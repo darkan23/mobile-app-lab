@@ -1,0 +1,22 @@
+<resources>
+    //App name
+    <string name="app_name">Performance</string>
+
+    // 1) counters
+    <string name="counters">Payment</string>
+    <string name="search_games">Поиск игры</string>
+    <string name="join_to_game">Присоединиться к игре</string>
+    <string name="detailed_information">Подробная информация</string>
+    <string name="choice_hero">Выбор героя</string>
+    <string name="chat">Чат</string>
+    <string name="name_counter">Спектакль: </string>
+    <string name="number_counter">Место: </string>
+    <string name="sum_price">Стоимость: </string>
+    <string name="my_ticket">Мои билеты</string>
+    <string name="perfomance">Спектакли</string>
+    <string name="buy">КУПИТЬ</string>
+    <string name="cancel">ОТМЕНИТЬ</string>
+    <string name="title_sum">Всего спетаклей:</string>
+    <string name="title_sum_price">Средняя цена спектакля:</string>
+
+</resources>

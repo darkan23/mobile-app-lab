@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/nameCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_counter"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="#ff222222"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/addNameCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/nameCounter"
+        app:layout_constraintTop_toTopOf="@id/nameCounter"
+        app:layout_constraintBottom_toBottomOf="@id/nameCounter"
+        android:hint="Название счетчика"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+    <TextView
+        android:id="@+id/numberCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/number_counter"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="#ff222222"
+        app:layout_constraintStart_toStartOf="@id/nameCounter"
+        app:layout_constraintTop_toBottomOf="@id/nameCounter" />
+
+    <EditText
+        android:id="@+id/addNumberCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        app:layout_constraintStart_toEndOf="@id/numberCounter"
+        app:layout_constraintTop_toTopOf="@id/numberCounter"
+        app:layout_constraintBottom_toBottomOf="@id/numberCounter"
+        android:digits="1234567890"
+        android:hint="Показатели счетчика"
+        android:maxLines="1"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+    <TextView
+        android:id="@+id/pricePayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sum_price"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="#ff222222"
+        app:layout_constraintStart_toStartOf="@id/numberCounter"
+        app:layout_constraintTop_toBottomOf="@id/numberCounter" />
+
+    <EditText
+        android:id="@+id/addPriceCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        app:layout_constraintStart_toEndOf="@id/pricePayment"
+        app:layout_constraintTop_toTopOf="@id/pricePayment"
+        app:layout_constraintBottom_toBottomOf="@id/pricePayment"
+        android:textAllCaps="false"
+        android:hint="Сумма оплаты"
+        android:maxLines="1"
+        tools:ignore="Autofill,HardcodedText,TextFields" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:fabSize="normal"
+
+        android:src="@drawable/ic_done_24dp"
+        app:layout_constraintStart_toStartOf="@id/pricePayment"
+        app:layout_constraintTop_toBottomOf="@id/pricePayment"
+        app:layout_anchorGravity="bottom|right|end" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

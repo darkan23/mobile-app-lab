@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/counters">
+
+    <fragment
+        android:id="@+id/counters"
+        android:name="labone.counters.FragmentPerformance"
+        android:label="@string/counters"
+        tools:layout="@layout/fragment_counters">
+        <action
+            android:id="@+id/add_counter"
+            app:destination="@id/addCounter" />
+        <action
+            android:id="@+id/detail_counter"
+            app:destination="@id/detailCounters" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addCounter"
+        android:name="labone.counters.AddCounterFragment"
+        android:label="@string/counters"
+        tools:layout="@layout/fragment_add_payment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailCounters"
+        android:name="labone.counters.DetailPerformance"
+        android:label="@string/counters"
+        tools:layout="@layout/fragment_detail_counter">
+    </fragment>
+    <fragment
+        android:id="@+id/myTicket"
+        android:name="labone.counters.MyTicketFragment"
+        android:label="Мои билеты"
+        tools:layout="@layout/fragment_my_ticket">
+    </fragment>
+
+</navigation>

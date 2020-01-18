@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/counters"
+        android:icon="@drawable/ic_news_24pd"
+        android:title="@string/perfomance" />
+
+    <item
+        android:id="@+id/myTicket"
+        android:icon="@drawable/ic_news_24pd"
+        android:title="@string/my_ticket" />
+</menu>
