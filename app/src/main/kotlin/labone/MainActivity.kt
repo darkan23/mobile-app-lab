@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        setSupportActionBar(toolbar)
-        NavigationUI.setupActionBarWithNavController(this, navController)
         bnv_nav?.let { NavigationUI.setupWithNavController(it, navController) }
     }
 

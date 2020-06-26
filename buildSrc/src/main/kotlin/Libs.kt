@@ -71,6 +71,13 @@ object Libs {
     const val splitties_preferences: String = "com.louiscad.splitties:splitties-preferences:" +
             Versions.com_louiscad_splitties
 
+
+    /**
+     * https://github.com/LouisCAD/Splitties
+     */
+    const val splitties_mainhandler: String = "com.louiscad.splitties:splitties-mainhandler:" +
+            Versions.com_louiscad_splitties
+
     /**
      * https://github.com/LouisCAD/Splitties
      */

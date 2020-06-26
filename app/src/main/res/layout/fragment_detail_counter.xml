@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:fabSize="normal"
-        android:src="@drawable/ic_edit_24dp"
+        android:src="@drawable/icon_edit"
         app:layout_constraintStart_toStartOf="@id/pricePayment"
         app:layout_constraintTop_toBottomOf="@id/pricePayment"
         app:layout_anchorGravity="bottom|right|end" />

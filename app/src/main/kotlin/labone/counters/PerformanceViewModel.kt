@@ -10,7 +10,6 @@ import com.squareup.inject.assisted.AssistedInject
 import labone.mvrx.AssistedViewModelFactory
 import labone.mvrx.DaggerViewModelFactory
 import labone.util.copy
-import labone.util.upsert
 import org.threeten.bp.Instant
 
 class PerformanceViewModel @AssistedInject constructor(
@@ -21,21 +20,13 @@ class PerformanceViewModel @AssistedInject constructor(
     init {
         performanceService.observeCountPerformance().toObservable()
             .execute { sum: Async<Int> ->
-                if (sum is Success) {
-                    copy(
-                        sum = sum()
-                    )
-                } else {
-                    this
-                }
+                if (sum is Success) copy(sum = sum()) else this
             }
 
         performanceService.observeActual()
             .toObservable()
             .execute { performance: Async<List<Performance>> ->
-                if (performance is Success) copy(
-                    performances = performance()
-                ) else this
+                if (performance is Success) copy(performances = sort(performance(), sortedBy)) else this
             }
     }
 
@@ -47,21 +38,12 @@ class PerformanceViewModel @AssistedInject constructor(
             price = price.toInt(),
             buy = state.buy
         )
-        setState {
-            copy(
-                performances = sort(
-                    performances.upsert(newCounter) { it.id == newCounter.id },
-                    sortedBy
-                )
-            )
-
-        }
         performanceService.savePerformance(newCounter)
     }
 
     fun setComplete(id: Long, complete: Boolean) {
         setState {
-            val task = performances.firstOrNull { it.id == id } ?:return@setState this
+            val task = performances.firstOrNull { it.id == id } ?: return@setState this
             if (task.buy == complete) return@setState this
             copy(
                 performances = performances.copy(
@@ -71,11 +53,6 @@ class PerformanceViewModel @AssistedInject constructor(
             )
         }
         performanceService.saveBuy(id, complete)
-    }
-
-    fun clearCompletedTasks() = setState {
-        performanceService.clearCompletedTasks()
-        copy(performances = performances.filter { !it.buy })
     }
 
     private fun sort(uiSale: List<Performance>, sortType: Sorted): List<Performance> =

@@ -16,6 +16,5 @@ object PerformanceModule {
 
     @Provides
     @IntoSet
-    fun counterNetworkJobSource(service: PerformanceService): NetworkJobSource =
-        service as NetworkJobSource
+    fun counterNetworkJobSource(service: PerformanceService): NetworkJobSource = service as NetworkJobSource
 }

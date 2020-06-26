@@ -84,7 +84,7 @@
         android:layout_margin="16dp"
         app:fabSize="normal"
 
-        android:src="@drawable/ic_done_24dp"
+        android:src="@drawable/icon_done"
         app:layout_constraintStart_toStartOf="@id/pricePayment"
         app:layout_constraintTop_toBottomOf="@id/pricePayment"
         app:layout_anchorGravity="bottom|right|end" />

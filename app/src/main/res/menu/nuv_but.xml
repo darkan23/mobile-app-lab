@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/counters"
-        android:icon="@drawable/ic_news_24pd"
+        android:icon="@drawable/icon_news"
         android:title="@string/perfomance" />
 
     <item
-        android:id="@+id/myTicket"
-        android:icon="@drawable/ic_news_24pd"
-        android:title="@string/my_ticket" />
+        android:id="@+id/news"
+        android:icon="@drawable/icon_news"
+        android:title="@string/news" />
 </menu>

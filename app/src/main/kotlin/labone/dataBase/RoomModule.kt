@@ -8,6 +8,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ElementsIntoSet
 import labone.counters.PerformanceDao
+import labone.news.NewsDao
+import labone.profile.ProfileDao
 import javax.inject.Singleton
 
 /**
@@ -46,5 +48,15 @@ class RoomModule @JvmOverloads constructor(
     @Provides
     fun provideSubscriptionDao(db: DataBaseCounters): PerformanceDao {
         return db.countersDao()
+    }
+
+    @Provides
+    fun provideProfileDao(db: DataBaseCounters): ProfileDao {
+        return db.profileDao()
+    }
+
+    @Provides
+    fun provideNewsDao(db: DataBaseCounters): NewsDao {
+        return db.newsDao()
     }
 }

@@ -40,7 +40,7 @@ android {
     sourceSets["main"].java.srcDir("src/main/kotlin")
 
     defaultConfig {
-        applicationId = "com.astroid.yodha"
+        applicationId = "com.text.stories"
         versionCode = 1
         versionName = project.version.toString()
         minSdkVersion(21)
@@ -205,10 +205,13 @@ dependencies {
     implementation(Libs.cardview)
     implementation(Libs.recyclerview)
     implementation(Libs.material)
-    testImplementation("io.mockk:mockk:1.9.3")
+    testImplementation("io.mockk:mockk:1.10.0")
     implementation("org.json:json:20190722") {
         exclude (group = "org.json", module = "json")
     }
+
+    implementation("com.github.lany192:DateTimePicker:1.0.6")
+    implementation("de.hdodenhof:circleimageview:2.2.0")
     implementation(Libs.vectordrawable)
     implementation(Libs.constraintlayout)
     implementation(Libs.lifecycle_process)
@@ -233,6 +236,7 @@ dependencies {
     }
 
     implementation(Libs.splitties_alertdialog_appcompat)
+    implementation(Libs.splitties_mainhandler)
     implementation(Libs.splitties_preferences)
     implementation(Libs.splitties_resources)
     implementation(Libs.splitties_systemservices)

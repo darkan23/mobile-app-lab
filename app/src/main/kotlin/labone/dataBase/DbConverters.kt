@@ -6,6 +6,7 @@ import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.parseList
 import kotlinx.serialization.stringify
+import labone.profile.Gender
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -18,33 +19,32 @@ object DbConverters {
 
     @JvmStatic
     @TypeConverter
-    fun toLocalDateTime(value: String?): LocalDateTime? {
-        return value?.let { str ->
-            LocalDateTime.from(
-                DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(
-                    str
-                )
-            )
-        }
+    fun fromGender(value: String?): Gender? = value?.let { Gender.valueOf(it) }
+
+    @JvmStatic
+    @TypeConverter
+    fun toGender(value: Gender?): String? = value?.name
+
+    @JvmStatic
+    @TypeConverter
+    fun toLocalDateTime(value: String?): LocalDateTime? = value?.let { str ->
+        LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(str))
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromLocalDateTime(value: LocalDateTime?): String? {
-        return value?.let { DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(value) }
-    }
+    fun fromLocalDateTime(value: LocalDateTime?): String? =
+        value?.let { DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(value) }
 
     @JvmStatic
     @TypeConverter
-    fun toLocalDate(value: String?): LocalDate? {
-        return value?.let { str -> LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(str)) }
-    }
+    fun toLocalDate(value: String?): LocalDate? =
+        value?.let { str -> LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(str)) }
+
 
     @JvmStatic
     @TypeConverter
-    fun fromLocalDate(value: LocalDate?): String? {
-        return value?.let { DateTimeFormatter.ISO_LOCAL_DATE.format(value) }
-    }
+    fun fromLocalDate(value: LocalDate?): String? = value?.let { DateTimeFormatter.ISO_LOCAL_DATE.format(value) }
 
     @JvmStatic
     @TypeConverter

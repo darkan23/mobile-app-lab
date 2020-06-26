@@ -43,7 +43,7 @@ object Versions {
 
     const val org_mockito: String = "3.2.4"
 
-    const val com_android_tools_build_gradle: String = "3.6.0-rc01"
+    const val com_android_tools_build_gradle: String = "4.0.0-beta04"
 
     const val androidx_test_ext_junit: String = "1.1.1"
 
@@ -97,7 +97,7 @@ object Versions {
 
     const val assertj_core: String = "3.14.0"
 
-    const val fragment_ktx: String = "1.2.0-rc04"
+    const val fragment_ktx: String = "1.3.0-alpha03"
 
     const val recyclerview: String = "1.1.0"
 
@@ -131,7 +131,7 @@ object Versions {
 
     const val rxjava: String = "2.2.16"
 
-    const val aapt2: String = "3.6.0-rc01-6040484"
+    const val aapt2: String = "4.0.0-beta04"
 
     const val epoxy: String = "3.9.0"
 
