@@ -5,37 +5,59 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/counters">
 
+    <action
+        android:id="@+id/open_profile"
+        app:destination="@id/profile"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/counters" />
+
+    <action
+        android:id="@+id/open_add_news"
+        app:destination="@id/addNews" />
+
     <fragment
         android:id="@+id/counters"
         android:name="labone.counters.FragmentPerformance"
         android:label="@string/counters"
         tools:layout="@layout/fragment_counters">
+
         <action
             android:id="@+id/add_counter"
             app:destination="@id/addCounter" />
+
         <action
             android:id="@+id/detail_counter"
             app:destination="@id/detailCounters" />
     </fragment>
 
+    <dialog
+        android:id="@+id/addNews"
+        android:name="labone.addnews.ui.AddNewsFragment"
+        android:label="@string/counters"
+        tools:layout="@layout/fragment_add_payment" />
+
     <fragment
         android:id="@+id/addCounter"
         android:name="labone.counters.AddCounterFragment"
         android:label="@string/counters"
-        tools:layout="@layout/fragment_add_payment">
-    </fragment>
+        tools:layout="@layout/fragment_add_payment" />
+
+    <dialog
+        android:id="@+id/profile"
+        android:name="labone.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/detailCounters"
         android:name="labone.counters.DetailPerformance"
         android:label="@string/counters"
-        tools:layout="@layout/fragment_detail_counter">
-    </fragment>
+        tools:layout="@layout/fragment_detail_counter" />
+
     <fragment
-        android:id="@+id/myTicket"
-        android:name="labone.counters.MyTicketFragment"
+        android:id="@+id/news"
+        android:name="labone.news.ui.NewsFragment"
         android:label="Мои билеты"
-        tools:layout="@layout/fragment_my_ticket">
-    </fragment>
+        tools:layout="@layout/fragment_news" />
 
 </navigation>

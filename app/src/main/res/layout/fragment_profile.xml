@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:windowSoftInputMode="stateHidden|adjustResize">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        android:background="@drawable/header_color"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/normal"
+        android:paddingTop="@dimen/normal"
+        android:paddingRight="@dimen/normal"
+        android:paddingBottom="@dimen/normal"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_profile_label"
+        android:layout_width="0dp"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/roboto_regular"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingLeft="@dimen/design_blue_margin"
+        android:paddingRight="@dimen/design_blue_margin"
+        android:singleLine="true"
+        android:text="@string/profile"
+        android:textColor="@color/white"
+        android:textSize="@dimen/header_font_size"
+        app:layout_constraintEnd_toStartOf="@id/done"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+    <ImageView
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="@dimen/design_blue_margin"
+        android:paddingRight="@dimen/design_blue_margin"
+        app:layout_constraintBottom_toBottomOf="@id/tv_profile_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_profile_label"
+        app:srcCompat="@drawable/icon_done"
+        tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
+
+    <!--Блок фотографии-->
+
+    <ImageView
+        android:id="@+id/profileAvatar"
+        android:layout_width="@dimen/ava_screen_size"
+        android:layout_height="@dimen/ava_screen_size"
+        android:layout_gravity="center"
+        android:src="@drawable/icon_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/header"
+        app:layout_constraintEnd_toEndOf="@id/header"
+        app:layout_constraintStart_toStartOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/clickerAvatar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/avatar_border"
+        app:layout_constraintBottom_toBottomOf="@id/profileAvatar"
+        app:layout_constraintEnd_toEndOf="@id/profileAvatar"
+        app:layout_constraintStart_toStartOf="@id/profileAvatar"
+        app:layout_constraintTop_toTopOf="@id/profileAvatar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/design_yellow_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clickerAvatar">
+
+        <!--Блок имени-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal"
+            android:layout_marginTop="@dimen/normal"
+            android:layout_marginEnd="@dimen/normal"
+            android:hint="@string/name_hint"
+            app:boxStrokeColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name_hint"
+                android:includeFontPadding="false"
+                android:inputType="textCapWords"
+                android:maxLines="50"
+                android:singleLine="true"
+                android:textColor="@color/textFieldColor"
+                android:textColorHint="@color/gray_170"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="@dimen/pt8" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlinedSurname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/normal"
+            android:layout_marginTop="@dimen/normal"
+            android:layout_marginEnd="@dimen/normal"
+            android:hint="@string/surname_hint"
+            app:boxBackgroundMode="outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/outlinedName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userSurname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/surname_hint"
+                android:includeFontPadding="false"
+                android:inputType="textCapWords"
+                android:maxLines="50"
+                android:singleLine="true"
+                android:textColor="@color/textFieldColor"
+                android:textColorHint="@color/gray_170"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="@dimen/pt8" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--Блок выбора пола-->
+        <!--Can't be replace compound drawable because attribute drawableTint in TextView support from 23 API-->
+        <LinearLayout
+            android:id="@+id/genderWoman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_correctionPt8"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/small"
+            app:layout_constraintEnd_toStartOf="@id/genderMan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/outlinedSurname">
+
+            <ImageView
+                android:id="@+id/womanGenderIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/icn_female_unselected"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/womanGenderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_light"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingLeft="@dimen/design_beige_margin"
+                android:text="@string/female"
+                android:textColor="@color/gray_170"
+                android:textSize="@dimen/pt8"
+                tools:ignore="RtlHardcoded,RtlSymmetry,SpUsage" />
+
+        </LinearLayout>
+
+        <!--Can't be replace compound drawable because attribute drawableTint in TextView support from 23 API-->
+        <LinearLayout
+            android:id="@+id/genderMan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/genderWoman"
+            app:layout_constraintTop_toTopOf="@id/genderWoman">
+
+            <ImageView
+                android:id="@+id/manGenderIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/icn_male_unselected"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/manGenderLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_light"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingLeft="@dimen/design_beige_margin"
+                android:text="@string/male"
+                android:textColor="@color/gray_170"
+                android:textSize="@dimen/pt8"
+                tools:ignore="RtlHardcoded,RtlSymmetry,SpUsage" />
+        </LinearLayout>
+
+        <!--Блок даты-->
+        <ImageView
+            android:id="@+id/profileDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            app:layout_constraintBottom_toBottomOf="@id/profileBirthDate"
+            app:layout_constraintStart_toStartOf="@id/genderWoman"
+            app:layout_constraintTop_toBottomOf="@id/genderWoman"
+            app:layout_constraintTop_toTopOf="@id/profileBirthDate"
+            app:srcCompat="@drawable/icon_calendar"
+            app:tint="@color/design_color2"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/profileBirthDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/design_blue_margin"
+            android:layout_marginTop="@dimen/design_orange_margin"
+            android:fontFamily="@font/roboto_light"
+            android:gravity="center_vertical|left"
+            android:hint="@string/birth_date"
+            android:includeFontPadding="false"
+            android:singleLine="true"
+            android:textColor="@color/textFieldColor"
+            android:textColorHint="@color/gray_170"
+            android:textSize="@dimen/pt8"
+            app:layout_constraintStart_toEndOf="@id/profileDate"
+            app:layout_constraintTop_toBottomOf="@id/genderWoman"
+            tools:ignore="RtlHardcoded,SpUsage" />
+
+        <ImageView
+            android:id="@+id/iv_date_chooser"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_alignTop="@id/profileBirthDate"
+            android:layout_alignBottom="@id/profileBirthDate"
+            app:layout_constraintBottom_toBottomOf="@id/profileBirthDate"
+            app:layout_constraintEnd_toEndOf="@id/outlinedSurname"
+            app:layout_constraintStart_toEndOf="@id/profileBirthDate"
+            app:layout_constraintTop_toTopOf="@id/profileBirthDate"
+            app:srcCompat="@drawable/icon_open_list"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/underlineDate"
+            style="@style/DividerLine"
+            android:layout_width="0dp"
+            android:layout_marginTop="@dimen/small"
+            app:layout_constraintEnd_toEndOf="@id/iv_date_chooser"
+            app:layout_constraintStart_toStartOf="@id/profileBirthDate"
+            app:layout_constraintTop_toBottomOf="@id/profileBirthDate" />
+
+        <View
+            android:id="@+id/clickerDate"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/underlineDate"
+            app:layout_constraintEnd_toEndOf="@id/iv_date_chooser"
+            app:layout_constraintStart_toStartOf="@id/profileBirthDate"
+            app:layout_constraintTop_toTopOf="@+id/profileBirthDate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

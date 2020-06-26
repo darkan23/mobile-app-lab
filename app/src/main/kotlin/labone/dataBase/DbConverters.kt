@@ -1,50 +1,45 @@
 package labone.dataBase
 
 import androidx.room.TypeConverter
-import kotlinx.serialization.ImplicitReflectionSerializer
-import kotlinx.serialization.UnstableDefault
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.parseList
-import kotlinx.serialization.stringify
-import org.threeten.bp.Instant
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalTime
-import org.threeten.bp.format.DateTimeFormatter
+import labone.profile.Gender
 import java.net.URI
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 object DbConverters {
 
     @JvmStatic
     @TypeConverter
-    fun toLocalDateTime(value: String?): LocalDateTime? {
-        return value?.let { str ->
-            LocalDateTime.from(
-                DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(
-                    str
-                )
-            )
-        }
+    fun fromGender(value: String?): Gender? = value?.let { Gender.valueOf(it) }
+
+    @JvmStatic
+    @TypeConverter
+    fun toGender(value: Gender?): String? = value?.name
+
+    @JvmStatic
+    @TypeConverter
+    fun toLocalDateTime(value: String?): LocalDateTime? = value?.let { str ->
+        LocalDateTime.from(DateTimeFormatter.ISO_LOCAL_DATE_TIME.parse(str))
     }
 
     @JvmStatic
     @TypeConverter
-    fun fromLocalDateTime(value: LocalDateTime?): String? {
-        return value?.let { DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(value) }
-    }
+    fun fromLocalDateTime(value: LocalDateTime?): String? =
+        value?.let { DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(value) }
 
     @JvmStatic
     @TypeConverter
-    fun toLocalDate(value: String?): LocalDate? {
-        return value?.let { str -> LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(str)) }
-    }
+    fun toLocalDate(value: String?): LocalDate? =
+        value?.let { str -> LocalDate.from(DateTimeFormatter.ISO_LOCAL_DATE.parse(str)) }
+
 
     @JvmStatic
     @TypeConverter
-    fun fromLocalDate(value: LocalDate?): String? {
-        return value?.let { DateTimeFormatter.ISO_LOCAL_DATE.format(value) }
-    }
+    fun fromLocalDate(value: LocalDate?): String? = value?.let { DateTimeFormatter.ISO_LOCAL_DATE.format(value) }
 
     @JvmStatic
     @TypeConverter
@@ -92,27 +87,5 @@ object DbConverters {
     @TypeConverter
     fun toUUID(value: String?): UUID? {
         return value?.let { UUID.fromString(it) }
-    }
-
-    /**
-     * Use Json.nonstrict for lists with 1 element
-     */
-    @ImplicitReflectionSerializer
-    @UnstableDefault
-    @JvmStatic
-    @TypeConverter
-    fun toStringList(list: List<String>): String {
-        return Json.nonstrict.stringify(list)
-    }
-
-    /**
-     * Use Json.nonstrict for lists with 1 element
-     */
-    @ImplicitReflectionSerializer
-    @UnstableDefault
-    @JvmStatic
-    @TypeConverter
-    fun fromStringList(value: String): List<String> {
-        return Json.nonstrict.parseList(value)
     }
 }

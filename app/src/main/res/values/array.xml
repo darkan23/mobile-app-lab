@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pick_ava_types">
+        <item>Take a picture</item>
+        <item>Choose From Gallery</item>
+        <item>Cancel</item>
+    </array>
+</resources>

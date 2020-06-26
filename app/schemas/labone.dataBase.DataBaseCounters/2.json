@@ -2,8 +2,64 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "8c892507b15815c8b240e99668fbbf7f",
+    "identityHash": "9b24d7d0639310abc2ef91fa81589309",
     "entities": [
+      {
+        "tableName": "CustomerProfile",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`customerId` INTEGER, `customerAvatar` TEXT, `syncedByAvatar` INTEGER NOT NULL, `syncedByDetails` INTEGER NOT NULL, `syntheticId` INTEGER NOT NULL, `name` TEXT, `surname` TEXT, PRIMARY KEY(`syntheticId`))",
+        "fields": [
+          {
+            "fieldPath": "customerId",
+            "columnName": "customerId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "customerAvatar",
+            "columnName": "customerAvatar",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "syncedByAvatar",
+            "columnName": "syncedByAvatar",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syncedByDetails",
+            "columnName": "syncedByDetails",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syntheticId",
+            "columnName": "syntheticId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "customerDetails.name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "customerDetails.surname",
+            "columnName": "surname",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "syntheticId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
       {
         "tableName": "Performance",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `performanceName` TEXT NOT NULL, `date` INTEGER NOT NULL, `performancePlace` INTEGER NOT NULL, `price` INTEGER NOT NULL, `buy` INTEGER NOT NULL)",
@@ -58,7 +114,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8c892507b15815c8b240e99668fbbf7f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9b24d7d0639310abc2ef91fa81589309')"
     ]
   }
 }

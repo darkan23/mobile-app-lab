@@ -2,10 +2,14 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowContentOverlay">@null</item>
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+
+        <item name="android:dialogTheme">@style/TextStoriesDialogTheme</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -16,6 +20,23 @@
         <item name="android:windowNoTitle">false</item>
     </style>
 
+    <style name="TextStoriesDialogTheme" parent="@style/BaseDialogTheme" />
+
+    <style name="BaseDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:buttonBarButtonStyle">@style/BorderlessButtonCustom</item>
+        <item name="android:windowBackground">@color/transparent_color</item>
+        <item name="android:textViewStyle">@style/YodhaTextView</item>
+    </style>
+
+    <style name="BorderlessButtonCustom" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/design_color</item>
+    </style>
+
+    <!-- Base TextView theme. -->
+    <style name="YodhaTextView">
+        <item name="android:includeFontPadding">false</item>
+    </style>
 
     <style name="DividerLine">
         <item name="android:layout_width">match_parent</item>
@@ -23,7 +44,32 @@
         <item name="android:background">@color/gray_170</item>
     </style>
 
-    <dimen name="line_size">0.8dp</dimen>
-    <color name="gray_170">#FFAAAAAA</color>
+    <style name="Title">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:translationX">-1dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/design_blue_margin</item>
+        <item name="android:paddingEnd">@dimen/design_blue_margin</item>
+        <item name="android:textColor">@color/header_black</item>
+        <item name="android:textSize">@dimen/header_font_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="ColoredControlEditText" parent="Widget.AppCompat.EditText">
+        <item name="colorControlActivated">@color/design_color</item>
+    </style>
+
+    <style name="AppTheme.TextStories">
+        <item name="editTextStyle">@style/ColoredControlEditText</item>
+    </style>
+
+    <style name="BottomUpAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_up</item>
+        <item name="android:windowExitAnimation">@anim/bottom_down</item>
+    </style>
 
 </resources>

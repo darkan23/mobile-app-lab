@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/edit_profile"
-        android:icon="@drawable/ic_edit_24dp"
+        android:icon="@drawable/icon_edit"
         app:showAsAction="always"
         tools:ignore="MenuTitle" />
 </menu>

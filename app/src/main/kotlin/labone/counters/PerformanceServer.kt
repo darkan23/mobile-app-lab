@@ -2,25 +2,21 @@ package labone.counters
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dagger.Module
-import dagger.Provides
 import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 interface PerformanceService {
-    fun observeActual(): Flowable<List<Performance>>
+    fun observeActual(): Flow<List<Performance>>
 
     fun savePerformance(performance: Performance): Disposable
 
     fun saveBuy(id: Long, complete: Boolean): Disposable
 
-    fun observeCountPerformance(): Flowable<Int>
+    fun observeCountPerformance(): Flow<Int>
 
-    fun sumPrice(): Flowable<Int>
+    fun sumPrice(): Flow<Int>
 
     fun clearCompletedTasks(): Disposable
 }
@@ -39,7 +35,7 @@ internal class PerformanceServiceImpl(
     private val performanceDao: PerformanceDao
 ) : PerformanceService {
 
-    override fun observeActual(): Flowable<List<Performance>> =
+    override fun observeActual(): Flow<List<Performance>> =
         performanceDao.observeActualCounters()
 
     override fun savePerformance(performance: Performance): Disposable =
@@ -51,10 +47,10 @@ internal class PerformanceServiceImpl(
     override fun clearCompletedTasks(): Disposable =
         fromAction { performanceDao.clearCompletedTasks() }
 
-    override fun observeCountPerformance(): Flowable<Int> =
+    override fun observeCountPerformance(): Flow<Int> =
         performanceDao.observeUnreadCount()
 
-    override fun sumPrice(): Flowable<Int> = performanceDao.observePriceCount()
+    override fun sumPrice(): Flow<Int> = performanceDao.observePriceCount()
 
 
     private fun fromAction(action: () -> Unit): Disposable = Completable.fromAction(action)
@@ -76,12 +72,3 @@ internal class TestImpl : Test {
         return sumPrise / sum.size
     }
 }
-
-@Module
-object TestModule {
-
-    @Provides
-    @Singleton
-    internal fun provideCountersService(): Test = TestImpl()
-}
-

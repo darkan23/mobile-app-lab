@@ -1,41 +1,31 @@
 package labone.counters
 
 import com.airbnb.mvrx.Async
-import com.airbnb.mvrx.BaseMvRxViewModel
-import com.airbnb.mvrx.BuildConfig
+import com.airbnb.mvrx.MavericksViewModel
 import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.Success
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import labone.mvrx.AssistedViewModelFactory
-import labone.mvrx.DaggerViewModelFactory
+import labone.mvrx.DiMavericksViewModelFactory
 import labone.util.copy
-import labone.util.upsert
-import org.threeten.bp.Instant
+import java.time.Instant
 
 class PerformanceViewModel @AssistedInject constructor(
     @Assisted initialState: CountersState,
     private val performanceService: PerformanceService
-) : BaseMvRxViewModel<CountersState>(initialState, BuildConfig.DEBUG) {
+) : MavericksViewModel<CountersState>(initialState) {
 
     init {
-        performanceService.observeCountPerformance().toObservable()
+        performanceService.observeCountPerformance()
             .execute { sum: Async<Int> ->
-                if (sum is Success) {
-                    copy(
-                        sum = sum()
-                    )
-                } else {
-                    this
-                }
+                if (sum is Success) copy(sum = sum()) else this
             }
 
         performanceService.observeActual()
-            .toObservable()
             .execute { performance: Async<List<Performance>> ->
-                if (performance is Success) copy(
-                    performances = performance()
-                ) else this
+                if (performance is Success) copy(performances = sort(performance(), sortedBy)) else this
             }
     }
 
@@ -47,21 +37,12 @@ class PerformanceViewModel @AssistedInject constructor(
             price = price.toInt(),
             buy = state.buy
         )
-        setState {
-            copy(
-                performances = sort(
-                    performances.upsert(newCounter) { it.id == newCounter.id },
-                    sortedBy
-                )
-            )
-
-        }
         performanceService.savePerformance(newCounter)
     }
 
     fun setComplete(id: Long, complete: Boolean) {
         setState {
-            val task = performances.firstOrNull { it.id == id } ?:return@setState this
+            val task = performances.firstOrNull { it.id == id } ?: return@setState this
             if (task.buy == complete) return@setState this
             copy(
                 performances = performances.copy(
@@ -73,23 +54,19 @@ class PerformanceViewModel @AssistedInject constructor(
         performanceService.saveBuy(id, complete)
     }
 
-    fun clearCompletedTasks() = setState {
-        performanceService.clearCompletedTasks()
-        copy(performances = performances.filter { !it.buy })
-    }
-
     private fun sort(uiSale: List<Performance>, sortType: Sorted): List<Performance> =
         when (sortType) {
             Sorted.ASC_DATE -> uiSale.sortedWith(compareBy(Performance::date))
             Sorted.DESC_DATE -> uiSale.sortedWith(compareByDescending(Performance::date))
         }
 
-    @AssistedInject.Factory
-    interface Factory : AssistedViewModelFactory<PerformanceViewModel, CountersState>
+    @AssistedFactory
+    interface Factory : AssistedViewModelFactory<PerformanceViewModel, CountersState> {
+        override fun create(initialState: CountersState): PerformanceViewModel
+    }
 
-    companion object : DaggerViewModelFactory<PerformanceViewModel, CountersState>(
-        PerformanceViewModel::class
-    )
+    companion object :
+        DiMavericksViewModelFactory<PerformanceViewModel, CountersState>(PerformanceViewModel::class.java)
 }
 
 data class CountersState(

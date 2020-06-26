@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/visual_sb"
+        style="@style/Title"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toStartOf="@id/fl_profile_action"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded" />
+
+    <ImageView
+        android:id="@+id/fl_profile_action"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/design_blue_margin"
+        android:paddingRight="@dimen/design_blue_margin"
+        app:layout_constraintBottom_toBottomOf="@id/visual_sb"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/visual_sb"
+        app:srcCompat="@drawable/icon_profile"
+        app:tint="@color/design_color4"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

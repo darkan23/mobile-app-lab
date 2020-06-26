@@ -1,0 +1,19 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:top="-5dp"
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:bottomLeftRadius="@dimen/card_corner_common"
+                android:bottomRightRadius="@dimen/card_corner_common" />
+            <!--For API 16-->
+            <solid android:color="@color/transparent_color" />
+            <stroke
+                android:width="@dimen/line_size"
+                android:color="@color/colorPrimaryDark" />
+        </shape>
+    </item>
+</layer-list>

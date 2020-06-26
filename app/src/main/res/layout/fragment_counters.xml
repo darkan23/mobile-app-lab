@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="UselessParent">
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/incl_action_bar"
+        layout="@layout/action_bar" />
+
+    <View
+        android:id="@+id/v_divider_header"
+        style="@style/DividerLine"
+        android:layout_below="@id/incl_action_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/titleSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/v_divider_header"
         android:paddingBottom="12dp"
         android:text="@string/title_sum"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -27,9 +37,9 @@
     <TextView
         android:id="@+id/sum"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@id/titleSum"
         android:layout_alignParentEnd="true"
-        android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="#ff222222" />
 
@@ -49,8 +59,7 @@
         android:layout_below="@id/tittleSumPrice"
         android:clipToPadding="false"
         android:paddingBottom="12dp"
-        android:scrollbarStyle="insideOverlay"
-        tools:listitem="@layout/item_counters" />
+        android:scrollbarStyle="insideOverlay" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCounter"
@@ -59,7 +68,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_add_24dp"
+        android:src="@drawable/icon_add"
         app:fabSize="normal" />
 
 </RelativeLayout>

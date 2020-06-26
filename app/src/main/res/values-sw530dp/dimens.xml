@@ -1,0 +1,14 @@
+<resources>
+    <!--match_parent=-1.0px wrap_content=-2.0px-->
+
+    <!-- common-->
+    <bool name="tablet_attribute">true</bool>
+    <dimen name="tablet_center_dialog_width">380dp</dimen>
+    <!--It need to be ~ 5% from screen height for tablets-->
+    <dimen name="dialog_max_height_border">32dp</dimen>
+
+    <dimen name="left_menu_height">@dimen/wrap_content</dimen>
+
+    <!-- profile fragment dimens -->
+    <dimen name="listed_dialog_height">-2.0px</dimen>
+</resources>

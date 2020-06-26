@@ -1,8 +1,26 @@
 <resources>
     //App name
-    <string name="app_name">Performance</string>
+    <string name="app_name">Text-Stories</string>
 
-    // 1) counters
+    // 1) Profile
+    <string name="profile">Profile</string>
+    <string name="name_hint">First name</string>
+    <string name="surname_hint">Last name</string>
+    <string name="profile_add_photo">Add photo</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="birth_date">Birth of date</string>
+    <string name="select_avatar">Select Your Avatar</string>
+    <string name="something_wrong">Oops…Something wrong</string>
+    <string name="error_added_photo">It seems that the photo can\'t be added at the moment. No worries. Just fill the rest of the profile. The photo you can add later.</string>
+
+    // 2) News
+    <string name="news">News</string>
+
+    // 3) Add News
+    <string name="add_record">Add record</string>
+    <string name="new_record">New record</string>
+
     <string name="counters">Payment</string>
     <string name="search_games">Поиск игры</string>
     <string name="join_to_game">Присоединиться к игре</string>
@@ -15,7 +33,7 @@
     <string name="my_ticket">Мои билеты</string>
     <string name="perfomance">Спектакли</string>
     <string name="buy">КУПИТЬ</string>
-    <string name="cancel">ОТМЕНИТЬ</string>
+    <string name="cancel">Cancel</string>
     <string name="title_sum">Всего спетаклей:</string>
     <string name="title_sum_price">Средняя цена спектакля:</string>
 

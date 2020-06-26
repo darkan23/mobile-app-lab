@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/design_blue_margin"
+    android:layout_marginRight="@dimen/design_blue_margin"
+    android:layout_marginBottom="@dimen/design_blue_margin">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ll_quote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/news_card_top_shape"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/design_blue_margin"
+                android:paddingTop="@dimen/design_blue_margin"
+                android:paddingRight="@dimen/design_blue_margin"
+                android:paddingBottom="@dimen/design_blue_margin"
+                app:srcCompat="@drawable/icon_share"
+                app:tint="@color/colorPrimaryDark"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/newsDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/imageGroup"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingLeft="@dimen/design_blue_margin"
+                android:paddingTop="@dimen/design_blue_margin"
+                android:paddingRight="@dimen/design_blue_margin"
+                android:paddingBottom="@dimen/design_blue_margin"
+                android:text="@string/new_record"
+                android:textColor="@color/gray_64"
+                android:textSize="@dimen/pt9"
+                tools:ignore="SpUsage" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!--Body background-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/news_card_bottom_shape"
+            app:layout_constraintBottom_toBottomOf="@+id/newsShareButton"
+            app:layout_constraintTop_toBottomOf="@id/label" />
+
+        <TextView
+            android:id="@+id/newsBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/design_blue_margin"
+            android:layout_marginRight="@dimen/design_blue_margin"
+            android:autoLink="web|email"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:linksClickable="true"
+            android:paddingTop="@dimen/design_blue_margin"
+            android:textColor="@color/gray_32"
+            android:textColorLink="@color/link_color"
+            android:textSize="@dimen/font_for_quotes"
+            app:layout_constraintTop_toBottomOf="@id/label"
+            tools:ignore="SpUsage" />
+
+        <ImageView
+            android:id="@+id/newsShareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/design_blue_margin"
+            android:paddingTop="@dimen/design_blue_margin"
+            android:paddingRight="@dimen/design_blue_margin"
+            android:paddingBottom="@dimen/design_blue_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newsBody"
+            app:srcCompat="@drawable/icon_share"
+            app:tint="@color/colorPrimaryDark"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/speakerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/design_blue_margin"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/gray_128"
+            android:textSize="@dimen/pt6"
+            app:layout_constraintBottom_toBottomOf="@id/newsShareButton"
+            app:layout_constraintEnd_toStartOf="@id/newsShareButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/newsShareButton"
+            tools:ignore="RtlHardcoded,SpUsage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

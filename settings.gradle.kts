@@ -4,21 +4,23 @@ include(":app")
 
 pluginManagement {
     repositories {
-        gradlePluginPortal()
+        mavenCentral()
         google()
-        jcenter()
-        maven { url = uri("https://plugins.gradle.org/m2/") }
-        maven { url = uri("https://maven.fabric.io/public") }
+        gradlePluginPortal()
     }
 
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                "com.android.application" -> useModule("com.android.tools.build:gradle:${requested.version}")
-                "io.fabric" -> useModule("io.fabric.tools:gradle:${requested.version}")
-                "kotlinx-serialization" -> useModule("org.jetbrains.kotlin:kotlin-serialization:${requested.version}")
+                "com.android.application" -> useModule("com.android.tools.build:gradle:7.0.4")
+                "dagger.hilt.android.plugin" -> useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
                 "androidx.navigation.safeargs.kotlin" -> useModule("androidx.navigation:navigation-safe-args-gradle-plugin:${requested.version}")
             }
         }
     }
+}
+
+
+plugins {
+    id("de.fayard.refreshVersions") version "0.21.0"
 }

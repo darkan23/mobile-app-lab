@@ -2,10 +2,14 @@ package labone.counters
 
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoSet
-import labone.server.NetworkJobSource
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoMap
+import labone.mvrx.AssistedViewModelFactory
+import labone.mvrx.ViewModelKey
 import javax.inject.Singleton
 
+@InstallIn(SingletonComponent::class)
 @Module
 object PerformanceModule {
 
@@ -14,8 +18,9 @@ object PerformanceModule {
     internal fun provideCountersService(performanceDao: PerformanceDao): PerformanceService =
         PerformanceServiceImpl(performanceDao)
 
+
     @Provides
-    @IntoSet
-    fun counterNetworkJobSource(service: PerformanceService): NetworkJobSource =
-        service as NetworkJobSource
+    @IntoMap
+    @ViewModelKey(PerformanceViewModel::class)
+    fun viewModelFactory(actual: PerformanceViewModel.Factory): AssistedViewModelFactory<*, *> = actual
 }

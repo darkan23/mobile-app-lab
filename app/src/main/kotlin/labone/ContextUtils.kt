@@ -1,19 +1,26 @@
 package labone
 
 import android.content.Context
+import android.text.Editable
 import android.text.format.DateFormat
 import android.widget.TextView
-import com.example.labone.BuildConfig
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 inline val Context.uiLocale: Locale
     get() = if (DateFormat.is24HourFormat(this)) Locale.UK else Locale.US
 
+fun Context.formatDate(date: LocalDate): String = DateTimeFormatter
+    .ofPattern("dd MMM yyyy")
+    .withLocale(uiLocale)
+    .format(date)
 
 fun TextView.renderURL(url: String) = url
 
-fun TextView.renderURL(photoId: Long) =
-    renderURL("${BuildConfig.API_BASE_URL}photo/$photoId?photoShape=ROUND")
+inline fun TextView.doAfterTextChanged(crossinline action: (text: Editable?) -> Unit) =
+    addTextChangedListener(afterTextChanged = action)
 
-val pop
-    get() = "${BuildConfig.API_BASE_URL}performance"
+fun Fragment.formatDate(time: LocalDate): String = requireContext().formatDate(time)

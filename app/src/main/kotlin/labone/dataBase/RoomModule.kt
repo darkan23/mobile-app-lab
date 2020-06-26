@@ -3,17 +3,17 @@ package labone.dataBase
 import android.app.Application
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.labone.BuildConfig
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
 import labone.counters.PerformanceDao
+import labone.news.data.NewsDao
+import labone.profile.ProfileDao
 import javax.inject.Singleton
 
-/**
- * @author rbarykin
- * @since 13.07.16.
- */
+@InstallIn(SingletonComponent::class)
 @Module
 class RoomModule @JvmOverloads constructor(
     private val inMemory: Boolean = false,
@@ -22,7 +22,7 @@ class RoomModule @JvmOverloads constructor(
 
     @Provides
     @Singleton
-    fun provideYodhaDatabase(
+    fun provideDatabase(
         application: Application,
         callbacks: Set<@JvmSuppressWildcards RoomDatabase.Callback>
     ): DataBaseCounters = if (inMemory) {
@@ -33,10 +33,6 @@ class RoomModule @JvmOverloads constructor(
         for (callback in callbacks) {
             addCallback(callback)
         }
-        // TODO возможно впоследствии убрать?
-        if (!BuildConfig.DEBUG) {
-            fallbackToDestructiveMigration()
-        }
     }.build()
 
     @Provides
@@ -46,5 +42,15 @@ class RoomModule @JvmOverloads constructor(
     @Provides
     fun provideSubscriptionDao(db: DataBaseCounters): PerformanceDao {
         return db.countersDao()
+    }
+
+    @Provides
+    fun provideProfileDao(db: DataBaseCounters): ProfileDao {
+        return db.profileDao()
+    }
+
+    @Provides
+    fun provideNewsDao(db: DataBaseCounters): NewsDao {
+        return db.newsDao()
     }
 }

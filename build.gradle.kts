@@ -1,25 +1,11 @@
-import groovy.xml.dom.DOMCategory.attributes
-import org.gradle.kotlin.dsl.provider.gradleKotlinDslJarsOf
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    buildSrcVersions
-}
-
-val currentScmVersion: String by ext
+internal val currentVersions = project.version
 
 allprojects {
-    repositories {
-        google()
-        jcenter()
-
-    }
+    group = "com.example.labone"
+    version = currentVersions
 }
 
 tasks {
-    wrapper {
-        gradleVersion = Versions.gradleLatestVersion
-    }
     register("clean", Delete::class) {
         delete = setOf(rootProject.buildDir)
     }
