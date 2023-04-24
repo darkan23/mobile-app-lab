@@ -2,23 +2,23 @@ package labone.counters
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import io.reactivex.Completable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import labone.AppScope
 
 interface PerformanceService {
-    fun observeActual(): Flow<List<Performance>>
+    fun flowActual(): Flow<List<Performance>>
 
-    fun savePerformance(performance: Performance): Disposable
+    fun flowCountPerformance(): Flow<Int>
 
-    fun saveBuy(id: Long, complete: Boolean): Disposable
+    fun flowSumPrice(): Flow<Int>
 
-    fun observeCountPerformance(): Flow<Int>
+    fun savePerformance(performance: Performance)
 
-    fun sumPrice(): Flow<Int>
+    fun saveBuy(id: Long, complete: Boolean)
 
-    fun clearCompletedTasks(): Disposable
+    fun clearCompletedTasks()
 }
 
 @Entity
@@ -28,34 +28,37 @@ data class Performance(
     val date: Long,
     val performancePlace: Int,
     val price: Int,
-    val buy: Boolean
+    val buy: Boolean,
 )
 
 internal class PerformanceServiceImpl(
-    private val performanceDao: PerformanceDao
+    private val performanceDao: PerformanceDao,
+    private val appScope: AppScope,
 ) : PerformanceService {
 
-    override fun observeActual(): Flow<List<Performance>> =
-        performanceDao.observeActualCounters()
+    override fun flowCountPerformance(): Flow<Int> = performanceDao.flowUnreadCount()
 
-    override fun savePerformance(performance: Performance): Disposable =
-        fromAction { performanceDao.savePerformance(performance) }
+    override fun flowActual(): Flow<List<Performance>> = performanceDao.flowActualCounters()
 
-    override fun saveBuy(id: Long, complete: Boolean): Disposable =
-        fromAction { performanceDao.setComplete(id, complete) }
+    override fun flowSumPrice(): Flow<Int> = performanceDao.flowPriceCount()
 
-    override fun clearCompletedTasks(): Disposable =
-        fromAction { performanceDao.clearCompletedTasks() }
+    override fun savePerformance(performance: Performance) {
+        appScope.launch(Dispatchers.IO) {
+            performanceDao.savePerformance(performance)
+        }
+    }
 
-    override fun observeCountPerformance(): Flow<Int> =
-        performanceDao.observeUnreadCount()
+    override fun saveBuy(id: Long, complete: Boolean) {
+        appScope.launch(Dispatchers.IO) {
+            performanceDao.setComplete(id, complete)
+        }
+    }
 
-    override fun sumPrice(): Flow<Int> = performanceDao.observePriceCount()
-
-
-    private fun fromAction(action: () -> Unit): Disposable = Completable.fromAction(action)
-        .subscribeOn(Schedulers.io())
-        .subscribe()
+    override fun clearCompletedTasks() {
+        appScope.launch(Dispatchers.IO) {
+            performanceDao.clearCompletedTasks()
+        }
+    }
 }
 
 interface Test {

@@ -17,14 +17,14 @@ import javax.inject.Singleton
 @Module
 class RoomModule @JvmOverloads constructor(
     private val inMemory: Boolean = false,
-    private val dbName: String = "counters_advanced.db"
+    private val dbName: String = "counters_advanced.db",
 ) {
 
     @Provides
     @Singleton
     fun provideDatabase(
         application: Application,
-        callbacks: Set<@JvmSuppressWildcards RoomDatabase.Callback>
+        callbacks: Set<@JvmSuppressWildcards RoomDatabase.Callback>,
     ): DataBaseCounters = if (inMemory) {
         Room.inMemoryDatabaseBuilder(application, DataBaseCounters::class.java)
     } else {
@@ -40,17 +40,11 @@ class RoomModule @JvmOverloads constructor(
     internal fun defaultCallbacks() = emptySet<RoomDatabase.Callback>()
 
     @Provides
-    fun provideSubscriptionDao(db: DataBaseCounters): PerformanceDao {
-        return db.countersDao()
-    }
+    fun provideSubscriptionDao(db: DataBaseCounters): PerformanceDao = db.countersDao()
 
     @Provides
-    fun provideProfileDao(db: DataBaseCounters): ProfileDao {
-        return db.profileDao()
-    }
+    fun provideProfileDao(db: DataBaseCounters): ProfileDao = db.profileDao()
 
     @Provides
-    fun provideNewsDao(db: DataBaseCounters): NewsDao {
-        return db.newsDao()
-    }
+    fun provideNewsDao(db: DataBaseCounters): NewsDao = db.newsDao()
 }

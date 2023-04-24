@@ -39,5 +39,5 @@ abstract class ProfileDao {
     abstract suspend fun updateAvatar(avatarUri: URI)
 
     @Query("SELECT * FROM CustomerProfile")
-    abstract fun observe(): Flow<CustomerProfile>
+    abstract fun observe(): Flow<CustomerProfile?>
 }

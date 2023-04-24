@@ -23,17 +23,17 @@ class ProfileViewModel @AssistedInject constructor(
 
     init {
         profileRepository.flowCustomerProfile()
-            .execute { profile: Async<CustomerProfile> ->
+            .execute { profile: Async<CustomerProfile?> ->
                 if (profile is Success) {
                     val details = profile()
                     log.info { "allDetails $details" }
                     copy(
-                        id = details.id,
-                        name = details.name,
-                        surname = details.surname,
-                        gender = details.gender,
-                        birthDate = details.birthDate,
-                        photoUri = details.customerAvatar
+                        id = details?.id,
+                        name = details?.name,
+                        surname = details?.surname,
+                        gender = details?.gender,
+                        birthDate = details?.birthDate,
+                        photoUri = details?.customerAvatar
                     )
                 } else {
                     this

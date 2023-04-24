@@ -11,7 +11,7 @@ interface ProfileRepository {
 
     suspend fun updateAvatar(avatarUri: URI)
 
-    fun flowCustomerProfile(): Flow<CustomerProfile>
+    fun flowCustomerProfile(): Flow<CustomerProfile?>
 }
 
 internal class ProfileRepositoryImpl(
@@ -30,5 +30,5 @@ internal class ProfileRepositoryImpl(
 
     override suspend fun updateAvatar(avatarUri: URI) = profileDao.updateAvatar(avatarUri)
 
-    override fun flowCustomerProfile(): Flow<CustomerProfile> = profileDao.observe()
+    override fun flowCustomerProfile(): Flow<CustomerProfile?> = profileDao.observe()
 }

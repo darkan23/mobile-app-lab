@@ -1,19 +1,38 @@
 plugins {
-    id("com.android.application")
+    id("com.android.application") version "7.4.2"
     kotlin("android")
     kotlin("kapt")
-    kotlin("android.extensions")
+    id("org.jetbrains.kotlin.plugin.parcelize") version "1.8.10"
     kotlin("plugin.serialization")
-    id("dagger.hilt.android.plugin") version "2.38.1"
-    id("androidx.navigation.safeargs.kotlin") version "2.3.0"
+    id("dagger.hilt.android.plugin") version "2.44"
+    id("androidx.navigation.safeargs.kotlin") version "2.5.3"
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 33
 
+    ndkVersion = "23.1.7779620"
+
+    kotlinOptions {
+        languageVersion = "1.7"
+        jvmTarget = JavaVersion.VERSION_11.toString()
+        javaParameters = true
+        freeCompilerArgs += "-Xjsr305=strict"
+        freeCompilerArgs += "-Xjvm-default=all"
+    }
 
     buildFeatures {
         viewBinding = true
+    }
+
+    buildTypes {
+        getByName("debug") {
+            isMinifyEnabled = false
+
+            val extra = (this as ExtensionAware).extra
+            extra["enableCrashlytics"] = false
+            extra["alwaysUpdateBuildId"] = false
+        }
     }
 
     defaultConfig {
@@ -24,6 +43,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        proguardFile("proguard-app.pro")
     }
 
     buildTypes {
@@ -34,19 +55,37 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true
+    }
+    packagingOptions {
+        resources {
+            excludes.add("META-INF/AL2.0")
+            excludes.add("META-INF/LGPL2.1")
+        }
+    }
+}
+
+kapt {
+    useBuildCache = true
+    correctErrorTypes = true
+    includeCompileClasspath = false
+    javacOptions {
+        option("-Xmaxerrs", 10_000)
+        option("-Xmaxwarns", 10_000)
     }
 }
 
 repositories {
     mavenCentral()
     google()
+    gradlePluginPortal()
 }
 
 dependencies {
     implementation("io.github.microutils:kotlin-logging:_")
     implementation("org.slf4j:slf4j-jdk14:_")
-
-    implementation(Kotlin.stdlib.jdk8)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.21")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
     implementation(KotlinX.serialization.json)
     implementation(KotlinX.coroutines.android)
     // COROUTINES: remove when migrated to coroutines
@@ -56,8 +95,6 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:_")
     implementation("io.reactivex.rxjava2:rxkotlin:_")
     implementation("io.reactivex.rxjava2:rxandroid:_")
-
-
 
     implementation(Square.retrofit2.retrofit)
     implementation(JakeWharton.retrofit2.converter.kotlinxSerialization)
@@ -69,7 +106,7 @@ dependencies {
     implementation(AndroidX.archCore.runtime)
     implementation(AndroidX.core)
     implementation(AndroidX.appCompat)
-    implementation(AndroidX.fragmentKtx)
+    implementation(AndroidX.fragment.ktx)
     implementation(AndroidX.annotation)
     implementation(AndroidX.exifInterface)
     implementation(AndroidX.recyclerView)
@@ -78,9 +115,9 @@ dependencies {
     implementation(AndroidX.constraintLayout)
     implementation(AndroidX.lifecycle.process)
     implementation(AndroidX.lifecycle.commonJava8)
-    implementation(AndroidX.lifecycle.runtimeKtx)
+    implementation(AndroidX.lifecycle.runtime.ktx)
     implementation(AndroidX.lifecycle.viewModelKtx)
-    implementation(AndroidX.preferenceKtx)
+    implementation(AndroidX.preference.ktx)
 
     implementation(AndroidX.navigation.fragmentKtx)
     implementation(AndroidX.navigation.uiKtx)
@@ -137,4 +174,16 @@ dependencies {
     androidTestImplementation(AndroidX.test.espresso.idlingResource)
     androidTestImplementation(Kotlin.test.junit)
     androidTestImplementation(Testing.mockK.android)
+}
+
+tasks {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            languageVersion = "1.7"
+            jvmTarget = JavaVersion.VERSION_11.toString()
+            javaParameters = true
+            freeCompilerArgs += "-Xjsr305=strict"
+            freeCompilerArgs += "-Xjvm-default=all"
+        }
+    }
 }

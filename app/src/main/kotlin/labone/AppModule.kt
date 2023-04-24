@@ -1,11 +1,16 @@
 package labone
 
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import labone.naviagion.Navigator
+import labone.naviagion.NavigatorCollect
+import labone.naviagion.NavigatorImpl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.OkHttpClient.Builder
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -19,9 +24,26 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun okHttpClient(): OkHttpClient {
-        val clientBuilder = OkHttpClient.Builder()
-        clientBuilder.apply {
+    fun applicationCoroutineScope(): AppScope = AppScope()
+
+    @Provides
+    @Singleton
+    fun provideNavigatorNav(
+        appScope: AppScope,
+        application: Application,
+    ): Navigator = NavigatorImpl(
+        appScope,
+        application,
+    )
+
+    @Provides
+    @Singleton
+    fun provideNavigatorNav1(navigator: Navigator): NavigatorCollect = navigator as NavigatorCollect
+
+    @Provides
+    @Singleton
+    fun okHttpClient(): OkHttpClient = Builder()
+        .apply {
             authenticator { _, _ ->
                 null
             }
@@ -31,11 +53,9 @@ class AppModule {
                 chain.proceed(reqBuilder.build())
             }
         }
-            .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
-            .pingInterval(PING_INTERVAL, TimeUnit.SECONDS)
-            .readTimeout(WRITE_AND_READ_INTERVAL, TimeUnit.SECONDS)
-            .writeTimeout(WRITE_AND_READ_INTERVAL, TimeUnit.SECONDS)
-
-        return clientBuilder.build()
-    }
+        .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+        .pingInterval(PING_INTERVAL, TimeUnit.SECONDS)
+        .readTimeout(WRITE_AND_READ_INTERVAL, TimeUnit.SECONDS)
+        .writeTimeout(WRITE_AND_READ_INTERVAL, TimeUnit.SECONDS)
+        .build()
 }

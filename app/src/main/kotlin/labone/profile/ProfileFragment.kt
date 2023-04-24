@@ -26,7 +26,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.example.labone.R
-import kotlinx.android.synthetic.main.fragment_profile.*
+import com.example.labone.databinding.FragmentCountersBinding
+import com.example.labone.databinding.FragmentProfileBinding
 import labone.GlideApp
 import labone.centerDialog
 import labone.doAfterTextChanged
@@ -36,6 +37,7 @@ import labone.showAlert
 import labone.showDatePicker
 import labone.toURI
 import labone.toUri
+import labone.viewbinding.viewBinding
 import mu.KotlinLogging.logger
 import splitties.alertdialog.appcompat.messageResource
 import splitties.alertdialog.appcompat.okButton
@@ -62,6 +64,7 @@ enum class AvatarPickType {
 }
 
 class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView {
+    private val binding by viewBinding(FragmentProfileBinding::bind)
 
     private val log = logger {}
 
@@ -88,29 +91,29 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-        userName.styledText = state.name
-        userSurname.styledText = state.surname
+        binding.userName.styledText = state.name
+        binding.userSurname.styledText = state.surname
         renderGender(state.gender)
         if(state.photoUri != null) {
             renderPhoto(state.photoUri.toUri())
         }
-        profileBirthDate.text = state.birthDate?.let { formatDate(it) }
+        binding.profileBirthDate.text = state.birthDate?.let { formatDate(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         isCancelable = false
 
-        userName.doAfterTextChanged {
+        binding.userName.doAfterTextChanged {
             viewModel.changeName(if (it?.toString().isNullOrBlank()) null else it.toString())
         }
 
-        userSurname.doAfterTextChanged {
+        binding.userSurname.doAfterTextChanged {
             viewModel.changeSurname(if (it?.toString().isNullOrBlank()) null else it.toString())
         }
 
-        genderWoman.setOnClickListener { viewModel.changeGender(Gender.FEMALE) }
+        binding.genderWoman.setOnClickListener { viewModel.changeGender(Gender.FEMALE) }
 
-        genderMan.setOnClickListener { viewModel.changeGender(Gender.MALE) }
+        binding.genderMan.setOnClickListener { viewModel.changeGender(Gender.MALE) }
 
         val dateClicker = View.OnClickListener {
             val startDate = withState(viewModel) {
@@ -119,7 +122,7 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
             val maxDate = Instant.now().minus(1, ChronoUnit.DAYS)
             showDatePicker(startDate, maxDate) { viewModel.changeBirthDate(it) }
         }
-        clickerDate.setOnClickListener(dateClicker)
+        binding.clickerDate.setOnClickListener(dateClicker)
 
         if (savedInstanceState != null) {
             cameraOutputUri = savedInstanceState.getParcelable(CAMERA_OUTPUT_URI_KEY)
@@ -137,9 +140,9 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
             }
         }
 
-        profileAvatar.setOnClickListener(pickPhoto)
+        binding.profileAvatar.setOnClickListener(pickPhoto)
 
-        done.setOnClickListener {
+        binding.done.setOnClickListener {
             viewModel.onDone()
             navigateBack()
         }
@@ -159,14 +162,14 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
     }
 
     private fun renderGenderColor(man: Int, woman: Int, manBorder: ColorStateList?, womanBorder: ColorStateList?) {
-        manGenderIcon.setColorFilter(man, PorterDuff.Mode.SRC_IN)
-        manGenderLabel.setTextColor(man)
-        robotoLight?.let { manGenderLabel.typeface = it }
-        womanGenderIcon.setColorFilter(woman, PorterDuff.Mode.SRC_IN)
-        womanGenderLabel.setTextColor(woman)
-        robotoLight?.let { womanGenderLabel.typeface = it }
-        genderMan.backgroundTintList = manBorder
-        genderWoman.backgroundTintList = womanBorder
+        binding.manGenderIcon.setColorFilter(man, PorterDuff.Mode.SRC_IN)
+        binding.manGenderLabel.setTextColor(man)
+        robotoLight?.let { binding.manGenderLabel.typeface = it }
+        binding.womanGenderIcon.setColorFilter(woman, PorterDuff.Mode.SRC_IN)
+        binding.womanGenderLabel.setTextColor(woman)
+        robotoLight?.let { binding.womanGenderLabel.typeface = it }
+        binding.genderMan.backgroundTintList = manBorder
+        binding.genderWoman.backgroundTintList = womanBorder
     }
 
     private fun openGalleryApp() {
@@ -221,7 +224,7 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
     private fun renderPhoto(avaUri: Uri?) {
         val defaultDrawable = AppCompatResources.getDrawable(requireContext(), R.drawable.icon_avatar)
         if (avaUri == null) {
-            profileAvatar.setImageDrawable(defaultDrawable)
+            binding.profileAvatar.setImageDrawable(defaultDrawable)
         } else {
             GlideApp.with(requireActivity())
                 .load(avaUri)
@@ -229,7 +232,7 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
                 .circleCrop()
                 .placeholder(defaultDrawable)
                 .error(defaultDrawable)
-                .into(profileAvatar)
+                .into(binding.profileAvatar)
         }
     }
 

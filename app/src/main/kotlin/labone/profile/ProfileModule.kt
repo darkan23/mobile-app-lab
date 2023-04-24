@@ -8,13 +8,14 @@ import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
 import labone.mvrx.AssistedViewModelFactory
 import labone.mvrx.ViewModelKey
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object ProfileModule {
 
     @Provides
-    @Reusable
+    @Singleton
     internal fun provideProfileServer(profileDao: ProfileDao): ProfileRepository = ProfileRepositoryImpl(profileDao)
 
     @Provides

@@ -1,16 +1,26 @@
 package labone.news.data
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import labone.AppScope
 
 interface NewsRepository {
-    suspend fun saveNews(news: News)
+    fun flowNews(): Flow<List<News>>
 
-    fun observeNews(): Flow<List<News>>
+    fun saveNews(news: News)
 }
 
-internal class NewsRepositoryImpl(private val newsDao: NewsDao) : NewsRepository {
+internal class NewsRepositoryImpl(
+    private val appScope: AppScope,
+    private val newsDao: NewsDao,
+) : NewsRepository {
 
-    override suspend fun saveNews(news: News): Unit = newsDao.saveLocal(news)
+    override fun flowNews(): Flow<List<News>> = newsDao.flowNews()
 
-    override fun observeNews(): Flow<List<News>> = newsDao.observe()
+    override fun saveNews(news: News) {
+        appScope.launch(Dispatchers.IO) {
+            newsDao.saveLocal(news)
+        }
+    }
 }

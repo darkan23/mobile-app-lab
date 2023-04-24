@@ -15,20 +15,19 @@
         android:id="@+id/open_add_news"
         app:destination="@id/addNews" />
 
+    <action
+        android:id="@+id/add_counter"
+        app:destination="@id/addCounter" />
+
+    <action
+        android:id="@+id/detail_counter"
+        app:destination="@id/detailCounters" />
+
     <fragment
         android:id="@+id/counters"
         android:name="labone.counters.FragmentPerformance"
         android:label="@string/counters"
-        tools:layout="@layout/fragment_counters">
-
-        <action
-            android:id="@+id/add_counter"
-            app:destination="@id/addCounter" />
-
-        <action
-            android:id="@+id/detail_counter"
-            app:destination="@id/detailCounters" />
-    </fragment>
+        tools:layout="@layout/fragment_counters" />
 
     <dialog
         android:id="@+id/addNews"
@@ -52,7 +51,14 @@
         android:id="@+id/detailCounters"
         android:name="labone.counters.DetailPerformance"
         android:label="@string/counters"
-        tools:layout="@layout/fragment_detail_counter" />
+        tools:layout="@layout/fragment_detail_counter">
+
+        <argument
+            android:name="newsDetailNavKey"
+            android:defaultValue="@null"
+            app:argType="labone.counters.NewsDetailNavKey"
+            app:nullable="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/news"

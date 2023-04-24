@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--FrameLayout need for vertical padding on tablet-->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,87 +8,81 @@
     android:paddingTop="@dimen/dialog_max_height_border"
     android:paddingBottom="@dimen/dialog_max_height_border">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/label"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/header_color"
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/design_blue_margin"
+            android:paddingRight="@dimen/design_blue_margin"
+            app:layout_constraintBottom_toBottomOf="@id/addNewsLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/addNewsLabel"
+            app:srcCompat="@drawable/icon_close"
+            tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
 
-            <ImageView
-                android:id="@+id/close"
-                android:layout_width="wrap_content"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="@dimen/design_blue_margin"
-                android:paddingRight="@dimen/design_blue_margin"
-                app:layout_constraintBottom_toBottomOf="@id/addNewsLabel"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addNewsLabel"
-                app:srcCompat="@drawable/icon_close"
-                tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
+        <TextView
+            android:id="@+id/addNewsLabel"
+            android:layout_width="0dp"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingLeft="@dimen/design_blue_margin"
+            android:paddingRight="@dimen/design_blue_margin"
+            android:singleLine="true"
+            android:text="@string/add_record"
+            android:textColor="@color/white"
+            android:textSize="@dimen/header_font_size"
+            app:layout_constraintEnd_toStartOf="@id/done"
+            app:layout_constraintStart_toEndOf="@id/close"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
 
-            <TextView
-                android:id="@+id/addNewsLabel"
-                android:layout_width="0dp"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_gravity="center_vertical"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center_vertical"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/design_blue_margin"
-                android:paddingRight="@dimen/design_blue_margin"
-                android:singleLine="true"
-                android:text="@string/add_record"
-                android:textColor="@color/white"
-                android:textSize="@dimen/header_font_size"
-                app:layout_constraintEnd_toStartOf="@id/done"
-                app:layout_constraintStart_toEndOf="@id/close"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="RtlSymmetry" />
+        <ImageView
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/design_blue_margin"
+            android:paddingRight="@dimen/design_blue_margin"
+            app:layout_constraintBottom_toBottomOf="@id/addNewsLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/addNewsLabel"
+            app:srcCompat="@drawable/icon_done"
+            tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
 
-            <ImageView
-                android:id="@+id/done"
-                android:layout_width="wrap_content"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="@dimen/design_blue_margin"
-                android:paddingRight="@dimen/design_blue_margin"
-                app:layout_constraintBottom_toBottomOf="@id/addNewsLabel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/addNewsLabel"
-                app:srcCompat="@drawable/icon_done"
-                tools:ignore="ContentDescription,RtlHardcoded,RtlSymmetry" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedRecord"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/label"
+        android:hint="@string/new_record">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedRecord"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/record"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/label"
-            android:hint="@string/new_record">
+            android:gravity="start"
+            android:hint="@string/new_record"
+            android:includeFontPadding="false"
+            android:inputType="textMultiLine"
+            android:textColor="@color/textFieldColor"
+            android:textColorHint="@color/gray_170"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="@dimen/pt8" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/record"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="start"
-                android:hint="@string/new_record"
-                android:includeFontPadding="false"
-                android:inputType="textMultiLine"
-                android:textColor="@color/textFieldColor"
-                android:textColorHint="@color/gray_170"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:textSize="@dimen/pt8" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

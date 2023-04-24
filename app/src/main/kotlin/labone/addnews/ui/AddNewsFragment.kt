@@ -4,6 +4,7 @@ import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -12,6 +13,8 @@ import com.example.labone.databinding.FragmentAddNewsBinding
 import labone.centerDialog
 import labone.doAfterTextChanged
 import labone.navigateBack
+import labone.onClickWithDebounce
+import labone.showToast
 import labone.viewbinding.viewBinding
 import splitties.resources.color
 
@@ -26,22 +29,25 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-        if (state.text?.trim() == null) {
-            binding.done.setColorFilter(color(R.color.gray_170), PorterDuff.Mode.SRC_IN)
-        } else {
-            binding.done.setColorFilter(color(R.color.white), PorterDuff.Mode.SRC_IN)
-        }
-        binding.done.isEnabled = state.text?.trim() != null
+        binding.done.setColorFilter(
+            color(if (state.text.isNullOrBlank()) R.color.gray_170 else R.color.white), PorterDuff.Mode.SRC_IN
+        )
+        binding.done.isEnabled = !state.text.isNullOrBlank()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.close.setOnClickListener { navigateBack() }
+        binding.close.onClickWithDebounce { navigateBack() }
         binding.record.doAfterTextChanged {
-            viewModel.changeText(if (it?.toString().isNullOrBlank()) null else it.toString())
+            viewModel.changeText(it?.toString())
         }
-        binding.done.setOnClickListener {
+        binding.done.onClickWithDebounce {
             viewModel.saveNewNews()
-            navigateBack()
+        }
+
+        viewModel.effects.collect(lifecycleScope) { effects ->
+            when (effects) {
+                NavigationBack -> navigateBack()
+            }
         }
     }
 }

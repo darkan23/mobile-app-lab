@@ -21,7 +21,7 @@ class NewsViewModel @AssistedInject constructor(
     private val log = logger {}
 
     init {
-        newsRepository.observeNews()
+        newsRepository.flowNews()
             .execute { newsFromDb: Async<List<News>> ->
                 if (newsFromDb is Success) {
                     val news = newsFromDb()

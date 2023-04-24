@@ -13,6 +13,6 @@ abstract class NewsDao {
     abstract suspend fun saveLocal(news: News)
 
     @Query("SELECT * FROM News")
-    abstract fun observe(): Flow<List<News>>
+    abstract fun flowNews(): Flow<List<News>>
 
 }

@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
+import labone.AppScope
 import labone.mvrx.AssistedViewModelFactory
 import labone.mvrx.ViewModelKey
 import javax.inject.Singleton
@@ -15,8 +16,10 @@ object PerformanceModule {
 
     @Provides
     @Singleton
-    internal fun provideCountersService(performanceDao: PerformanceDao): PerformanceService =
-        PerformanceServiceImpl(performanceDao)
+    internal fun provideCountersService(
+        performanceDao: PerformanceDao,
+        appScope: AppScope,
+    ): PerformanceService = PerformanceServiceImpl(performanceDao, appScope)
 
 
     @Provides

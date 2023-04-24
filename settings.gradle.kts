@@ -12,7 +12,7 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                "com.android.application" -> useModule("com.android.tools.build:gradle:7.0.4")
+                "com.android.application" -> useModule("com.android.tools.build:gradle:${requested.version}")
                 "dagger.hilt.android.plugin" -> useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
                 "androidx.navigation.safeargs.kotlin" -> useModule("androidx.navigation:navigation-safe-args-gradle-plugin:${requested.version}")
             }
@@ -22,5 +22,5 @@ pluginManagement {
 
 
 plugins {
-    id("de.fayard.refreshVersions") version "0.21.0"
+    id("de.fayard.refreshVersions") version "0.51.0"
 }

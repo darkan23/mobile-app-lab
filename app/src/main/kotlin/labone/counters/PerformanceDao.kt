@@ -13,13 +13,13 @@ abstract class PerformanceDao {
     abstract fun savePerformance(performance: Performance): Long
 
     @Query("SELECT * FROM Performance")
-    abstract fun observeActualCounters(): Flow<List<Performance>>
+    abstract fun flowActualCounters(): Flow<List<Performance>>
 
     @Query("SELECT COUNT(*) FROM Performance WHERE id IS NOT NULL")
-    abstract fun observeUnreadCount(): Flow<Int>
+    abstract fun flowUnreadCount(): Flow<Int>
 
     @Query("SELECT COUNT(price) FROM Performance WHERE price IS NOT NULL")
-    abstract fun observePriceCount(): Flow<Int>
+    abstract fun flowPriceCount(): Flow<Int>
 
     @Query("UPDATE Performance SET buy = :complete WHERE id = :id")
     abstract fun setComplete(id: Long, complete: Boolean)

@@ -1,49 +1,45 @@
 package labone.counters
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
-import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.airbnb.mvrx.Mavericks
 import com.airbnb.mvrx.MavericksView
-import com.airbnb.mvrx.args
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.example.labone.R
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.synthetic.main.fragment_detail_counter.*
+import com.example.labone.databinding.FragmentDetailCounterBinding
 import labone.formatDateTime
-
-@SuppressLint("ParcelCreator")
-@Parcelize
-data class NewsDetailArgs(val id: Long?) : Parcelable
+import labone.viewbinding.viewBinding
 
 class DetailPerformance : Fragment(R.layout.fragment_detail_counter), MavericksView {
 
-    private val args: NewsDetailArgs by args()
-
     private val viewModel by fragmentViewModel(PerformanceViewModel::class)
+    private val binding by viewBinding(FragmentDetailCounterBinding::bind)
+    private val args: DetailPerformanceArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if (args.newsDetailNavKey != null) {
+            arguments = Bundle().apply {
+                putParcelable(Mavericks.KEY_ARG, args.newsDetailNavKey)
+            }
+        }
+        super.onCreate(savedInstanceState)
+    }
 
     override fun invalidate() = withState(viewModel) { state ->
-        val counterDetails = state.performances.firstOrNull { it.id == args.id }
+        val counterDetails = state.performances.firstOrNull { it.id == state.id }
         if (counterDetails != null) {
-            counterDate.text = formatDateTime(counterDetails.date)
-            countersName.text = counterDetails.performanceName
-            countersNumber.text = counterDetails.performancePlace.toString()
-            price.text = counterDetails.price.toString()
+            binding.counterDate.text = formatDateTime(counterDetails.date)
+            binding.countersName.text = counterDetails.performanceName
+            binding.countersNumber.text = counterDetails.performancePlace.toString()
+            binding.price.text = counterDetails.price.toString()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        editCounter.setOnClickListener {
-            navigate(R.id.addCounter, AddEditTaskArgs(args.id))
+        binding.editCounter.setOnClickListener {
         }
-    }
-
-    private fun navigate(@IdRes id: Int, args: Parcelable? = null) {
-        findNavController().navigate(id, Bundle().apply { putParcelable(Mavericks.KEY_ARG, args) })
     }
 }

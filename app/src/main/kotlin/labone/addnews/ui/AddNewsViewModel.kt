@@ -5,7 +5,8 @@ import com.airbnb.mvrx.MvRxState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.launch
+import labone.Effects
+import labone.effects
 import labone.mvrx.AssistedViewModelFactory
 import labone.mvrx.DiMavericksViewModelFactory
 import labone.news.data.News
@@ -14,20 +15,21 @@ import java.time.Instant
 
 class AddNewsViewModel @AssistedInject constructor(
     @Assisted initialState: AddNewsState,
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
 ) : MavericksViewModel<AddNewsState>(initialState) {
 
+    val effects: Effects<AddNewsEffect> = effects()
+
     fun saveNewNews() = withState { state ->
-        viewModelScope.launch {
-            val text = state.text
-            if (text != null) {
-                val news = News(
-                    nameGroup = state.nameGroup,
-                    text = text,
-                    date = Instant.now().toEpochMilli()
-                )
-                newsRepository.saveNews(news)
-            }
+        val text = state.text
+        if (text != null) {
+            val news = News(
+                nameGroup = state.nameGroup,
+                text = text,
+                date = Instant.now().toEpochMilli()
+            )
+            newsRepository.saveNews(news)
+            effects.publish(NavigationBack)
         }
     }
 
@@ -44,5 +46,9 @@ class AddNewsViewModel @AssistedInject constructor(
 data class AddNewsState(
     val news: List<News> = emptyList(),
     val nameGroup: String = "",
-    val text: String? = null
+    val text: String? = null,
 ) : MvRxState
+
+object NavigationBack : AddNewsEffect()
+
+sealed class AddNewsEffect

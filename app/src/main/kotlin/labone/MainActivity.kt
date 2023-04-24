@@ -1,6 +1,7 @@
 package labone
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -9,22 +10,24 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.example.labone.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.labone.databinding.ActivityMainBinding
+import labone.viewbinding.viewBinding
 import splitties.init.appCtx
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity() {
+
+    private val binding by viewBinding(ActivityMainBinding::inflate)
 
     private val navController: NavController
         get() = findNavController(R.id.navHostFragment)
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        bnv_nav?.let { NavigationUI.setupWithNavController(it, navController) }
+        setContentView(binding.root)
+        NavigationUI.setupWithNavController(binding.bnvNav, navController)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(
-            AppBarConfiguration(navController.graph, DrawerLayout(appCtx))
-        ) || super.onSupportNavigateUp()
-    }
+    override fun onSupportNavigateUp(): Boolean = navController.navigateUp(
+        AppBarConfiguration(navController.graph, DrawerLayout(appCtx))
+    ) || super.onSupportNavigateUp()
 }
