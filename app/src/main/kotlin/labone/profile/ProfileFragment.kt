@@ -26,7 +26,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.example.labone.R
-import com.example.labone.databinding.FragmentCountersBinding
 import com.example.labone.databinding.FragmentProfileBinding
 import labone.GlideApp
 import labone.centerDialog
@@ -60,7 +59,8 @@ private const val YEARS = 1990
 private const val JPEG_QUALITY = 70
 
 enum class AvatarPickType {
-    PHOTO, GALLERY
+    PHOTO,
+    GALLERY
 }
 
 class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView {
@@ -94,7 +94,7 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
         binding.userName.styledText = state.name
         binding.userSurname.styledText = state.surname
         renderGender(state.gender)
-        if(state.photoUri != null) {
+        if (state.photoUri != null) {
             renderPhoto(state.photoUri.toUri())
         }
         binding.profileBirthDate.text = state.birthDate?.let { formatDate(it) }
@@ -250,6 +250,7 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
                     saveCustomerAva(receiverUri)
                 }
             }
+
             CAMERA_CAPTURE_IMAGE_REQUEST_CODE -> if (resultCode == Activity.RESULT_OK) {
                 cameraOutputUri?.let { receiverUri ->
                     log.info { "Try to process and save photo from camera: $receiverUri" }
@@ -281,8 +282,8 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
-                    target: Target<Bitmap>?,
-                    isFirstResource: Boolean
+                    target: Target<Bitmap>,
+                    isFirstResource: Boolean,
                 ): Boolean {
                     log.warn(e) { "Customer photo transformation failed fro src: $srcUri" }
                     return true
@@ -290,10 +291,10 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
 
                 override fun onResourceReady(
                     resource: Bitmap,
-                    model: Any?,
-                    target: Target<Bitmap?>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
+                    model: Any,
+                    target: Target<Bitmap>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean,
                 ): Boolean {
                     @Suppress("TooGenericExceptionCaught")
                     try {

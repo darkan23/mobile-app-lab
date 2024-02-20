@@ -1,6 +1,7 @@
 package labone.dataBase
 
 import javax.inject.Inject
+import java.util.concurrent.Callable
 
 interface TransactionService {
     fun doInTransaction(action: () -> Unit)
@@ -14,5 +15,5 @@ constructor(private val database: DataBaseCounters) : TransactionService {
         database.runInTransaction(action)
     }
 
-    override fun <V> doInTransaction(action: () -> V): V = database.runInTransaction(action)
+    override fun <V> doInTransaction(action: () -> V): V = database.runInTransaction(Callable(action))
 }

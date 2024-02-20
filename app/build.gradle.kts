@@ -1,28 +1,29 @@
 plugins {
-    id("com.android.application") version "7.4.2"
+    id("com.android.application") version "8.2.0-rc02"
     kotlin("android")
     kotlin("kapt")
     id("org.jetbrains.kotlin.plugin.parcelize") version "1.8.10"
     kotlin("plugin.serialization")
-    id("dagger.hilt.android.plugin") version "2.44"
-    id("androidx.navigation.safeargs.kotlin") version "2.5.3"
+    id("dagger.hilt.android.plugin") version "2.50"
+    id("androidx.navigation.safeargs.kotlin") version "2.7.7"
 }
 
 android {
-    compileSdk = 33
+    compileSdk = 34
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
 
     ndkVersion = "23.1.7779620"
 
     kotlinOptions {
         languageVersion = "1.7"
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
         javaParameters = true
         freeCompilerArgs += "-Xjsr305=strict"
         freeCompilerArgs += "-Xjvm-default=all"
-    }
-
-    buildFeatures {
-        viewBinding = true
     }
 
     buildTypes {
@@ -37,8 +38,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.labone"
-        minSdk = 26
-        targetSdk = 31
+        minSdk = 29
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -53,16 +54,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
         isCoreLibraryDesugaringEnabled = true
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes.add("META-INF/AL2.0")
             excludes.add("META-INF/LGPL2.1")
         }
     }
+    namespace = "com.example.labone"
 }
 
 kapt {
@@ -84,8 +86,8 @@ repositories {
 dependencies {
     implementation("io.github.microutils:kotlin-logging:_")
     implementation("org.slf4j:slf4j-jdk14:_")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.21")
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
     implementation(KotlinX.serialization.json)
     implementation(KotlinX.coroutines.android)
     // COROUTINES: remove when migrated to coroutines
@@ -180,7 +182,7 @@ tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
             languageVersion = "1.7"
-            jvmTarget = JavaVersion.VERSION_11.toString()
+            jvmTarget = JavaVersion.VERSION_17.toString()
             javaParameters = true
             freeCompilerArgs += "-Xjsr305=strict"
             freeCompilerArgs += "-Xjvm-default=all"

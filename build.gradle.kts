@@ -1,3 +1,6 @@
+buildscript {
+}
+
 internal val currentVersions = project.version
 
 allprojects {
@@ -7,6 +10,6 @@ allprojects {
 
 tasks {
     register("clean", Delete::class) {
-        delete = setOf(rootProject.buildDir)
+        delete = setOf(rootProject.layout.buildDirectory)
     }
 }
