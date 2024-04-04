@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.labone"
+        applicationId = "ru.labone"
         minSdk = 29
         targetSdk = 33
         versionCode = 1
@@ -150,6 +150,11 @@ dependencies {
     implementation(Google.Dagger.hilt.android)
 
     implementation("me.leolin:ShortcutBadger:_")
+    implementation("androidx.viewpager2:viewpager2:_")
+    implementation("me.relex:circleindicator:_")
+    implementation("io.coil-kt:coil:_")
+    implementation("com.google.guava:guava:_")
+    implementation("org.apache.tika:tika-core:_")
 
     kapt("com.github.bumptech.glide:compiler:_")
     implementation("com.github.bumptech.glide:glide:_")

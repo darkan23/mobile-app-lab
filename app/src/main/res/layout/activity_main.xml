@@ -5,6 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tb_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            app:title="Title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -18,7 +32,7 @@
         android:id="@+id/bnv_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/header_color"
+        android:background="@color/colorPrimary"
         app:itemIconTint="@color/bb_state_selector"
         app:itemTextColor="@color/bb_state_selector"
         app:labelVisibilityMode="labeled"

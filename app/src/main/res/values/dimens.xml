@@ -36,7 +36,7 @@
     <dimen name="send_icon_padding">7dp</dimen>
 
     <dimen name="xxsmall">2dp</dimen>
-    <dimen name="xsmall_plus">6dp</dimen>
+    <dimen name="xsmall_plus">5dp</dimen>
     <dimen name="small">8dp</dimen>
     <dimen name="small05">9dp</dimen>
     <dimen name="small_plus05">11dp</dimen>
@@ -59,6 +59,7 @@
     <!-- profile fragment dimens -->
     <dimen name="ava_server_size" tools:ignore="PxUsage">240px</dimen>
     <dimen name="ava_screen_size">164dp</dimen>
+    <dimen name="screen_size">220dp</dimen>
 
     <dimen name="rating_height">22dp</dimen>
 
@@ -79,6 +80,33 @@
     <dimen name="listed_dialog_height">-1.0px</dimen>
 
     <dimen name="date_time_picker_width">262dp</dimen>
+
+    <dimen name="padding_huge">32dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_medium_bigger">12dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_smaller">2dp</dimen>
+    <dimen name="center_dialog_width">-1.0px</dimen>
+
+    <dimen name="card_padding">8dp</dimen>
+
+    <dimen name="margin_huge">40dp</dimen>
+    <dimen name="margin_large_medium">24dp</dimen>
+    <dimen name="margin_large_small">20dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_smaller">5dp</dimen>
+
+    <!--Fonts-->
+    <dimen name="font_large">16sp</dimen>
+    <dimen name="font_main">14sp</dimen>
+    <dimen name="font_gemba">13sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_smaller">8sp</dimen>
+
+    <dimen name="min_element_space">4dp</dimen>
+    <dimen name="action_button_size">45dp</dimen>
+    <dimen name="action_button_siz1e">35dp</dimen>
 
     <!--design colored margins-->
     <dimen name="design_beige_margin">@dimen/xsmall_plus</dimen>

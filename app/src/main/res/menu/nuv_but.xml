@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/counters"
-        android:icon="@drawable/icon_news"
-        android:title="@string/perfomance" />
-
-    <item
         android:id="@+id/news"
         android:icon="@drawable/icon_news"
         android:title="@string/news" />
+
+    <item
+        android:id="@+id/counters"
+        android:icon="@drawable/icon_news"
+        android:title="@string/perfomance" />
 </menu>

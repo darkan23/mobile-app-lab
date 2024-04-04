@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#2e86d9</color>
+    <color name="colorPrimaryLight">#6fb5ff</color>
+    <color name="colorPrimaryDark">#005aa7</color>
+
+    <color name="colorOnPrimary">#FFFFFF</color>
+
+    <color name="colorSecondary">#03DAC5</color>
+
+    <color name="colorSecondaryVariant">#018786</color>
+
+    <color name="colorOnSecondary">#000000</color>
+
+    <color name="colorBackground">#F5F5F5</color>
+
+    <color name="colorSurface">#FFFFFF</color>
+
+    <color name="colorError">#B00020</color>
+
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="ad_color">#F00000</color>
@@ -19,10 +37,7 @@
     <color name="gray_170">#FFAAAAAA</color>
     <color name="gray_192">#FFC0C0C0</color>
     <color name="gray_224">#FFE0E0E0</color>
-    <color name="colorPrimaryDark">#7E57C2</color>
-    <color name="colorPrimary">#9575CD</color>
-    <color name="colorAccent">#B39DDB</color>
-    <color name="colorPrimaryLight">#D1C4E9</color>
+    <color name="gray_225">#F6F6F6</color>
     <color name="green">#1c8729</color>
 
     <color name="design_color">#FFF3BB21</color>
@@ -30,4 +45,8 @@
     <color name="design_color2">@color/gray_128</color>
     <color name="design_color4">@color/black</color>
     <color name="header_black">@color/black</color>
+
+    <color name="icon_color">@color/white</color>
+    <color name="text_color">@color/white</color>
+    <color name="toolbar_title_text_color">@color/white</color>
 </resources>
