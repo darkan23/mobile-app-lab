@@ -1,11 +1,9 @@
 package ru.labone.addnews.ui
 
-import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +13,13 @@ import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.example.labone.R
 import com.example.labone.databinding.FragmentAddNewsBinding
+import com.example.labone.databinding.ItemDocumentBinding
+import ru.labone.FileData
+import ru.labone.DocumentType.AUDIO
+import ru.labone.DocumentType.DOCUMENT
+import ru.labone.DocumentType.PICTURE
 import ru.labone.doAfterTextChanged
+import ru.labone.formatFileSize
 import ru.labone.fullScreenDialog
 import ru.labone.getFileData
 import ru.labone.navigateBack
@@ -34,8 +38,17 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
         }
     }
 
-    private val pickMultipleMedia =
+    private val pickMultiplePhoto =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(maxItems = 2)) { uris ->
+            if (uris.isNotEmpty()) {
+                viewModel.savePhoto(getFileData(uris))
+            } else {
+                showToast("Что-то пошло не так")
+            }
+        }
+
+    private val pickMultipleMedia =
+        registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uris ->
             if (uris.isNotEmpty()) {
                 viewModel.savePhoto(getFileData(uris))
             } else {
@@ -63,7 +76,7 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
         binding.addNewTab.setNavigationOnClickListener { navigateBack() }
         binding.viewPager.registerOnPageChangeCallback(onPageChangeCallback)
         binding.actionStartCall.onClickWithDebounce {
-            pickMultipleMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+            viewModel.pickDocument()
         }
         binding.record.doAfterTextChanged {
             viewModel.changeText(it?.toString())
@@ -74,25 +87,50 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
             true
         }
 
-        viewModel.effects.collect(lifecycleScope) { effects ->
-            when (effects) {
+        viewModel.effects.collect(lifecycleScope) { effect ->
+            when (effect) {
                 NavigationBack -> navigateBack()
-                is RenderPhoto -> renderDocuments(effects.photoUri, effects.newPosition)
+                is RenderDocument -> {
+                    val images = effect.photoUri.filter { it.type == PICTURE }
+                    val documents = effect.photoUri.filter { it.type == DOCUMENT }
+                    val audios = effect.photoUri.filter { it.type == AUDIO }
+                    renderImages(images, effect.newPosition)
+                    renderDocument(documents)
+                }
+
+                is ShowToast -> showToast(effect.text)
+                PickDocuments -> pickMultipleMedia.launch("*/*")
             }
         }
     }
 
-    private fun renderDocuments(fileUri: List<Uri>, newPosition: Int) {
-        val imageAdapter = ImageAdapter(fileUri)
-        binding.indicator.isVisible = fileUri.size > 1
-        binding.viewPager.adapter = imageAdapter
-        if (fileUri.isNotEmpty()) {
-            binding.viewPager.offscreenPageLimit = fileUri.size
+    private fun renderImages(fileData: List<FileData>, newPosition: Int) {
+        val fileUris = fileData.map { it.uri }
+        val filesCount = fileUris.size
+        binding.viewPager.isVisible = fileUris.isNotEmpty()
+        binding.indicator.isVisible = filesCount > 1
+        if (fileUris.isNotEmpty()) {
+            val imageAdapter = ImageAdapter(fileData)
+            binding.viewPager.adapter = imageAdapter
+            binding.viewPager.offscreenPageLimit = filesCount
             binding.viewPager.setCurrentItem(newPosition, false)
             binding.indicator.setViewPager(binding.viewPager)
+            imageAdapter.listener = { pos, id ->
+                viewModel.deleteImage(pos, id)
+            }
         }
-        imageAdapter.listener = {
-            viewModel.delete(it)
+    }
+
+    private fun renderDocument(fileData: List<FileData>) {
+        binding.variants.removeAllViews()
+        fileData.forEach { file ->
+            val bindingVariant = ItemDocumentBinding.inflate(LayoutInflater.from(context))
+            bindingVariant.text.text = file.name
+            bindingVariant.size.text = formatFileSize(file.size)
+            bindingVariant.remove.setOnClickListener {
+                viewModel.deleteImage(id = file.id)
+            }
+            binding.variants.addView(bindingVariant.root)
         }
     }
 }

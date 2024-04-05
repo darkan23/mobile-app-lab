@@ -69,6 +69,12 @@
                 android:layout_height="24dp"
                 app:ci_drawable="@drawable/action_border_ring" />
 
+            <LinearLayout
+                android:id="@+id/variants"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

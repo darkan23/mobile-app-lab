@@ -1,5 +1,6 @@
 package ru.labone
 
+import android.content.ContentResolver
 import android.net.Uri
 import android.os.SystemClock
 import android.provider.MediaStore.MediaColumns
@@ -7,7 +8,12 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import coil.load
+import ru.labone.DocumentType.AUDIO
+import ru.labone.DocumentType.DOCUMENT
+import ru.labone.DocumentType.PICTURE
+import ru.labone.DocumentType.UNKNOWN
 import java.io.File
+import java.io.FileInputStream
 import java.net.URI
 import java.time.Instant
 import java.time.LocalDate
@@ -89,9 +95,10 @@ private const val ROUNDED_CORNER = 25f
 fun ImageView.loadWithRoundedCorners(data: Any? = null) {
     val correctData = when (data) {
         is String -> {
-            if(data.contains("files/documents")) Uri.fromFile(File(data)) else Uri.parse(data)
+            if (data.contains("files/documents")) Uri.fromFile(File(data)) else Uri.parse(data)
             Uri.fromFile(File(data))
         }
+
         else -> data
     }
     val context = this.context
@@ -117,7 +124,11 @@ fun Fragment.getFileData(uriList: List<Uri>): List<FileData> {
             if (cursor != null && cursor.moveToFirst()) {
                 val nameIndex = cursor.getColumnIndex(MediaColumns.DISPLAY_NAME)
                 val name = cursor.getString(nameIndex)
-                val newFileData = FileData(uri, name)
+                val currentTime = Instant.now()
+                val id = "$currentTime$name"
+                val type = name.getDocumentType()
+                val size = contentResolver.getSizeFileByUri(uri)
+                val newFileData = FileData(id, uri, name, size, type)
                 fileData.add(newFileData)
             }
         }
@@ -125,9 +136,44 @@ fun Fragment.getFileData(uriList: List<Uri>): List<FileData> {
     return fileData
 }
 
+private fun String.getDocumentType(): DocumentType {
+    val extension = this.substringAfterLast(".")
+    val mimeTypeForAudio = listOf("3gpp", "mpeg", "mp3", "aac", "wav", "m4a")
+    val mimeTypeForDocument = listOf("pdf", "doc", "docx")
+    val mimeTypeForJpeg = listOf("jpeg", "jpg", "png")
+    return when {
+        mimeTypeForDocument.contains(extension) -> DOCUMENT
+        mimeTypeForJpeg.contains(extension) -> PICTURE
+        mimeTypeForAudio.contains(extension) -> AUDIO
+        else -> UNKNOWN
+    }
+}
+
 data class FileData(
+    val id: String,
     val uri: Uri,
     val name: String,
+    val size: Int,
+    val type: DocumentType,
 )
+
+enum class DocumentType {
+    DOCUMENT,
+    PICTURE,
+    AUDIO,
+    UNKNOWN,
+}
+
+fun formatFileSize(bytes: Int): String = when {
+    bytes < 1024 -> "$bytes B"
+    bytes < 1024 * 1024 -> String.format("%.2f KB", bytes.toFloat() / 1024.0f)
+    bytes < 1024 * 1024 * 1024 -> String.format("%.2f MB", bytes.toFloat() / (1024 * 1024))
+    else -> String.format("%.2f GB", bytes.toFloat() / (1024 * 1024 * 1024))
+}
+
+private fun ContentResolver.getSizeFileByUri(uri: Uri): Int = openFileDescriptor(uri, "r").use {
+    val inputStream = FileInputStream(it?.fileDescriptor)
+    inputStream.available()
+}
 
 fun String?.orEmpty(): String = if (this.isNullOrBlank()) "" else this

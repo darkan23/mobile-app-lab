@@ -1,6 +1,8 @@
 package ru.labone.dataBase
 
 import androidx.room.TypeConverter
+import com.google.gson.Gson
+import ru.labone.news.data.Documents
 import ru.labone.profile.Gender
 import java.net.URI
 import java.time.Instant
@@ -93,5 +95,15 @@ object DbConverters {
     @TypeConverter
     fun toUUID(value: String?): UUID? {
         return value?.let { UUID.fromString(it) }
+    }
+
+    @TypeConverter
+    fun fromDocumentsToJSON(clothinglist: Documents): String {
+        return Gson().toJson(clothinglist)
+    }
+
+    @TypeConverter
+    fun fromJSONToDocuments(json: String): Documents {
+        return Gson().fromJson(json, Documents::class.java)
     }
 }

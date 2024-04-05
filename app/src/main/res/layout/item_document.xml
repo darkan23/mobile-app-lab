@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--FrameLayout need for viewBinding and only viewGroup-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:ignore="UseCompoundDrawables,UselessParent">
+
+        <FrameLayout
+            android:id="@+id/image2"
+            android:layout_width="@dimen/action_button_siz1e"
+            android:layout_height="@dimen/action_button_siz1e"
+            android:layout_margin="@dimen/padding_medium"
+            android:background="@drawable/action_border_ring"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/documentItem"
+                android:layout_width="@dimen/margin_large_medium"
+                android:layout_height="@dimen/margin_large_medium"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_document_filled"
+                app:tint="@color/white"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/design_blue_margin"
+            android:layout_marginEnd="@dimen/design_blue_margin"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text"
+                style="@style/mainTextBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:textColor="@color/gray_64"
+                tools:ignore="SpUsage" />
+
+            <TextView
+                android:id="@+id/size"
+                style="@style/mainText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/xsmall_plus"
+                android:fontFamily="@font/roboto_light"
+                tools:ignore="RtlHardcoded,SpUsage" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginEnd="@dimen/padding_medium"
+            android:src="@drawable/icon_close"
+            app:tint="@color/black"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+</FrameLayout>

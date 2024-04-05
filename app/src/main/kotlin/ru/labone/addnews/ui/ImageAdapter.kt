@@ -1,6 +1,5 @@
 package ru.labone.addnews.ui
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +7,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.labone.R
+import ru.labone.FileData
 import ru.labone.loadWithRoundedCorners
 
-class ImageAdapter(private val images: List<Uri>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageAdapter(private val files: List<FileData>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
-    var listener: ((pos: Int) -> Unit)? = null
+    var listener: ((pos: Int, id: String) -> Unit)? = null
 
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.image)
@@ -25,12 +25,12 @@ class ImageAdapter(private val images: List<Uri>) : RecyclerView.Adapter<ImageAd
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        val image = images[position]
-        holder.imageView.loadWithRoundedCorners(image)
+        val file = files[position]
+        holder.imageView.loadWithRoundedCorners(file.uri)
         holder.imageView2.setOnClickListener {
-            listener?.invoke(position)
+            listener?.invoke(position, file.id)
         }
     }
 
-    override fun getItemCount(): Int = images.size
+    override fun getItemCount(): Int = files.size
 }

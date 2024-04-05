@@ -97,6 +97,7 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:_")
     implementation("io.reactivex.rxjava2:rxkotlin:_")
     implementation("io.reactivex.rxjava2:rxandroid:_")
+    implementation("com.google.code.gson:gson:_")
 
     implementation(Square.retrofit2.retrofit)
     implementation(JakeWharton.retrofit2.converter.kotlinxSerialization)
