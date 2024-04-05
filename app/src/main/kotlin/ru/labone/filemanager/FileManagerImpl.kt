@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import mu.KotlinLogging.logger
 import ru.labone.filemanager.FileManager.Companion.FILE_NAME_SEPARATOR
-import ru.labone.orEmpty
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
@@ -45,7 +44,7 @@ class FileManagerImpl @Inject internal constructor(
     }
 
     override fun createNextDocumentFile(name: String, extension: String?): File? {
-        val fileName = "$name$FILE_NAME_SEPARATOR${Instant.now()}$FILE_NAME_SEPARATOR${extension.orEmpty()}"
+        val fileName = "${Instant.now()}$FILE_NAME_SEPARATOR$name"
         val incomingDocDir = incomingDocumentDir
         var result: File? = null
         try {

@@ -3,7 +3,9 @@ package ru.labone.news.ui
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.mvrx.MavericksView
@@ -24,7 +26,6 @@ class NewsFragment : Fragment(R.layout.fragment_news), MavericksView {
     private val binding by viewBinding(FragmentNewsBinding::bind)
 
     override fun invalidate() = withState(viewModel) { state ->
-
         binding.news.withModels {
             state.news.forEach { news ->
                 newsView {
@@ -53,6 +54,8 @@ internal class NewsView @JvmOverloads constructor(
 
     private val binding by viewBinding(ItemNewsBinding::bind)
 
+    private var files: List<String> = emptyList()
+
     init {
         inflate(context, R.layout.item_news, this)
     }
@@ -60,9 +63,19 @@ internal class NewsView @JvmOverloads constructor(
     @ModelProp
     fun setNews(performance: News) {
         binding.speakerName.text = Instant.ofEpochMilli(performance.date).convertTimeTo()
-        performance.filePaths.map {
-            println("FUCK ${it}")
-        }
+        files = performance.filePaths.filter { it.isNotEmpty() }
         binding.newsBody.text = performance.text
+    }
+
+    @AfterPropsSet
+    fun postBindSetup() {
+        binding.indicator.isVisible = files.size > 1
+        binding.viewPager.isVisible = files.isNotEmpty()
+        if (files.isNotEmpty()) {
+            val imageAdapter = ImageViewNewsAdapter(files)
+            binding.viewPager.adapter = imageAdapter
+            binding.viewPager.offscreenPageLimit = files.size
+            binding.indicator.setViewPager(binding.viewPager)
+        }
     }
 }

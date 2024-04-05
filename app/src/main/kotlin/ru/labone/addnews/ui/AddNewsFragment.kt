@@ -2,13 +2,14 @@ package ru.labone.addnews.ui
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
@@ -19,6 +20,7 @@ import ru.labone.fullScreenDialog
 import ru.labone.getFileData
 import ru.labone.navigateBack
 import ru.labone.onClickWithDebounce
+import ru.labone.showToast
 import ru.labone.viewbinding.viewBinding
 import splitties.resources.colorSL
 
@@ -26,13 +28,18 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
 
     private val viewModel by fragmentViewModel(AddNewsViewModel::class)
     private val binding by viewBinding(FragmentAddNewsBinding::bind)
+    private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            viewModel.savePosition(position)
+        }
+    }
 
-    val pickMultipleMedia =
+    private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(maxItems = 2)) { uris ->
             if (uris.isNotEmpty()) {
                 viewModel.savePhoto(getFileData(uris))
             } else {
-                Log.d("PhotoPicker", "No media selected")
+                showToast("Что-то пошло не так")
             }
         }
 
@@ -54,6 +61,7 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.addNewTab.setNavigationOnClickListener { navigateBack() }
+        binding.viewPager.registerOnPageChangeCallback(onPageChangeCallback)
         binding.actionStartCall.onClickWithDebounce {
             pickMultipleMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
         }
@@ -69,17 +77,20 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
         viewModel.effects.collect(lifecycleScope) { effects ->
             when (effects) {
                 NavigationBack -> navigateBack()
-                is RenderPhoto -> renderPhoto(effects.photoUri, effects.newPosition)
+                is RenderPhoto -> renderDocuments(effects.photoUri, effects.newPosition)
             }
         }
     }
 
-    private fun renderPhoto(avaUri: List<Uri>, newPisition: Int) {
-        val imageAdapter = ImageAdapter(avaUri)
+    private fun renderDocuments(fileUri: List<Uri>, newPosition: Int) {
+        val imageAdapter = ImageAdapter(fileUri)
+        binding.indicator.isVisible = fileUri.size > 1
         binding.viewPager.adapter = imageAdapter
-        binding.viewPager.offscreenPageLimit = avaUri.size
-        binding.viewPager.setCurrentItem(newPisition, false)
-        binding.indicator.setViewPager(binding.viewPager)
+        if (fileUri.isNotEmpty()) {
+            binding.viewPager.offscreenPageLimit = fileUri.size
+            binding.viewPager.setCurrentItem(newPosition, false)
+            binding.indicator.setViewPager(binding.viewPager)
+        }
         imageAdapter.listener = {
             viewModel.delete(it)
         }

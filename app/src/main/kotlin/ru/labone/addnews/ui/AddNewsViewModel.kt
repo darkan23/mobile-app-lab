@@ -8,6 +8,9 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ru.labone.Effects
 import ru.labone.FileData
+import ru.labone.addnews.ui.UIDocumentType.AUDIO
+import ru.labone.addnews.ui.UIDocumentType.DOCUMENT
+import ru.labone.addnews.ui.UIDocumentType.PICTURE
 import ru.labone.effects
 import ru.labone.filemanager.ExceedingTheSize
 import ru.labone.filemanager.FileManager
@@ -17,6 +20,8 @@ import ru.labone.news.data.News
 import ru.labone.news.data.NewsRepository
 import java.time.Instant
 import java.util.UUID
+
+private const val MAX_SIZE_FILE = 10
 
 class AddNewsViewModel @AssistedInject constructor(
     @Assisted initialState: AddNewsState,
@@ -28,15 +33,25 @@ class AddNewsViewModel @AssistedInject constructor(
 
     fun changeText(text: String?) = setState { copy(text = text) }
 
-    fun savePhoto(uriList: List<FileData>) {
-        setState { copy(fileData = uriList) }
-        effects.publish(RenderPhoto(uriList.map { it.uri }, 0))
+    fun savePhoto(uriList: List<FileData>) = withState { state ->
+        val oldFileData = state.fileData.toMutableList()
+        val sizeFileData = oldFileData.size
+        if (sizeFileData == MAX_SIZE_FILE) {
+
+        } else {
+            val newSize = MAX_SIZE_FILE - sizeFileData
+            val asd = uriList.take(newSize)
+            oldFileData.addAll(asd)
+            setState { copy(fileData = oldFileData) }
+            effects.publish(RenderPhoto(oldFileData.map { it.uri }, state.imagePosition))
+        }
     }
 
     fun delete(pos: Int) = withState { state ->
         val newUriList = state.fileData.toMutableList()
         newUriList.removeAt(pos)
-        setState { copy(fileData = newUriList) }
+        val newPosition = pos - 1
+        setState { copy(fileData = newUriList, imagePosition = newPosition) }
         effects.publish(RenderPhoto(newUriList.map { it.uri }, pos - 1))
     }
 
@@ -50,7 +65,6 @@ class AddNewsViewModel @AssistedInject constructor(
             }
             if (!text.isNullOrBlank() || state.fileData.isNotEmpty()) {
                 val uuiD = UUID.randomUUID().toString()
-                println("FUCK ${filePaths.size}")
                 val news = News(
                     id = uuiD,
                     nameGroup = state.nameGroup,
@@ -73,6 +87,26 @@ class AddNewsViewModel @AssistedInject constructor(
             )
         }
 
+    private fun getDocumentType(mimeType: String): UIDocumentType? {
+        val mimeTypeForAudio = "3gpp, mpeg, mp3, aac, wav, m4a"
+        val mimeTypeForDocument = listOf("pdf, doc, docx")
+        val mimeTypeForJpeg = listOf("jpeg", "jpg", "png")
+        return when {
+            mimeTypeForDocument.contains(mimeType) -> DOCUMENT
+            mimeTypeForJpeg.contains(mimeType) -> PICTURE
+            mimeTypeForAudio.contains(mimeType) -> AUDIO
+            else -> null
+        }
+    }
+
+    fun savePosition(position: Int) {
+        setState {
+            copy(
+                imagePosition = position,
+            )
+        }
+    }
+
     @AssistedFactory
     interface Factory : AssistedViewModelFactory<AddNewsViewModel, AddNewsState> {
         override fun create(initialState: AddNewsState): AddNewsViewModel
@@ -86,7 +120,14 @@ data class AddNewsState(
     val nameGroup: String = "",
     val text: String? = null,
     val fileData: List<FileData> = emptyList(),
+    val imagePosition: Int = 0,
 ) : MavericksState
+
+enum class UIDocumentType {
+    DOCUMENT,
+    PICTURE,
+    AUDIO
+}
 
 object NavigationBack : AddNewsEffect()
 

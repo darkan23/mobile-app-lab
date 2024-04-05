@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import coil.load
+import java.io.File
 import java.net.URI
 import java.time.Instant
 import java.time.LocalDate
@@ -86,13 +87,22 @@ fun Instant.convertTimeTo(): String {
 private const val ROUNDED_CORNER = 25f
 
 fun ImageView.loadWithRoundedCorners(data: Any? = null) {
-    load(data) {
+    val correctData = when (data) {
+        is String -> {
+            if(data.contains("files/documents")) Uri.fromFile(File(data)) else Uri.parse(data)
+            Uri.fromFile(File(data))
+        }
+        else -> data
+    }
+    val context = this.context
+    load(correctData) {
         transformations(
             AppRoundedCornersTransformation(
                 ROUNDED_CORNER,
                 ROUNDED_CORNER,
                 ROUNDED_CORNER,
-                ROUNDED_CORNER
+                ROUNDED_CORNER,
+                context
             )
         )
     }

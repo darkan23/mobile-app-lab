@@ -20,61 +20,58 @@
         <requestFocus />
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addNewTab">
-
-    </ScrollView>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/outlinedRecord"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxBackgroundColor="@color/ad_color"
-        app:boxBackgroundMode="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addNewTab">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/record"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:hint="@string/new_record"
-            android:includeFontPadding="false"
-            android:inputType="textMultiLine"
-            android:textColor="@color/textFieldColor"
-            android:textColorHint="@color/gray_170"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:textSize="@dimen/pt8" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/card_padding"
-        android:elevation="8dp"
-        android:maxHeight="@dimen/screen_size"
+        android:layout_marginBottom="@dimen/card_padding"
         app:layout_constraintBottom_toTopOf="@id/actionStartCall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/outlinedRecord" />
+        app:layout_constraintTop_toBottomOf="@id/addNewTab">
 
-    <me.relex.circleindicator.CircleIndicator3
-        android:id="@+id/indicator"
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        app:ci_drawable="@drawable/action_border_ring"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPager" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/outlinedRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/record"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/new_record"
+                    android:includeFontPadding="false"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/textFieldColor"
+                    android:textColorHint="@color/gray_170"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textSize="@dimen/pt8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="460dp"
+                android:elevation="8dp"
+                android:overScrollMode="never" />
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                app:ci_drawable="@drawable/action_border_ring" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <FrameLayout
         android:id="@+id/actionStartCall"

@@ -9,8 +9,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_medium"
-        android:layout_marginEnd="@dimen/padding_medium"
         android:layout_marginBottom="@dimen/card_padding"
         android:background="@drawable/bubble"
         android:elevation="@dimen/padding_smaller"
@@ -20,6 +18,7 @@
             android:id="@+id/label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -38,15 +37,12 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/design_blue_margin"
                 android:layout_marginEnd="@dimen/design_blue_margin"
                 android:layout_weight="0.8"
                 android:gravity="center_vertical"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/newsDate"
@@ -67,10 +63,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/xsmall_plus"
                     android:fontFamily="@font/roboto_light"
-                    app:layout_constraintBottom_toBottomOf="@id/newsShareButton"
-                    app:layout_constraintEnd_toStartOf="@id/newsShareButton"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/newsShareButton"
                     tools:ignore="RtlHardcoded,SpUsage" />
             </LinearLayout>
 
@@ -79,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/design_blue_margin"
-                android:layout_marginEnd="@dimen/design_blue_margin_half"
+                android:layout_marginEnd="@dimen/card_padding"
                 android:layout_marginBottom="@dimen/design_blue_margin"
                 android:layout_weight="0.1"
                 app:srcCompat="@drawable/ic_more_vert"
@@ -93,25 +85,43 @@
             style="@style/mainTextBig"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/design_blue_margin"
-            android:layout_marginTop="@dimen/design_blue_margin"
-            android:layout_marginRight="@dimen/design_blue_margin"
+            android:layout_marginLeft="@dimen/card_padding"
+            android:layout_marginTop="@dimen/card_padding"
+            android:layout_marginRight="@dimen/card_padding"
             android:fontFamily="@font/roboto_light"
             android:includeFontPadding="false"
             android:textColor="@color/gray_32"
             app:layout_constraintTop_toBottomOf="@id/label"
             tools:ignore="SpUsage" />
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="460dp"
+            android:layout_marginTop="@dimen/card_padding"
+            android:overScrollMode="never"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newsBody" />
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:ci_drawable="@drawable/action_border_ring"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewPager" />
+
         <ImageView
             android:id="@+id/newsShareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/design_blue_margin"
-            android:paddingTop="@dimen/design_blue_margin"
-            android:paddingRight="@dimen/design_blue_margin"
-            android:paddingBottom="@dimen/design_blue_margin"
+            android:layout_margin="@dimen/card_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newsBody"
+            app:layout_constraintTop_toBottomOf="@id/indicator"
             app:srcCompat="@drawable/icon_share"
             app:tint="@color/colorPrimaryDark"
             tools:ignore="ContentDescription" />

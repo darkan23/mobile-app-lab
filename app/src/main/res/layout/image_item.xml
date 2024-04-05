@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
@@ -18,8 +17,8 @@
 
     <FrameLayout
         android:id="@+id/image2"
-        android:layout_width="@dimen/action_button_siz1e"
-        android:layout_height="@dimen/action_button_siz1e"
+        android:layout_width="@dimen/margin_large_medium"
+        android:layout_height="@dimen/margin_large_medium"
         android:layout_margin="@dimen/padding_large"
         android:background="@drawable/action_border_ring"
         android:backgroundTint="@color/gray_224"
@@ -27,8 +26,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/padding_large"
+            android:layout_height="@dimen/padding_large"
             android:layout_gravity="center"
             app:srcCompat="@drawable/icon_close"
             app:tint="@color/black"
