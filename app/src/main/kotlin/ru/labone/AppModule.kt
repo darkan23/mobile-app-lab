@@ -34,13 +34,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideNavigatorNav(
-        appScope: AppScope,
-        application: Application,
-    ): Navigator = NavigatorImpl(
-        appScope,
-        application,
-    )
+    fun provideNavigatorNav(navigatorImpl: NavigatorImpl): Navigator = navigatorImpl
 
     @Provides
     @Singleton

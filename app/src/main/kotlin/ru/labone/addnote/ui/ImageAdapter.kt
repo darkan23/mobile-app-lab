@@ -1,4 +1,4 @@
-package ru.labone.addnews.ui
+package ru.labone.addnote.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.labone.R
 import ru.labone.FileData
-import ru.labone.loadWithRoundedCorners
+import ru.labone.loadWithBackgroundBlur
 
 class ImageAdapter(private val files: List<FileData>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
@@ -26,7 +26,7 @@ class ImageAdapter(private val files: List<FileData>) : RecyclerView.Adapter<Ima
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val file = files[position]
-        holder.imageView.loadWithRoundedCorners(file.uri)
+        holder.imageView.loadWithBackgroundBlur(file.uri)
         holder.imageView2.setOnClickListener {
             listener?.invoke(position, file.id)
         }

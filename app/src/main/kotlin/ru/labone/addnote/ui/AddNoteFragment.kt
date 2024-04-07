@@ -1,4 +1,4 @@
-package ru.labone.addnews.ui
+package ru.labone.addnote.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,12 @@ import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
 import com.airbnb.mvrx.withState
 import com.example.labone.R
-import com.example.labone.databinding.FragmentAddNewsBinding
+import com.example.labone.databinding.FragmentAddNoteBinding
 import com.example.labone.databinding.ItemDocumentBinding
-import ru.labone.FileData
 import ru.labone.DocumentType.AUDIO
 import ru.labone.DocumentType.DOCUMENT
 import ru.labone.DocumentType.PICTURE
+import ru.labone.FileData
 import ru.labone.doAfterTextChanged
 import ru.labone.formatFileSize
 import ru.labone.fullScreenDialog
@@ -28,10 +28,10 @@ import ru.labone.showToast
 import ru.labone.viewbinding.viewBinding
 import splitties.resources.colorSL
 
-class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksView {
+class AddNoteFragment : DialogFragment(R.layout.fragment_add_note), MavericksView {
 
     private val viewModel by fragmentViewModel(AddNewsViewModel::class)
-    private val binding by viewBinding(FragmentAddNewsBinding::bind)
+    private val binding by viewBinding(FragmentAddNoteBinding::bind)
     private val onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             viewModel.savePosition(position)
@@ -67,9 +67,9 @@ class AddNewsFragment : DialogFragment(R.layout.fragment_add_news), MavericksVie
 
     override fun invalidate() = withState(viewModel) { state ->
         menuAction.setIconTintList(
-            colorSL(if (state.text.isNullOrBlank()) R.color.gray_192 else R.color.white)
+            colorSL(if (state.text.isNullOrBlank() && state.fileData.isEmpty()) R.color.gray_192 else R.color.colorPrimary)
         )
-        menuAction.isEnabled = !state.text.isNullOrBlank()
+        menuAction.isEnabled = !state.text.isNullOrBlank() || state.fileData.isNotEmpty()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

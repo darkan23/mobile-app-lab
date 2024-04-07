@@ -4,10 +4,5 @@
     <item
         android:id="@+id/news"
         android:icon="@drawable/icon_news"
-        android:title="@string/news" />
-
-    <item
-        android:id="@+id/counters"
-        android:icon="@drawable/icon_news"
-        android:title="@string/perfomance" />
+        android:title="@string/home" />
 </menu>

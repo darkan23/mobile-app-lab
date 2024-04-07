@@ -1,24 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorOnPrimary">@color/gray_225</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/colorPrimaryLight</item>
-        <item name="colorOnBackground">@color/dark</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/dark</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/dark</item>
+        <item name="colorAccent">@color/gray_93</item>
+        <item name="colorOnBackground">@color/white</item>
         <item name="colorOnSecondary">@color/dark</item>
-        <item name="colorOnSurface">@color/dark</item>
-        <item name="colorOnError">@color/white</item>
-        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnError">@color/dark</item>
+        <item name="colorSurface">@color/dark</item>
         <item name="colorError">@color/colorError</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="android:windowBackground">@color/gray_225</item>
+        <item name="colorControlActivated">@color/dark</item>
+        <item name="android:windowBackground">@color/dark</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
 
         <item name="android:textViewStyle">@style/AppTextView</item>
         <item name="android:editTextStyle">@style/AppEditText</item>
@@ -28,21 +28,22 @@
         <item name="bottomNavigationStyle">@style/MyBottomNavigationTheme</item>
     </style>
 
-    <style name="MyToolbarTheme" parent="Widget.MaterialComponents.Toolbar.Primary">
+    <style name="TextStoriesDialogTheme" parent="@style/BaseDialogTheme" />
+
+    <style name="MyToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
         <item name="colorControlNormal">@color/white</item>
         <item name="colorControlHighlight">@color/gray_225</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="titleTextColor">@color/toolbar_color</item>
-        <item name="navigationIconTint">@color/dark</item>
+        <item name="navigationIconTint">@color/toolbar_color</item>
     </style>
 
     <style name="MyBottomNavigationTheme" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="android:background">?attr/colorPrimary</item>
+        <!--        <item name="itemBackground">@color/colorPrimary</item>-->
         <item name="itemIconTint">@color/bb_state_selector</item>
         <item name="itemTextColor">@color/bb_state_selector</item>
     </style>
-
-    <style name="TextStoriesDialogTheme" parent="@style/BaseDialogTheme" />
 
     <style name="BaseDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:buttonBarButtonStyle">@style/BorderlessButtonCustom</item>
@@ -82,7 +83,7 @@
     </style>
 
     <style name="mainText">
-        <item name="android:textColor">@color/main_text_color</item>
+        <item name="android:textColor">@color/gray_225</item>
         <item name="android:textSize">@dimen/font_main</item>
     </style>
 
@@ -91,7 +92,7 @@
     </style>
 
     <style name="headerText" parent="mainText">
-        <item name="android:textColor">@color/header_text_color</item>
+        <item name="android:textColor">@color/gray_128</item>
         <item name="android:textSize">@dimen/font_small</item>
     </style>
 

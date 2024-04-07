@@ -8,7 +8,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
-import ru.labone.counters.PerformanceDao
 import ru.labone.news.data.NewsDao
 import ru.labone.profile.ProfileDao
 import javax.inject.Singleton
@@ -38,9 +37,6 @@ class RoomModule @JvmOverloads constructor(
     @Provides
     @ElementsIntoSet
     internal fun defaultCallbacks() = emptySet<RoomDatabase.Callback>()
-
-    @Provides
-    fun provideSubscriptionDao(db: DataBaseCounters): PerformanceDao = db.countersDao()
 
     @Provides
     fun provideProfileDao(db: DataBaseCounters): ProfileDao = db.profileDao()

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.labone.R
-import ru.labone.loadWithRoundedCorners
+import ru.labone.loadWithBackgroundBlur
 
 class ImageViewNewsAdapter(private val images: List<String>) :
     RecyclerView.Adapter<ImageViewNewsAdapter.ImageViewHolder>() {
@@ -22,7 +22,7 @@ class ImageViewNewsAdapter(private val images: List<String>) :
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val image = images[position]
-        holder.imageView.loadWithRoundedCorners(image)
+        holder.imageView.loadWithBackgroundBlur(image)
     }
 
     override fun getItemCount(): Int = images.size

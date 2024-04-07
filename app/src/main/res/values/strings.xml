@@ -14,8 +14,8 @@
     <string name="something_wrong">Oops…Something wrong</string>
     <string name="error_added_photo">It seems that the photo can\'t be added at the moment. No worries. Just fill the rest of the profile. The photo you can add later.</string>
 
-    // 2) News
-    <string name="news">News</string>
+    // 2) Home
+    <string name="home">Главная</string>
 
     // 3) Add News
     <string name="add_record">Add record</string>

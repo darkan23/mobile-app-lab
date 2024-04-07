@@ -19,7 +19,7 @@ import kotlin.math.roundToInt
 
 const val SCALE = 10
 
-class AppRoundedCornersTransformation(
+class AppBackgroundBlurTransformation(
     @Px private val topLeft: Float = 0f,
     @Px private val topRight: Float = 0f,
     @Px private val bottomLeft: Float = 0f,
@@ -72,35 +72,33 @@ class AppRoundedCornersTransformation(
         return scaled
     }
 
-    private fun calculateOutputSize(input: Bitmap, size: Size): Pair<Int, Int> {
-        if (size.isOriginal) {
-            return input.width to input.height
-        }
-
+    private fun calculateOutputSize(input: Bitmap, size: Size): Pair<Int, Int> = if (size.isOriginal) {
+        input.width to input.height
+    } else {
         val (dstWidth, dstHeight) = size
         if (dstWidth is Dimension.Pixels && dstHeight is Dimension.Pixels) {
-            return dstWidth.px to dstHeight.px
+            dstWidth.px to dstHeight.px
+        } else {
+            val multiplier = calculateScaleFactor(
+                input.width,
+                input.height,
+                dstWidth.pxOrElse { Int.MIN_VALUE },
+                dstHeight.pxOrElse { Int.MIN_VALUE })
+            val outputWidth = (multiplier * input.width).roundToInt()
+            val outputHeight = (multiplier * input.height).roundToInt()
+            outputWidth to outputHeight
         }
 
-        val multiplier = calculateScaleFactor(
-            input.width,
-            input.height,
-            dstWidth.pxOrElse { Int.MIN_VALUE },
-            dstHeight.pxOrElse { Int.MIN_VALUE })
-        val outputWidth = (multiplier * input.width).roundToInt()
-        val outputHeight = (multiplier * input.height).roundToInt()
-        return outputWidth to outputHeight
     }
 
     private fun calculateScaleFactor(srcWidth: Int, srcHeight: Int, dstWidth: Int, dstHeight: Int): Float {
         val maxScale = maxOf(dstWidth.toFloat() / srcWidth, dstHeight.toFloat() / srcHeight)
-        val scale = minOf(maxScale, 1f)
-        return scale
+        return minOf(maxScale, 1f)
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        return other is AppRoundedCornersTransformation && topLeft == other.topLeft && topRight == other.topRight && bottomLeft == other.bottomLeft && bottomRight == other.bottomRight
+        return other is AppBackgroundBlurTransformation && topLeft == other.topLeft && topRight == other.topRight && bottomLeft == other.bottomLeft && bottomRight == other.bottomRight
     }
 
     override fun hashCode(): Int {

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/dialog_max_height_border"
-    android:paddingBottom="@dimen/dialog_max_height_border"
+    android:background="?attr/colorOnPrimary"
     tools:ignore="UselessParent">
 
     <!--FrameLayout need for properly ERV size-->
@@ -18,7 +17,6 @@
             android:id="@+id/news"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/design_blue_margin"
             android:clipToPadding="false"
             android:scrollbarStyle="insideOverlay"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

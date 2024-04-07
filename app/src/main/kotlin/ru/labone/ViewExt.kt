@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import coil.load
+import coil.transform.RoundedCornersTransformation
 import ru.labone.DocumentType.AUDIO
 import ru.labone.DocumentType.DOCUMENT
 import ru.labone.DocumentType.PICTURE
@@ -60,6 +61,7 @@ fun Instant.convertTimeToMinutes(): String {
     val diff = currentTime - this.toEpochMilli()
     val minutes = diff / (60 * 1000) % 60
     return when (minutes % 10) {
+        0L -> "Только что"
         1L -> "$minutes минуту назад"
         in 2..4 -> "$minutes минуты назад"
         else -> "$minutes минут назад"
@@ -92,19 +94,12 @@ fun Instant.convertTimeTo(): String {
 
 private const val ROUNDED_CORNER = 25f
 
-fun ImageView.loadWithRoundedCorners(data: Any? = null) {
-    val correctData = when (data) {
-        is String -> {
-            if (data.contains("files/documents")) Uri.fromFile(File(data)) else Uri.parse(data)
-            Uri.fromFile(File(data))
-        }
-
-        else -> data
-    }
+fun ImageView.loadWithBackgroundBlur(data: Any? = null) {
+    val correctData = getFileData(data)
     val context = this.context
     load(correctData) {
         transformations(
-            AppRoundedCornersTransformation(
+            AppBackgroundBlurTransformation(
                 ROUNDED_CORNER,
                 ROUNDED_CORNER,
                 ROUNDED_CORNER,
@@ -113,6 +108,29 @@ fun ImageView.loadWithRoundedCorners(data: Any? = null) {
             )
         )
     }
+}
+
+fun ImageView.loadWithRoundedCorners(data: Any? = null) {
+    val correctData = getFileData(data)
+    load(correctData) {
+        transformations(
+            RoundedCornersTransformation(
+                ROUNDED_CORNER,
+                ROUNDED_CORNER,
+                ROUNDED_CORNER,
+                ROUNDED_CORNER,
+            )
+        )
+    }
+}
+
+private fun getFileData(data: Any?): Any? = when (data) {
+    is String -> {
+        if (data.contains("files/documents")) Uri.fromFile(File(data)) else Uri.parse(data)
+        Uri.fromFile(File(data))
+    }
+
+    else -> data
 }
 
 fun Fragment.getFileData(uriList: List<Uri>): List<FileData> {

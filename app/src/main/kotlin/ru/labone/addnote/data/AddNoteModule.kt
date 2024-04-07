@@ -1,17 +1,17 @@
-package ru.labone.addnews.data
+package ru.labone.addnote.data
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
-import ru.labone.addnews.ui.AddNewsViewModel
+import ru.labone.addnote.ui.AddNewsViewModel
 import ru.labone.mvrx.AssistedViewModelFactory
 import ru.labone.mvrx.ViewModelKey
 
 @InstallIn(SingletonComponent::class)
 @Module
-object AddNewsModule {
+object AddNoteModule {
 
     @Provides
     @IntoMap

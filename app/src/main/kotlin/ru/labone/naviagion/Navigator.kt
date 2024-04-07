@@ -5,11 +5,10 @@ import android.content.Context
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.labone.NavGraphDirections
+import mu.KotlinLogging.logger
 import ru.labone.AppScope
 import ru.labone.Effects
-import ru.labone.counters.AddNewsNavKey
-import ru.labone.counters.NewsDetailNavKey
-import mu.KotlinLogging.logger
+import ru.labone.addnote.data.AddNewsNavKey
 import javax.inject.Inject
 
 interface Navigator {
@@ -42,12 +41,7 @@ class NavigatorImpl @Inject constructor(
     ) {
         effects.collect(lifecycleScope) { effect ->
             when (effect) {
-                is NewsDetailNavKey -> navController.navigate(
-                    NavGraphDirections.detailCounter(effect)
-                )
-                is AddNewsNavKey -> navController.navigate(
-                    NavGraphDirections.addCounter()
-                )
+                is AddNewsNavKey -> navController.navigate(NavGraphDirections.openAddNews(effect))
             }
         }
     }

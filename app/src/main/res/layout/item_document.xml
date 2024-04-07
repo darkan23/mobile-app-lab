@@ -49,12 +49,11 @@
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:textColor="@color/gray_64"
                 tools:ignore="SpUsage" />
 
             <TextView
                 android:id="@+id/size"
-                style="@style/mainText"
+                style="@style/headerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/xsmall_plus"

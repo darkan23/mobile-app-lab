@@ -1,4 +1,4 @@
-package ru.labone.addnews.ui
+package ru.labone.addnote.ui
 
 import com.airbnb.mvrx.MavericksState
 import com.airbnb.mvrx.MavericksViewModel

@@ -14,50 +14,24 @@
         android:id="@+id/open_add_news"
         app:destination="@id/addNews" />
 
-    <action
-        android:id="@+id/add_counter"
-        app:destination="@id/addCounter" />
-
-    <action
-        android:id="@+id/detail_counter"
-        app:destination="@id/detailCounters" />
-
-    <fragment
-        android:id="@+id/counters"
-        android:name="ru.labone.counters.FragmentPerformance"
-        android:label="@string/counters"
-        tools:layout="@layout/fragment_counters" />
-
     <fragment
         android:id="@+id/news"
         android:name="ru.labone.news.ui.NewsFragment"
-        android:label="Мои билеты"
+        android:label="Главная"
         tools:layout="@layout/fragment_news" />
-
-    <fragment
-        android:id="@+id/detailCounters"
-        android:name="ru.labone.counters.DetailPerformance"
-        android:label="@string/counters"
-        tools:layout="@layout/fragment_detail_counter">
-
-        <argument
-            android:name="newsDetailNavKey"
-            android:defaultValue="@null"
-            app:argType="ru.labone.counters.NewsDetailNavKey"
-            app:nullable="true" />
-    </fragment>
-
-    <dialog
-        android:id="@+id/addCounter"
-        android:name="ru.labone.counters.AddCounterFragment"
-        android:label="@string/counters"
-        tools:layout="@layout/fragment_add_payment" />
 
     <dialog
         android:id="@+id/addNews"
-        android:name="ru.labone.addnews.ui.AddNewsFragment"
+        android:name="ru.labone.addnote.ui.AddNoteFragment"
         android:label="@string/counters"
-        tools:layout="@layout/fragment_add_payment" />
+        tools:layout="@layout/fragment_add_note">
+
+        <argument
+            android:name="addNotelNavKey"
+            android:defaultValue="@null"
+            app:argType="ru.labone.addnote.data.AddNewsNavKey"
+            app:nullable="true" />
+    </dialog>
 
     <dialog
         android:id="@+id/profile"

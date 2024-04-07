@@ -1,11 +1,18 @@
 package ru.labone.news.ui
 
 import android.content.Context
+import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.widget.FrameLayout
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.airbnb.epoxy.AfterPropsSet
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
@@ -34,6 +41,9 @@ class NewsFragment : Fragment(R.layout.fragment_news), MavericksView {
 
     override fun invalidate() = withState(viewModel) { state ->
         binding.news.withModels {
+            dividerView {
+                id("dividerId")
+            }
             state.news.forEach { news ->
                 newsView {
                     id(news.id)
@@ -43,11 +53,25 @@ class NewsFragment : Fragment(R.layout.fragment_news), MavericksView {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.add_note, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED,
+        )
+    }
+
     override fun onResume() {
         super.onResume()
         if (activity is ActionBarTitleChanger) {
             val actionBarTitleChanger = activity as? ActionBarTitleChanger
-            actionBarTitleChanger?.changeTitle(R.string.news)
+            actionBarTitleChanger?.changeTitle(R.string.home)
         }
     }
 }
@@ -72,6 +96,7 @@ internal class NewsView @JvmOverloads constructor(
         binding.speakerName.text = Instant.ofEpochMilli(performance.date).convertTimeTo()
         files = performance.document.documents
         binding.newsBody.text = performance.text
+        binding.newsBody.isVisible = performance.text.isNotEmpty()
     }
 
     @AfterPropsSet
@@ -104,5 +129,17 @@ internal class NewsView @JvmOverloads constructor(
             bindingVariant.remove.isVisible = false
             binding.variants.addView(bindingVariant.root)
         }
+    }
+}
+
+@ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
+internal class DividerView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : FrameLayout(context, attrs, defStyleAttr) {
+
+    init {
+        inflate(context, R.layout.item_divider, this)
     }
 }

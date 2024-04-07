@@ -5,137 +5,137 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/container"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/card_padding"
-        android:background="@drawable/bubble"
-        android:elevation="@dimen/padding_smaller"
-        android:paddingBottom="@dimen/min_element_space">
+        app:cardCornerRadius="16dp">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/label"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:paddingBottom="@dimen/min_element_space">
 
-            <ImageView
-                android:id="@+id/imageGroup"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/label"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/design_blue_margin"
-                android:layout_marginTop="@dimen/design_blue_margin"
-                android:layout_marginBottom="@dimen/design_blue_margin"
-                android:layout_weight="0.1"
-                app:srcCompat="@drawable/icon_share"
-                app:tint="@color/colorPrimaryDark"
-                tools:ignore="ContentDescription" />
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/design_blue_margin"
+                    android:layout_marginTop="@dimen/design_blue_margin"
+                    android:layout_marginBottom="@dimen/design_blue_margin"
+                    android:layout_weight="0.1"
+                    app:srcCompat="@drawable/icon_share"
+                    app:tint="?attr/colorAccent"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/design_blue_margin"
+                    android:layout_marginEnd="@dimen/design_blue_margin"
+                    android:layout_weight="0.8"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/newsDate"
+                        style="@style/mainTextBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/new_record"
+                        tools:ignore="SpUsage" />
+
+                    <TextView
+                        android:id="@+id/speakerName"
+                        style="@style/headerText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/xsmall_plus"
+                        tools:ignore="RtlHardcoded,SpUsage" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/design_blue_margin"
+                    android:layout_marginEnd="@dimen/card_padding"
+                    android:layout_marginBottom="@dimen/design_blue_margin"
+                    android:layout_weight="0.1"
+                    app:srcCompat="@drawable/ic_more_vert"
+                    app:tint="@color/colorPrimary"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <TextView
+                android:id="@+id/newsBody"
+                style="@style/mainTextBig"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/card_padding"
+                android:layout_marginTop="@dimen/card_padding"
+                android:layout_marginRight="@dimen/card_padding"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/label"
+                tools:ignore="SpUsage" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="460dp"
+                android:layout_marginTop="@dimen/card_padding"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/newsBody" />
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:visibility="gone"
+                app:ci_drawable="@drawable/action_border_ring"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewPager" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/variants"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/design_blue_margin"
-                android:layout_marginEnd="@dimen/design_blue_margin"
-                android:layout_weight="0.8"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/newsDate"
-                    style="@style/mainTextBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/new_record"
-                    android:textColor="@color/gray_64"
-                    tools:ignore="SpUsage" />
-
-                <TextView
-                    android:id="@+id/speakerName"
-                    style="@style/mainText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/xsmall_plus"
-                    android:fontFamily="@font/roboto_light"
-                    tools:ignore="RtlHardcoded,SpUsage" />
-            </LinearLayout>
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/indicator" />
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/newsShareButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/design_blue_margin"
-                android:layout_marginEnd="@dimen/card_padding"
-                android:layout_marginBottom="@dimen/design_blue_margin"
-                android:layout_weight="0.1"
-                app:srcCompat="@drawable/ic_more_vert"
-                app:tint="@color/colorPrimaryDark"
+                android:layout_margin="@dimen/card_padding"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/variants"
+                app:srcCompat="@drawable/icon_share"
+                app:tint="?attr/colorAccent"
                 tools:ignore="ContentDescription" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/newsBody"
-            style="@style/mainTextBig"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/card_padding"
-            android:layout_marginTop="@dimen/card_padding"
-            android:layout_marginRight="@dimen/card_padding"
-            android:fontFamily="@font/roboto_light"
-            android:includeFontPadding="false"
-            android:textColor="@color/gray_32"
-            app:layout_constraintTop_toBottomOf="@id/label"
-            tools:ignore="SpUsage" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="460dp"
-            android:layout_marginTop="@dimen/card_padding"
-            android:overScrollMode="never"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/newsBody" />
-
-        <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/indicator"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:visibility="gone"
-            app:ci_drawable="@drawable/action_border_ring"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/viewPager" />
-
-        <LinearLayout
-            android:id="@+id/variants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/indicator"  />
-
-        <ImageView
-            android:id="@+id/newsShareButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/variants"
-            app:srcCompat="@drawable/icon_share"
-            app:tint="@color/colorPrimaryDark"
-            tools:ignore="ContentDescription" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </FrameLayout>
