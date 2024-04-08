@@ -71,7 +71,6 @@ class AddNewsViewModel @AssistedInject constructor(
     fun saveNewNews() = withState { state ->
         try {
             val text = state.text
-            val filePaths = mutableListOf<String>()
             val documents = state.fileData.map { fileData ->
                 val file = fileManager.copyDocumentFileToAppDir(fileData.uri, fileData.name)
                 val filePath = file?.path

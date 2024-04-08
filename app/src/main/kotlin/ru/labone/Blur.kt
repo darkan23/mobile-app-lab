@@ -13,7 +13,7 @@ import android.renderscript.ScriptIntrinsicBlur
 
 object Blur {
 
-    fun rs(context: Context, bitmap: Bitmap, radius: Int): Bitmap {
+    fun rs(context: Context, bitmap: Bitmap): Bitmap {
         var rs: RenderScript? = null
         var input: Allocation? = null
         var output: Allocation? = null
@@ -28,7 +28,7 @@ object Blur {
             output = Allocation.createTyped(rs, input.type)
             blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs))
             blur.setInput(input)
-            blur.setRadius(radius.toFloat())
+            blur.setRadius(25f)
             blur.forEach(output)
             output.copyTo(bitmap)
         } finally {

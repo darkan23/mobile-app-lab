@@ -99,13 +99,7 @@ fun ImageView.loadWithBackgroundBlur(data: Any? = null) {
     val context = this.context
     load(correctData) {
         transformations(
-            AppBackgroundBlurTransformation(
-                ROUNDED_CORNER,
-                ROUNDED_CORNER,
-                ROUNDED_CORNER,
-                ROUNDED_CORNER,
-                context
-            )
+            AppBackgroundBlurTransformation(ROUNDED_CORNER, context)
         )
     }
 }
