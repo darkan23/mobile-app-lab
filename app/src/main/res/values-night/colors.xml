@@ -8,4 +8,6 @@
     <color name="header_text_color">@color/gray_112</color>
     <color name="toolbar_color">@color/gray_225</color>
     <color name="not_selectable_nav_color">@color/gray_112</color>
+    <color name="disable_color">@color/gray_dark</color>
+    <color name="message_date_background_color">@color/gray_225</color>
 </resources>

@@ -65,7 +65,9 @@
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">@android:color/transparent</item>
+        <item name="android:navigationBarDividerColor" tools:ignore="NewApi">
+            @android:color/transparent
+        </item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">false</item>
     </style>
 
@@ -102,7 +104,7 @@
 
     <style name="DividerLine">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/line_size</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
         <item name="android:background">@color/gray_170</item>
     </style>
 
@@ -112,10 +114,10 @@
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:translationX">-1dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingStart">@dimen/design_blue_margin</item>
-        <item name="android:paddingEnd">@dimen/design_blue_margin</item>
+        <item name="android:paddingStart">@dimen/padding_medium</item>
+        <item name="android:paddingEnd">@dimen/padding_medium</item>
         <item name="android:textColor">@color/header_black</item>
-        <item name="android:textSize">@dimen/header_font_size</item>
+        <item name="android:textSize">@dimen/font_main</item>
         <item name="android:singleLine">true</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
@@ -132,6 +134,23 @@
     <style name="BottomUpAnimation">
         <item name="android:windowEnterAnimation">@anim/bottom_up</item>
         <item name="android:windowExitAnimation">@anim/bottom_down</item>
+    </style>
+
+    <style name="BadgeMenu">
+        <item name="android:background">@drawable/shapecount</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/font_main</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="MessageDate">
+        <item name="android:background">@drawable/shape_message_date</item>
+        <item name="android:backgroundTint">@color/background_message_date_color</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:textColor">@color/gray_225</item>
+        <item name="android:textSize">@dimen/font_main</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 </resources>

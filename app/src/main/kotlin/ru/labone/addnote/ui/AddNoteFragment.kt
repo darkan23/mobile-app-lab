@@ -66,8 +66,9 @@ class AddNoteFragment : DialogFragment(R.layout.fragment_add_note), MavericksVie
     }
 
     override fun invalidate() = withState(viewModel) { state ->
+        val hasEnable = !state.text.isNullOrBlank() || state.fileData.isNotEmpty()
         menuAction.setIconTintList(
-            colorSL(if (state.text.isNullOrBlank() && state.fileData.isEmpty()) R.color.gray_192 else R.color.colorPrimary)
+            colorSL(if (hasEnable) R.color.colorPrimary else R.color.disable_color)
         )
         menuAction.isEnabled = !state.text.isNullOrBlank() || state.fileData.isNotEmpty()
     }

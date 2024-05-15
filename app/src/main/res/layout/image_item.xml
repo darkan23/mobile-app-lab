@@ -31,7 +31,7 @@
             android:layout_height="@dimen/padding_large"
             android:layout_gravity="center"
             app:srcCompat="@drawable/icon_close"
-            app:tint="@color/black"
+            app:tint="@color/dark"
             tools:ignore="ContentDescription" />
 
     </FrameLayout>

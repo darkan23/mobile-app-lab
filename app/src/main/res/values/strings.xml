@@ -17,9 +17,15 @@
     // 2) Home
     <string name="home">Главная</string>
 
-    // 3) Add News
-    <string name="add_record">Add record</string>
+    // 3) Chats
+    <string name="chats">Мессенджер</string>
+
+    // 4) Add News
+    <string name="add_record">Добавить запись</string>
     <string name="new_record">New record</string>
+
+    // 5) Add chat
+    <string name="add_chat">Новый чат</string>
 
     <string name="counters">Payment</string>
     <string name="search_games">Поиск игры</string>

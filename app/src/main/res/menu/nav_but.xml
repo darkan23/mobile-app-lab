@@ -3,6 +3,11 @@
 
     <item
         android:id="@+id/news"
-        android:icon="@drawable/icon_news"
+        android:icon="@drawable/ic_news"
         android:title="@string/home" />
+
+    <item
+        android:id="@+id/chats"
+        android:icon="@drawable/ic_chats"
+        android:title="@string/chats" />
 </menu>

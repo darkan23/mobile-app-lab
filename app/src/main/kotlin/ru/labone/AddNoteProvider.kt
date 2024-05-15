@@ -14,7 +14,8 @@ import ru.labone.naviagion.Navigator
 
 class AddNoteActionProvider(context: Context) : ActionProvider(context) {
     private val navigator: Navigator
-    private val binding: AddNoteActionBinding = AddNoteActionBinding.inflate(LayoutInflater.from(context))
+    private val binding: AddNoteActionBinding =
+        AddNoteActionBinding.inflate(LayoutInflater.from(context))
 
     init {
         val entryPoint = EntryPoints.get(context.applicationContext, FilterAPEntryPoint::class.java)
@@ -24,7 +25,6 @@ class AddNoteActionProvider(context: Context) : ActionProvider(context) {
     override fun onCreateActionView(): View = binding.root
         .apply {
             onClickWithDebounce {
-                println("FUCK_1")
                 navigator.navigateTo(AddNewsNavKey())
             }
         }

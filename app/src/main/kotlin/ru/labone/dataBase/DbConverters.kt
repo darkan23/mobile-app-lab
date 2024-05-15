@@ -2,6 +2,8 @@ package ru.labone.dataBase
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import ru.labone.chats.data.Messages
+import ru.labone.chats.data.Person
 import ru.labone.news.data.Documents
 import ru.labone.profile.Gender
 import java.net.URI
@@ -15,7 +17,8 @@ import java.util.UUID
 object DbConverters {
 
     @TypeConverter
-    fun fromString(value: String?): List<String> = value?.let { it.split(',').map { it.trim() } } ?: emptyList()
+    fun fromString(value: String?): List<String> =
+        value?.let { it.split(',').map { it.trim() } } ?: emptyList()
 
     @TypeConverter
     fun toString(strings: List<String>): String = strings.joinToString(separator = ",")
@@ -47,7 +50,8 @@ object DbConverters {
 
     @JvmStatic
     @TypeConverter
-    fun fromLocalDate(value: LocalDate?): String? = value?.let { DateTimeFormatter.ISO_LOCAL_DATE.format(value) }
+    fun fromLocalDate(value: LocalDate?): String? =
+        value?.let { DateTimeFormatter.ISO_LOCAL_DATE.format(value) }
 
     @JvmStatic
     @TypeConverter
@@ -93,17 +97,23 @@ object DbConverters {
 
     @JvmStatic
     @TypeConverter
-    fun toUUID(value: String?): UUID? {
-        return value?.let { UUID.fromString(it) }
-    }
+    fun toUUID(value: String?): UUID? = value?.let { UUID.fromString(it) }
 
     @TypeConverter
-    fun fromDocumentsToJSON(clothinglist: Documents): String {
-        return Gson().toJson(clothinglist)
-    }
+    fun fromDocumentsToJSON(clothinglist: Documents): String = Gson().toJson(clothinglist)
 
     @TypeConverter
-    fun fromJSONToDocuments(json: String): Documents {
-        return Gson().fromJson(json, Documents::class.java)
-    }
+    fun fromJSONToDocuments(json: String): Documents = Gson().fromJson(json, Documents::class.java)
+
+    @TypeConverter
+    fun fromMessagesToJSON(clothinglist: Messages): String = Gson().toJson(clothinglist)
+
+    @TypeConverter
+    fun fromJSONToMessages(json: String): Messages = Gson().fromJson(json, Messages::class.java)
+
+    @TypeConverter
+    fun fromPersonToJSON(clothinglist: Person): String = Gson().toJson(clothinglist)
+
+    @TypeConverter
+    fun fromJSONToPerson(json: String): Person = Gson().fromJson(json, Person::class.java)
 }

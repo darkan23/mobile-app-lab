@@ -108,7 +108,10 @@ class AddNewsViewModel @AssistedInject constructor(
         }
     }
 
-    private fun updateSelectedFile(fileData: List<FileData> = emptyList(), generalError: String? = null): Unit =
+    private fun updateSelectedFile(
+        fileData: List<FileData> = emptyList(),
+        generalError: String? = null
+    ): Unit =
         setState {
             copy(
                 fileData = fileData,
@@ -128,7 +131,8 @@ class AddNewsViewModel @AssistedInject constructor(
         override fun create(initialState: AddNewsState): AddNewsViewModel
     }
 
-    companion object : DiMavericksViewModelFactory<AddNewsViewModel, AddNewsState>(AddNewsViewModel::class.java)
+    companion object :
+        DiMavericksViewModelFactory<AddNewsViewModel, AddNewsState>(AddNewsViewModel::class.java)
 }
 
 data class AddNewsState(

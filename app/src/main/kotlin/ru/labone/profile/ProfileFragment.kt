@@ -273,7 +273,7 @@ class ProfileFragment : DialogFragment(R.layout.fragment_profile), MavericksView
 
     private fun saveCustomerAva(srcUri: Uri) {
         val context = requireContext()
-        val size = context.dimenPxSize(R.dimen.ava_server_size)
+        val size = context.dimenPxSize(R.dimen.ava_screen_size)
         Glide.with(this)
             .asBitmap()
             .load(srcUri)

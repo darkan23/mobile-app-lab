@@ -12,58 +12,17 @@
     <dimen name="left_menu_height">@dimen/match_parent</dimen>
 
     <dimen name="card_corner_common">12dp</dimen>
-
-    <!--<dimen name="pt5">8.889dp</dimen>-->
-    <dimen name="pt6">12.22dp</dimen>
-    <dimen name="pt7">13.333dp</dimen>
-    <dimen name="pt7_5" tools:ignore="SpUsage">14.444dp</dimen>
-    <dimen name="pt7_7" tools:ignore="SpUsage">15.556dp</dimen>
-    <dimen name="pt8">16.667sp</dimen>
-    <dimen name="pt9">17.778dp</dimen>
-    <dimen name="pt9_2">20dp</dimen>
-    <dimen name="font_for_quotes">20dp</dimen>
-    <dimen name="font_for_splash">25dp</dimen>
-    <dimen name="font_for_short_quotes">22dp</dimen>
-    <dimen name="pt20" tools:ignore="SpUsage">44.444dp</dimen>
-
-    <dimen name="chat_size">15dp</dimen>
-    <dimen name="textline_size">16.5dp</dimen>
-    <dimen name="line_size">0.8dp</dimen>
-    <dimen name="line_size_negative">-0.8dp</dimen>
-    <dimen name="photo_border_thickness">0.5dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
 
     <dimen name="send_icon_size">20dp</dimen>
     <dimen name="send_icon_padding">7dp</dimen>
-
-    <dimen name="xxsmall">2dp</dimen>
-    <dimen name="xsmall_plus">5dp</dimen>
-    <dimen name="small">8dp</dimen>
-    <dimen name="small05">9dp</dimen>
-    <dimen name="small_plus05">11dp</dimen>
-    <dimen name="small_plus_with_correction_on_icon_inner_padding">12dp</dimen>
-    <dimen name="normal_subtract_text_padding">14dp</dimen>
-    <dimen name="normal">16dp</dimen>
-    <dimen name="normal0125">16.5dp</dimen>
-    <dimen name="normal_plus0">18dp</dimen>
-    <dimen name="normal_plus0125">18.5dp</dimen>
-    <dimen name="normal_plus025">19dp</dimen>
-    <dimen name="normal_plus075">21dp</dimen>
-    <dimen name="normal_plus2">26dp</dimen>
-    <dimen name="large">32dp</dimen>
-    <dimen name="margin_top_correctionPt8">33.786dp</dimen>
-    <dimen name="margin_correctionPt9">15.071dp</dimen>
-    <dimen name="xlarge_plus0">37dp</dimen>
     <dimen name="nav_header_height">200dp</dimen>
 
-
     <!-- profile fragment dimens -->
-    <dimen name="ava_server_size" tools:ignore="PxUsage">240px</dimen>
     <dimen name="ava_screen_size">164dp</dimen>
     <dimen name="screen_size">220dp</dimen>
 
     <dimen name="rating_height">22dp</dimen>
-
-    <dimen name="header_font_size">@dimen/pt9_2</dimen>
 
     <dimen name="dimen_progress_size">25.6dp</dimen>
 
@@ -91,6 +50,8 @@
 
     <dimen name="card_padding">8dp</dimen>
 
+    <dimen name="shape_padding">25dp</dimen>
+
     <dimen name="margin_huge">40dp</dimen>
     <dimen name="margin_large_medium">24dp</dimen>
     <dimen name="margin_large_small">20dp</dimen>
@@ -102,28 +63,10 @@
     <dimen name="font_main">14sp</dimen>
     <dimen name="font_gemba">13sp</dimen>
     <dimen name="font_small">12sp</dimen>
+    <dimen name="font_smalle">10sp</dimen>
     <dimen name="font_smaller">8sp</dimen>
 
     <dimen name="min_element_space">4dp</dimen>
     <dimen name="action_button_size">45dp</dimen>
     <dimen name="action_button_siz1e">35dp</dimen>
-
-    <!--design colored margins-->
-    <dimen name="design_beige_margin">@dimen/xsmall_plus</dimen>
-
-    <dimen name="design_cyan_margin">@dimen/small_plus05</dimen>
-
-    <dimen name="design_blue_margin_half">@dimen/small05</dimen>
-    <dimen name="design_blue_margin">@dimen/normal_plus0</dimen>
-
-    <dimen name="design_yellow_margin_extract_font_padding">@dimen/normal_plus025</dimen>
-    <dimen name="design_yellow_margin">@dimen/normal_plus075</dimen>
-
-    <dimen name="design_violet_margin">@dimen/normal</dimen>
-
-    <dimen name="design_blue_empty_margin">@dimen/normal_plus2</dimen>
-
-    <dimen name="design_orange_margin">@dimen/xlarge_plus0</dimen>
-    <dimen name="design_orange_margin_half_extract_font_padding">@dimen/normal0125</dimen>
-    <dimen name="design_orange_margin_half">@dimen/normal_plus0125</dimen>
 </resources>

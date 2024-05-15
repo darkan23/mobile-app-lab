@@ -6,7 +6,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:layout_marginTop="@dimen/card_padding"
-        android:background="?attr/colorOnPrimary" />
+        android:layout_marginTop="@dimen/card_padding" />
 
 </FrameLayout>

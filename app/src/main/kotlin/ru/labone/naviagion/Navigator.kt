@@ -8,7 +8,9 @@ import com.example.labone.NavGraphDirections
 import mu.KotlinLogging.logger
 import ru.labone.AppScope
 import ru.labone.Effects
+import ru.labone.addchat.data.AddChatNavKey
 import ru.labone.addnote.data.AddNewsNavKey
+import ru.labone.chat.data.ChatNavKey
 import javax.inject.Inject
 
 interface Navigator {
@@ -18,7 +20,11 @@ interface Navigator {
 
 interface NavigatorCollect {
 
-    fun collect(lifecycleScope: LifecycleCoroutineScope, navController: NavController, activityContext: Context)
+    fun collect(
+        lifecycleScope: LifecycleCoroutineScope,
+        navController: NavController,
+        activityContext: Context
+    )
 }
 
 class NavigatorImpl @Inject constructor(
@@ -42,6 +48,8 @@ class NavigatorImpl @Inject constructor(
         effects.collect(lifecycleScope) { effect ->
             when (effect) {
                 is AddNewsNavKey -> navController.navigate(NavGraphDirections.openAddNews(effect))
+                is AddChatNavKey -> navController.navigate(NavGraphDirections.openAddChat())
+                is ChatNavKey -> navController.navigate(NavGraphDirections.openChat(effect))
             }
         }
     }

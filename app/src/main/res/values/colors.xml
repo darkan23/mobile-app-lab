@@ -9,13 +9,18 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="dark">#181818</color>
+    <color name="dark_dark">#0C0C0C</color>
+    <color name="dark_light">#303030</color>
     <color name="ad_color">#F00000</color>
     <color name="err_status">#E08337</color>
     <color name="gray">#BABABA</color>
+    <color name="gray_light">#bdbdbd</color>
+    <color name="gray_dark">#616161</color>
     <color name="light_transparent_gray">#B5555555</color>
     <color name="textFieldColor">@color/black</color>
     <color name="chosen_astrologer_badge">#1c8729</color>
     <color name="transparent_color">#00000000</color>
+    <color name="message_date_background_color">@color/dark</color>
 
     <color name="link_color">#FF508AC0</color>
 
@@ -42,4 +47,5 @@
     <color name="header_text_color">@color/gray_128</color>
     <color name="toolbar_color">@color/dark</color>
     <color name="not_selectable_nav_color">@color/gray_128</color>
+    <color name="disable_color">@color/gray_light</color>
 </resources>

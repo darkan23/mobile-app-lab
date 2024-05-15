@@ -6,6 +6,7 @@
     <item
         android:id="@+id/add_news"
         android:orderInCategory="50"
+        android:title=""
         app:actionProviderClass="ru.labone.AddNoteActionProvider"
         app:showAsAction="always"
         tools:ignore="MenuTitle" />

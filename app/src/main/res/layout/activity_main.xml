@@ -26,6 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/nuv_but" />
+        app:menu="@menu/nav_but" />
 
 </LinearLayout>

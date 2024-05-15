@@ -11,7 +11,7 @@
             <!--For API 16-->
             <solid android:color="@color/transparent_color" />
             <stroke
-                android:width="@dimen/line_size"
+                android:width="@dimen/divider_height"
                 android:color="@color/colorPrimaryDark" />
         </shape>
     </item>

@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
+import ru.labone.chats.data.ChatDao
 import ru.labone.news.data.NewsDao
 import ru.labone.profile.ProfileDao
 import javax.inject.Singleton
@@ -43,4 +44,7 @@ class RoomModule @JvmOverloads constructor(
 
     @Provides
     fun provideNewsDao(db: DataBaseCounters): NewsDao = db.newsDao()
+
+    @Provides
+    fun provideChatDao(db: DataBaseCounters): ChatDao = db.chatDao()
 }

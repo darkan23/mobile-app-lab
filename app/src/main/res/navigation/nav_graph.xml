@@ -14,11 +14,26 @@
         android:id="@+id/open_add_news"
         app:destination="@id/addNews" />
 
+    <action
+        android:id="@+id/open_add_chat"
+        app:destination="@id/addChat" />
+
+
+    <action
+        android:id="@+id/open_chat"
+        app:destination="@id/chat" />
+
     <fragment
         android:id="@+id/news"
         android:name="ru.labone.news.ui.NewsFragment"
-        android:label="Главная"
+        android:label="@string/home"
         tools:layout="@layout/fragment_news" />
+
+    <fragment
+        android:id="@+id/chats"
+        android:name="ru.labone.chats.ui.ChatsFragment"
+        android:label="@string/chats"
+        tools:layout="@layout/fragment_chats" />
 
     <dialog
         android:id="@+id/addNews"
@@ -30,6 +45,25 @@
             android:name="addNotelNavKey"
             android:defaultValue="@null"
             app:argType="ru.labone.addnote.data.AddNewsNavKey"
+            app:nullable="true" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/addChat"
+        android:name="ru.labone.addchat.ui.AddChatFragment"
+        android:label="@string/counters"
+        tools:layout="@layout/fragment_add_chat" />
+
+    <dialog
+        android:id="@+id/chat"
+        android:name="ru.labone.chat.ui.ChatDialogFragment"
+        android:label="@string/counters"
+        tools:layout="@layout/fragment_chat">
+
+        <argument
+            android:name="chatNavKey"
+            android:defaultValue="@null"
+            app:argType="ru.labone.chat.data.ChatNavKey"
             app:nullable="true" />
     </dialog>
 

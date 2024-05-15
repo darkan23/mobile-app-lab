@@ -51,7 +51,7 @@
                     android:inputType="textMultiLine"
                     android:textColorHint="@color/gray_170"
                     android:textCursorDrawable="@drawable/color_cursor"
-                    android:textSize="@dimen/pt8" />
+                    android:textSize="@dimen/font_main" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

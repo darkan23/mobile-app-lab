@@ -10,7 +10,9 @@ import com.example.labone.R
 import ru.labone.FileData
 import ru.labone.loadWithBackgroundBlur
 
-class ImageAdapter(private val files: List<FileData>) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageAdapter(
+    private val files: List<FileData>,
+) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     var listener: ((pos: Int, id: String) -> Unit)? = null
 

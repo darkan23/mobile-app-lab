@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import coil.load
+import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import ru.labone.DocumentType.AUDIO
 import ru.labone.DocumentType.DOCUMENT
@@ -46,15 +47,19 @@ fun View.onClickWithDebounce(action: View.OnClickListener?, debounceTime: Long) 
     }
 }
 
-inline fun <T, R> T?.ifNotNull(defaultValue: (T) -> R): R? = if (this != null) defaultValue(this) else null
+inline fun <T, R> T?.ifNotNull(defaultValue: (T) -> R): R? =
+    if (this != null) defaultValue(this) else null
 
 inline fun <T> T?.ifNull(defaultValue: () -> T): T = this ?: defaultValue()
 
-fun Instant.convertInstantToLocalDate(): LocalDate = this.atZone(ZoneId.systemDefault()).toLocalDate()
+fun Instant.convertInstantToLocalDate(): LocalDate =
+    this.atZone(ZoneId.systemDefault()).toLocalDate()
 
-fun Instant.convertInstantToLocalTime(): LocalTime = this.atZone(ZoneId.systemDefault()).toLocalTime()
+fun Instant.convertInstantToLocalTime(): LocalTime =
+    this.atZone(ZoneId.systemDefault()).toLocalTime()
 
-fun Instant.convertInstantToLocalDateTime(): LocalDateTime = this.atZone(ZoneId.systemDefault()).toLocalDateTime()
+fun Instant.convertInstantToLocalDateTime(): LocalDateTime =
+    this.atZone(ZoneId.systemDefault()).toLocalDateTime()
 
 fun Instant.convertTimeToMinutes(): String {
     val currentTime = Instant.now().toEpochMilli()
@@ -76,18 +81,25 @@ fun Instant.convertTimeTo(): String {
     val targetLocalTime = this.convertInstantToLocalTime()
     val currentDate = LocalDate.now()
     val currentTime = LocalTime.now()
+    val hasCheckMinutes = currentTime.minute <= 59
     return when {
         targetLocalDate.dayOfMonth == currentDate.dayOfMonth -> {
             when {
-                currentTime.hour - targetLocalTime.hour < 1 -> convertTimeToMinutes()
-                currentTime.hour - targetLocalTime.hour == 1 -> "Час назад"
-                currentTime.hour - targetLocalTime.hour == 2 -> "Два часа назад"
-                currentTime.hour - targetLocalTime.hour == 3 -> "Три часа назад"
+                currentTime.hour - targetLocalTime.hour <= 1 && hasCheckMinutes -> {
+                    convertTimeToMinutes()
+                }
+
+                currentTime.hour - targetLocalTime.hour == 1 && hasCheckMinutes -> "Час назад"
+                currentTime.hour - targetLocalTime.hour == 2 && hasCheckMinutes -> "Два часа назад"
+                currentTime.hour - targetLocalTime.hour == 3 && hasCheckMinutes -> "Три часа назад"
                 else -> "$TODAY в ${Convertors.temporalToUITime(this)}"
             }
         }
 
-        currentDate.dayOfMonth - targetLocalDate.dayOfMonth == 1 -> "$YESTERDAY в ${Convertors.temporalToUITime(this)}"
+        currentDate.dayOfMonth - targetLocalDate.dayOfMonth == 1 -> {
+            "$YESTERDAY в ${Convertors.temporalToUITime(this)}"
+        }
+
         else -> Convertors.temporalToUIDate(this)
     }
 }
@@ -118,10 +130,18 @@ fun ImageView.loadWithRoundedCorners(data: Any? = null) {
     }
 }
 
+fun ImageView.loadWithCircle(data: Any? = null) {
+    val correctData = getFileData(data)
+    load(correctData) {
+        transformations(
+            CircleCropTransformation()
+        )
+    }
+}
+
 private fun getFileData(data: Any?): Any? = when (data) {
     is String -> {
         if (data.contains("files/documents")) Uri.fromFile(File(data)) else Uri.parse(data)
-        Uri.fromFile(File(data))
     }
 
     else -> data

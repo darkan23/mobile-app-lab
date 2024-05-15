@@ -10,7 +10,7 @@
                 android:topRightRadius="@dimen/card_corner_common" />
             <solid android:color="@color/design_color_back" />
             <stroke
-                android:width="@dimen/line_size"
+                android:width="@dimen/divider_height"
                 android:color="@color/colorPrimaryDark" />
         </shape>
     </item>
