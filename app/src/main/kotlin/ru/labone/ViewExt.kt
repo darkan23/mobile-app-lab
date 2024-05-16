@@ -2,18 +2,25 @@ package ru.labone
 
 import android.content.ContentResolver
 import android.net.Uri
+import android.os.Looper
 import android.os.SystemClock
 import android.provider.MediaStore.MediaColumns
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import ru.labone.DocumentType.AUDIO
 import ru.labone.DocumentType.DOCUMENT
 import ru.labone.DocumentType.PICTURE
-import ru.labone.DocumentType.UNKNOWN
+import splitties.systemservices.inputMethodManager
 import java.io.File
 import java.io.FileInputStream
 import java.net.URI
@@ -177,7 +184,7 @@ private fun String.getDocumentType(): DocumentType {
         mimeTypeForDocument.contains(extension) -> DOCUMENT
         mimeTypeForJpeg.contains(extension) -> PICTURE
         mimeTypeForAudio.contains(extension) -> AUDIO
-        else -> UNKNOWN
+        else -> DOCUMENT
     }
 }
 
@@ -209,3 +216,30 @@ private fun ContentResolver.getSizeFileByUri(uri: Uri): Int = openFileDescriptor
 }
 
 fun String?.orEmpty(): String = if (this.isNullOrBlank()) "" else this
+
+fun View.hideKeyboard() {
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+inline fun Fragment.ui(crossinline block: (activity: FragmentActivity) -> Unit): Job? {
+    val activity = this.activity
+    return if (activity != null && view != null && context != null) {
+        if (Looper.getMainLooper() == Looper.myLooper()) {
+            block(activity)
+            null
+        } else {
+            lifecycleScope.launch(Dispatchers.Main) {
+                block(activity)
+            }
+        }
+    } else {
+        null
+    }
+}
+
+fun EditText.text(newText: CharSequence?) {
+    if (newText != this.text.toString()) {
+        setText(newText)
+        setSelection(newText?.length ?: 0)
+    }
+}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--Frame for background and stroke padding-->
+<?xml version="1.0" encoding="utf-8"?> <!--Frame for background and stroke padding-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,56 +20,63 @@
             android:id="@+id/personImage"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginEnd="@dimen/padding_medium_bigger"
+            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginEnd="@dimen/padding_medium"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/container"
             app:layout_constraintEnd_toStartOf="@id/container"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="ContentDescription" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/padding_smaller"
-            android:background="@drawable/chat_shape"
-            android:backgroundTint="@color/dark_light"
-            android:gravity="center_vertical"
-            android:minHeight="36dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/personImage"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/personName"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small"
-                android:layout_marginEnd="@dimen/padding_medium_bigger"
-                android:layout_marginBottom="@dimen/padding_small"
-                android:gravity="start"
-                android:includeFontPadding="false"
-                android:paddingStart="@dimen/padding_medium_bigger"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:visibility="gone"
-                tools:text="Тестов Тест" />
+                android:background="@drawable/chat_shape"
+                android:backgroundTint="@color/dark_light"
+                android:gravity="center_vertical"
+                android:minHeight="36dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/padding_small"
-                android:layout_marginEnd="@dimen/padding_medium_bigger"
-                android:layout_marginBottom="@dimen/padding_small"
-                android:gravity="start"
-                android:includeFontPadding="false"
-                android:paddingStart="@dimen/padding_medium_bigger"
-                android:textColor="@color/gray_225"
-                tools:text="Тест 1 Тест 1 Тест 1 Тест 1 Тест 1 Тест " />
+                <TextView
+                    android:id="@+id/personName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_medium_bigger"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_medium_bigger"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:gravity="start"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:text="Тестов Тест" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_medium_bigger"
+                    android:layout_marginTop="@dimen/padding_small"
+                    android:layout_marginEnd="@dimen/padding_medium_bigger"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/gray_225"
+                    tools:text="UNREAD MESSAGE" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/messageDate"

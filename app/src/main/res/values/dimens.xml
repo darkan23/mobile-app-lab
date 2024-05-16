@@ -23,6 +23,7 @@
     <dimen name="screen_size">220dp</dimen>
 
     <dimen name="rating_height">22dp</dimen>
+    <dimen name="bubble_line_size">0.5dp</dimen>
 
     <dimen name="dimen_progress_size">25.6dp</dimen>
 

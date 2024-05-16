@@ -1,43 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Используется LinearLayout, а не ConstraintLayout, т.к. в ином случае длинное сообщение выходит за экран -->
-<!--Frame for background and stroke padding-->
+<?xml version="1.0" encoding="utf-8"?><!--Frame for background and stroke padding-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/popupAnchor"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end"
     android:layout_marginStart="@dimen/padding_huge"
     android:layout_marginEnd="@dimen/padding_medium"
-    android:layout_marginBottom="@dimen/padding_smaller"
-    tools:ignore="RtlHardcoded,UselessParent">
+    android:layout_marginBottom="@dimen/padding_smaller">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="end">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/chat_shape"
             android:gravity="center_vertical"
             android:minHeight="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlHardcoded">
 
             <TextView
                 android:id="@+id/message"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_medium_bigger"
                 android:layout_marginTop="@dimen/padding_small"
                 android:layout_marginEnd="@dimen/padding_medium_bigger"
                 android:layout_marginBottom="@dimen/padding_small"
-                android:gravity="start"
-                android:includeFontPadding="false"
-                android:paddingStart="@dimen/padding_medium_bigger"
                 android:textColor="@color/gray_225"
                 tools:ignore="RtlSymmetry,SpUsage"
-                tools:text="Тест 1 Тест 1 Тест 1 Тест 1 Тест 1 Тест 1 Тест Тест Тест Тест Тест  " />
+                tools:text="Тес" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -45,7 +43,6 @@
             android:id="@+id/messageDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:layout_marginTop="@dimen/padding_small"
             android:layout_marginEnd="@dimen/padding_smaller"
             android:includeFontPadding="false"
@@ -53,8 +50,9 @@
             android:textColor="@color/header_text_color"
             android:textSize="@dimen/font_smalle"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container"
             tools:ignore="RtlSymmetry,SpUsage"
             tools:text="22:33" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

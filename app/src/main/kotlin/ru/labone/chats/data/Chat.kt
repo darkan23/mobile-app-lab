@@ -14,6 +14,7 @@ data class Chat(
 @Entity(primaryKeys = ["id"])
 data class Message(
     val id: String,
+    val chatId: String,
     val text: String? = null,
     val author: Person,
     val readDate: Instant? = null,

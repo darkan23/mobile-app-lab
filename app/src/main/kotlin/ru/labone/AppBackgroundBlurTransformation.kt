@@ -69,25 +69,33 @@ class AppBackgroundBlurTransformation(
         return scaled
     }
 
-    private fun calculateOutputSize(input: Bitmap, size: Size): Pair<Int, Int> = if (size.isOriginal) {
-        input.width to input.height
-    } else {
-        val (dstWidth, dstHeight) = size
-        if (dstWidth is Dimension.Pixels && dstHeight is Dimension.Pixels) {
-            dstWidth.px to dstHeight.px
+    private fun calculateOutputSize(input: Bitmap, size: Size): Pair<Int, Int> =
+        if (size.isOriginal) {
+            input.width to input.height
         } else {
-            val multiplier = calculateScaleFactor(input.width,
-                input.height,
-                dstWidth.pxOrElse { Int.MIN_VALUE },
-                dstHeight.pxOrElse { Int.MIN_VALUE })
-            val outputWidth = (multiplier * input.width).roundToInt()
-            val outputHeight = (multiplier * input.height).roundToInt()
-            outputWidth to outputHeight
+            val (dstWidth, dstHeight) = size
+            if (dstWidth is Dimension.Pixels && dstHeight is Dimension.Pixels) {
+                dstWidth.px to dstHeight.px
+            } else {
+                val multiplier = calculateScaleFactor(
+                    srcWidth = input.width,
+                    srcHeight = input.height,
+                    dstWidth = dstWidth.pxOrElse { Int.MIN_VALUE },
+                    dstHeight = dstHeight.pxOrElse { Int.MIN_VALUE }
+                )
+                val outputWidth = (multiplier * input.width).roundToInt()
+                val outputHeight = (multiplier * input.height).roundToInt()
+                outputWidth to outputHeight
+            }
+
         }
 
-    }
-
-    private fun calculateScaleFactor(srcWidth: Int, srcHeight: Int, dstWidth: Int, dstHeight: Int): Float {
+    private fun calculateScaleFactor(
+        srcWidth: Int,
+        srcHeight: Int,
+        dstWidth: Int,
+        dstHeight: Int
+    ): Float {
         val maxScale = maxOf(dstWidth.toFloat() / srcWidth, dstHeight.toFloat() / srcHeight)
         return minOf(maxScale, 1f)
     }

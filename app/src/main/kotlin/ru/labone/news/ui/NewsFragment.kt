@@ -29,6 +29,7 @@ import ru.labone.DocumentType.DOCUMENT
 import ru.labone.DocumentType.PICTURE
 import ru.labone.convertTimeTo
 import ru.labone.formatFileSize
+import ru.labone.loadWithCircle
 import ru.labone.news.data.Document
 import ru.labone.news.data.News
 import ru.labone.viewbinding.viewBinding
@@ -97,6 +98,7 @@ internal class NewsView @JvmOverloads constructor(
         files = performance.document.documents
         binding.newsBody.text = performance.text
         binding.newsBody.isVisible = performance.text.isNotEmpty()
+        binding.imageGroup.loadWithCircle("https://cs14.pikabu.ru/post_img/big/2023/02/13/8/1676295806139337963.png")
     }
 
     @AfterPropsSet
@@ -123,7 +125,8 @@ internal class NewsView @JvmOverloads constructor(
         binding.variants.isVisible = files.isNotEmpty()
         binding.variants.removeAllViews()
         fileData.forEach { file ->
-            val bindingVariant = ItemDocumentBinding.inflate(LayoutInflater.from(context), this, false)
+            val bindingVariant =
+                ItemDocumentBinding.inflate(LayoutInflater.from(context), this, false)
             bindingVariant.text.text = file.name
             bindingVariant.size.text = formatFileSize(file.size)
             bindingVariant.remove.isVisible = false

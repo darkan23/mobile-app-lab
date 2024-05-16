@@ -13,7 +13,7 @@
         <item name="colorOnError">@color/dark</item>
         <item name="colorSurface">@color/dark</item>
         <item name="colorError">@color/colorError</item>
-        <item name="colorControlActivated">@color/dark</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="android:windowBackground">@color/dark_dark</item>
 
         <item name="windowActionBar">false</item>

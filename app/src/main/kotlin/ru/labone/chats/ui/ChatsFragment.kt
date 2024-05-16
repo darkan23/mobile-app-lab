@@ -23,6 +23,7 @@ import com.example.labone.databinding.ItemChatsBinding
 import ru.labone.ActionBarTitleChanger
 import ru.labone.chats.data.Chat
 import ru.labone.convertTimeTo
+import ru.labone.loadWithCircle
 import ru.labone.news.ui.dividerView
 import ru.labone.onClickWithDebounce
 import ru.labone.viewbinding.viewBinding
@@ -90,6 +91,7 @@ internal class ChatsView @JvmOverloads constructor(
     fun setChat(performance: Chat) {
         binding.speakerName.text = performance.name
         binding.lastMessage.text = Instant.ofEpochMilli(performance.date).convertTimeTo()
+        binding.imageChat.loadWithCircle("https://masterpiecer-images.s3.yandex.net/8d73ce257d8611eea814d659965eed18:upscaled")
     }
 
     @CallbackProp

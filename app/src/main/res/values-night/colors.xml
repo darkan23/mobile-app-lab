@@ -10,4 +10,6 @@
     <color name="not_selectable_nav_color">@color/gray_112</color>
     <color name="disable_color">@color/gray_dark</color>
     <color name="message_date_background_color">@color/gray_225</color>
+    <color name="question_field_background_color">@color/dark_light</color>
+    <color name="question_field_divider_color">@color/dark</color>
 </resources>

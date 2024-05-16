@@ -1,30 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <include
         android:id="@+id/addChatTab"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:focusableInTouchMode="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_left_w">
-
-        <requestFocus />
-    </com.google.android.material.appbar.MaterialToolbar>
+        layout="@layout/custom_tool_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/messages"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:scrollbarStyle="insideOverlay"
+        android:transcriptMode="alwaysScroll"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dividerChat"
         app:layout_constraintTop_toBottomOf="@id/addChatTab" />
+
+    <View
+        android:id="@+id/dividerChat"
+        style="@style/DividerLine"
+        android:background="@color/question_field_divider_color"
+        app:layout_constraintBottom_toTopOf="@id/ll_edit_message_area"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/ll_edit_message_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/question_field_background_color"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/actionBarSize"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_medium_bigger"
+        android:paddingTop="@dimen/padding_medium"
+        android:paddingBottom="@dimen/padding_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="RtlHardcoded,RtlSymmetry">
+
+        <ImageView
+            android:id="@+id/addAttachment"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="@dimen/padding_medium_bigger"
+            android:layout_weight="0.1"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_attachment"
+            app:tint="@color/icon_color"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/cet_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:background="@null"
+            android:hint="Сообщение"
+            android:maxLines="5"
+            android:paddingLeft="@dimen/padding_medium_bigger"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium_bigger"
+            android:paddingBottom="@dimen/padding_medium"
+            android:textColorHint="@color/gray_170"
+            android:textSize="@dimen/font_large" />
+
+        <ImageView
+            android:id="@+id/sendMessage"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/padding_medium_bigger"
+            android:layout_marginEnd="@dimen/padding_medium_bigger"
+            android:layout_weight="0.1"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/selectable_send"
+            tools:ignore="ContentDescription" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,8 +6,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import androidx.core.view.postDelayed
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.mvrx.Mavericks
@@ -20,23 +24,72 @@ import com.example.labone.databinding.ItemChatOtherUserMessageBinding
 import com.example.labone.databinding.ItemChatUserMessageBinding
 import com.example.labone.databinding.ItemMessageDateBinding
 import ru.labone.Convertors
-import ru.labone.chat.data.takeAuthorAvatar
-import ru.labone.chat.data.takeAuthorName
 import ru.labone.chats.data.ChatMessage
 import ru.labone.chats.data.OtherUserMessage
 import ru.labone.chats.data.UserMessage
+import ru.labone.doAfterTextChanged
 import ru.labone.fullScreenDialog
 import ru.labone.loadWithCircle
 import ru.labone.navigateBack
 import ru.labone.news.ui.dividerView
+import ru.labone.onClickWithDebounce
+import ru.labone.ui
 import ru.labone.viewbinding.viewBinding
 import java.time.LocalDate
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.math.abs
+import kotlin.math.max
+
 
 class ChatDialogFragment : DialogFragment(R.layout.fragment_chat), MavericksView {
 
     private val viewModel by fragmentViewModel(ChatViewModel::class)
     private val binding by viewBinding(FragmentChatBinding::bind)
     private val args: ChatDialogFragmentArgs by navArgs()
+    private var verticalScrollOffset = AtomicInteger(0)
+
+    private val layoutChangeListener =
+        View.OnLayoutChangeListener { _, _, _, _, bottom, _, _, _, oldBottom ->
+            val y = oldBottom - bottom
+            if (abs(y) > 0 && isAdded) {
+                binding.messages.post {
+                    if (y > 0 || abs(verticalScrollOffset.get()) >= abs(y)) {
+                        ui { binding.messages.scrollBy(0, y) }
+                    } else {
+                        ui { binding.messages.scrollBy(0, verticalScrollOffset.get()) }
+                    }
+                }
+            }
+        }
+
+    private val onScrollListener = object : RecyclerView.OnScrollListener() {
+        var state = AtomicInteger(RecyclerView.SCROLL_STATE_IDLE)
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            state.compareAndSet(RecyclerView.SCROLL_STATE_IDLE, newState)
+            when (newState) {
+                RecyclerView.SCROLL_STATE_IDLE -> {
+                    if (!state.compareAndSet(RecyclerView.SCROLL_STATE_SETTLING, newState)) {
+                        state.compareAndSet(RecyclerView.SCROLL_STATE_DRAGGING, newState)
+                    }
+                }
+
+                RecyclerView.SCROLL_STATE_DRAGGING -> {
+                    state.compareAndSet(RecyclerView.SCROLL_STATE_IDLE, newState)
+                }
+
+                RecyclerView.SCROLL_STATE_SETTLING -> {
+                    state.compareAndSet(RecyclerView.SCROLL_STATE_DRAGGING, newState)
+                }
+            }
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (state.get() != RecyclerView.SCROLL_STATE_IDLE) {
+                verticalScrollOffset.getAndAdd(dy)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (args.chatNavKey != null) {
@@ -49,63 +102,112 @@ class ChatDialogFragment : DialogFragment(R.layout.fragment_chat), MavericksView
     }
 
     override fun invalidate() = withState(viewModel) { state ->
-        val chat = state.messages.first
-        val messages = state.messages.second
-        binding.addChatTab.title = chat.name
+        val chat = state.chat
+        val messages = state.messages
+        if (state.message != binding.cetMessage.text.toString()) {
+            binding.cetMessage.setTextKeepState(state.message)
+        }
+        binding.sendMessage.isEnabled = state.message.isNotBlank()
+        binding.addChatTab.speakerName.text = chat?.name
+        binding.addChatTab.imageChat.loadWithCircle("https://masterpiecer-images.s3.yandex.net/8d73ce257d8611eea814d659965eed18:upscaled")
         binding.messages.withModels {
             dividerView {
                 id("dividerId")
             }
-            messages.forEach { (date, messages) ->
-                dateView {
-                    id(date.toEpochDay())
-                    date(date)
-                }
-                messages.forEachIndexed { index, message ->
-                    val previousMessage = messages.getOrNull(index - 1)
-                    val nextMessage = messages.getOrNull(index + 1)
-                    when (message) {
-                        is OtherUserMessage -> {
-                            val currentAuthorId = message.author.id
-                            val previousAuthorId =
-                                (previousMessage as? OtherUserMessage)?.author?.id
-                            val nextAuthorId = (nextMessage as? OtherUserMessage)?.author?.id
-                            val authorAvatar =
-                                message.takeAuthorAvatar(currentAuthorId, nextAuthorId)?.photoId
-                            val authorName =
-                                message.takeAuthorName(currentAuthorId, previousAuthorId)?.name
+            messages
+                .forEach { (date, messages) ->
+                    dateView {
+                        id(date.toEpochDay())
+                        date(date)
+                    }
+                    val readMessages = messages.filter { it.readDate != null }
+                    val unReadMessages = messages.filter { it.readDate == null }
+                    readMessages.forEach { message ->
+                        when (message) {
+                            is OtherUserMessage -> {
+                                otherUserMessageView {
+                                    id(message.id)
+                                    message(message)
+                                    authorName(message.authorName)
+                                    authorAvatar(message.authorAvatar)
+                                }
+                            }
+
+                            is UserMessage -> userMessageView {
+                                id(message.id)
+                                message(message)
+                            }
+                        }
+                    }
+                    if (unReadMessages.isNotEmpty()) {
+                        unReadMessageView {
+                            id("unreadMessage")
+                        }
+                    }
+                    unReadMessages.forEach { message ->
+                        if (message is OtherUserMessage) {
                             otherUserMessageView {
                                 id(message.id)
                                 message(message)
-                                authorName(authorName)
-                                authorAvatar(authorAvatar)
-                            }
-                            if (currentAuthorId != nextAuthorId) {
-                                dividerView {
-                                    id("dividerMessage$index")
-                                }
+                                authorName(message.authorName)
+                                authorAvatar(message.authorAvatar)
                             }
                         }
+                    }
+                }
+        }
+    }
 
-                        is UserMessage -> {
-                            userMessageView {
-                                id(message.id)
-                                message(message)
-                            }
-                            if (nextMessage is OtherUserMessage || nextMessage == null) {
-                                dividerView {
-                                    id("dividerMessage$index")
-                                }
-                            }
-                        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.addChatTab.navigateBack.setOnClickListener { navigateBack() }
+        setupRecyclerView()
+        binding.cetMessage.doAfterTextChanged {
+            viewModel.changeMessage(it.toString())
+        }
+
+        binding.sendMessage.onClickWithDebounce {
+            viewModel.saveMessage()
+        }
+        viewModel.effect.collect(lifecycleScope) { effect ->
+            when (effect) {
+                is ScrollToNextPosition -> {
+                    val layoutManager = binding.messages.layoutManager as? LinearLayoutManager
+                    binding.messages.postDelayed(50L) {
+                        layoutManager?.scrollToPositionWithOffset(effect.index, 0)
                     }
                 }
             }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.addChatTab.setNavigationOnClickListener { navigateBack() }
+    private fun setupRecyclerView() {
+        val layoutManager = binding.messages.layoutManager as? LinearLayoutManager
+        binding.messages.addOnScrollListener(onScrollListener)
+        binding.messages.addOnLayoutChangeListener(layoutChangeListener)
+        binding.messages.withModels {
+            var scrollPos = -1
+            adapter.addModelBuildListener {
+                if (scrollPos >= 0) {
+                    layoutManager?.apply {
+                        viewModel.scrollToPosition(scrollPos)
+                    }
+                    scrollPos = -1
+                }
+            }
+            adapter.registerAdapterDataObserver(
+                object : RecyclerView.AdapterDataObserver() {
+                    override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                        scrollPos = max(scrollPos, positionStart + itemCount - 1)
+                    }
+
+                    override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                        if (adapter.itemCount == positionStart + itemCount) {
+                            scrollPos = max(scrollPos, adapter.itemCount - 1)
+                        }
+                    }
+                }
+            )
+        }
     }
 }
 
@@ -135,6 +237,18 @@ internal class DateView @JvmOverloads constructor(
 }
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
+internal class UnReadMessageView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : FrameLayout(context, attrs, defStyleAttr) {
+
+    init {
+        inflate(context, R.layout.item_unread_message, this)
+    }
+}
+
+@ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
 internal class UserMessageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -149,7 +263,7 @@ internal class UserMessageView @JvmOverloads constructor(
 
     @ModelProp
     fun setMessage(message: ChatMessage) {
-        binding.message.text = message.text
+        binding.message.text = message.text?.trim()
         binding.messageDate.text = Convertors.temporalToUITime(message.createDate)
     }
 }
@@ -180,7 +294,7 @@ internal class OtherUserMessageView @JvmOverloads constructor(
     }
 
     @ModelProp
-    fun setAuthorAvatar(avatar: Long?) {
+    fun setAuthorAvatar(avatar: String?) {
         binding.personImage.visibility = if (avatar != null) VISIBLE else INVISIBLE
         binding.personImage.loadWithCircle("https://cs14.pikabu.ru/post_img/big/2023/02/13/8/1676295806139337963.png")
     }
