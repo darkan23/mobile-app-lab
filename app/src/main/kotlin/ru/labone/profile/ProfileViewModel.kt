@@ -8,11 +8,11 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import mu.KotlinLogging.logger
 import ru.labone.Effects
 import ru.labone.effects
 import ru.labone.mvrx.AssistedViewModelFactory
 import ru.labone.mvrx.DiMavericksViewModelFactory
-import mu.KotlinLogging.logger
 import java.net.URI
 import java.time.LocalDate
 

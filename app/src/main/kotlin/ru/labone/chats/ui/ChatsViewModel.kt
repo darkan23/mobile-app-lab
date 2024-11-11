@@ -10,7 +10,10 @@ import dagger.assisted.AssistedInject
 import mu.KotlinLogging.logger
 import ru.labone.chat.data.ChatNavKey
 import ru.labone.chats.data.Chat
+import ru.labone.chats.data.ChatMessage
 import ru.labone.chats.data.ChatsRepository
+import ru.labone.chats.data.Message
+import ru.labone.chats.data.Messages
 import ru.labone.mvrx.AssistedViewModelFactory
 import ru.labone.mvrx.DiMavericksViewModelFactory
 import ru.labone.naviagion.Navigator
@@ -25,7 +28,7 @@ class ChatsViewModel @AssistedInject constructor(
 
     init {
         chatsRepository.flowChats()
-            .execute { newsFromDb: Async<List<Chat>> ->
+            .execute { newsFromDb: Async<List<UiChat>> ->
                 if (newsFromDb is Success) {
                     val chats = newsFromDb()
                     log.info { "Flow to all chats: $chats" }
@@ -49,6 +52,13 @@ class ChatsViewModel @AssistedInject constructor(
         DiMavericksViewModelFactory<ChatsViewModel, ChatsState>(ChatsViewModel::class.java)
 }
 
+data class UiChat(
+    val id: String,
+    val name: String,
+    val date: Long,
+    val messages: List<ChatMessage>,
+)
+
 data class ChatsState(
-    val chats: List<Chat> = emptyList(),
+    val chats: List<UiChat> = emptyList(),
 ) : MavericksState

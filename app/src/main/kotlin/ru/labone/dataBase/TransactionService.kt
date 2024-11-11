@@ -1,7 +1,7 @@
 package ru.labone.dataBase
 
-import javax.inject.Inject
 import java.util.concurrent.Callable
+import javax.inject.Inject
 
 interface TransactionService {
     fun doInTransaction(action: () -> Unit)

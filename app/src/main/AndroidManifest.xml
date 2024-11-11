@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.labone">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name="ru.labone.PerformancesApp"
@@ -40,6 +40,27 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <meta-data
+            android:name="ru.rustore.sdk.pushclient.project_id"
+            android:value="jyqHM62fkzivo9Q42d5jS4Ig3YTPg1EV" />
+
+        <service
+            android:name="ru.labone.notification.FcmListeningService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="ru.rustore.sdk.pushclient.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+<!--        <meta-data-->
+<!--            android:name="ru.rustore.sdk.pushclient.default_notification_icon"-->
+<!--            android:resource="@drawable/icon_edit" />-->
+
+<!--        <meta-data-->
+<!--            android:name="ru.rustore.sdk.pushclient.default_notification_iconfication_channel_id"-->
+<!--            android:value="labone_notification_channel" />-->
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoMap
+import okhttp3.OkHttpClient
 import ru.labone.AppScope
 import ru.labone.mvrx.AssistedViewModelFactory
 import ru.labone.mvrx.ViewModelKey
@@ -20,7 +21,8 @@ object NewsModule {
     internal fun provideProfileServer(
         appScope: AppScope,
         newsDao: NewsDao,
-    ): NewsRepository = NewsRepositoryImpl(appScope, newsDao)
+        okHttpClient: OkHttpClient
+    ): NewsRepository = NewsRepositoryImpl(appScope, newsDao, okHttpClient)
 
     @Provides
     @IntoMap

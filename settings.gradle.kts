@@ -4,6 +4,9 @@ include(":app")
 
 pluginManagement {
     repositories {
+        maven {
+            url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+        }
         mavenCentral()
         google()
         gradlePluginPortal()

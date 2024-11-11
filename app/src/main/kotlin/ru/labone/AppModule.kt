@@ -1,13 +1,17 @@
 package ru.labone
 
 import android.app.Application
+import com.jenzz.appstate.AppState
+import com.jenzz.appstate.adapter.rxjava2.RxAppStateMonitor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.OkHttpClient.Builder
+import okhttp3.logging.HttpLoggingInterceptor
 import ru.labone.filemanager.FileManager
 import ru.labone.filemanager.FileManagerImpl
 import ru.labone.naviagion.Navigator
@@ -52,10 +56,15 @@ class AppModule {
                 val reqBuilder = request.newBuilder()
                 chain.proceed(reqBuilder.build())
             }
+            addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         }
         .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
         .pingInterval(PING_INTERVAL, TimeUnit.SECONDS)
         .readTimeout(WRITE_AND_READ_INTERVAL, TimeUnit.SECONDS)
         .writeTimeout(WRITE_AND_READ_INTERVAL, TimeUnit.SECONDS)
         .build()
+
+    @Provides
+    @Singleton
+    fun appStateObservable(context: Application): Observable<AppState> = RxAppStateMonitor.monitor(context)
 }

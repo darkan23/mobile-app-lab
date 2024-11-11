@@ -14,6 +14,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.airbnb.epoxy.AfterPropsSet
+import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import com.airbnb.mvrx.MavericksView
@@ -32,6 +33,7 @@ import ru.labone.formatFileSize
 import ru.labone.loadWithCircle
 import ru.labone.news.data.Document
 import ru.labone.news.data.News
+import ru.labone.onClickWithDebounce
 import ru.labone.viewbinding.viewBinding
 import java.time.Instant
 
@@ -49,6 +51,9 @@ class NewsFragment : Fragment(R.layout.fragment_news), MavericksView {
                 newsView {
                     id(news.id)
                     news(news)
+                    testPush { _ ->
+                        viewModel.test()
+                    }
                 }
             }
         }
@@ -133,6 +138,9 @@ internal class NewsView @JvmOverloads constructor(
             binding.variants.addView(bindingVariant.root)
         }
     }
+
+    @CallbackProp
+    fun testPush(onClickListener: OnClickListener?) = binding.root.setOnClickListener(onClickListener)
 }
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)

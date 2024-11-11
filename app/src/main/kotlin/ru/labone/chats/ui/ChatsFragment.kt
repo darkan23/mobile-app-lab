@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.airbnb.epoxy.CallbackProp
@@ -21,13 +22,15 @@ import com.example.labone.R
 import com.example.labone.databinding.FragmentChatsBinding
 import com.example.labone.databinding.ItemChatsBinding
 import ru.labone.ActionBarTitleChanger
-import ru.labone.chats.data.Chat
-import ru.labone.convertTimeTo
+import ru.labone.chats.data.OtherUserMessage
+import ru.labone.chats.data.Status
+import ru.labone.chats.data.UserMessage
 import ru.labone.loadWithCircle
 import ru.labone.news.ui.dividerView
 import ru.labone.onClickWithDebounce
 import ru.labone.viewbinding.viewBinding
-import java.time.Instant
+import splitties.resources.colorSL
+import splitties.resources.drawable
 
 class ChatsFragment : Fragment(R.layout.fragment_chats), MavericksView {
 
@@ -88,9 +91,38 @@ internal class ChatsView @JvmOverloads constructor(
     }
 
     @ModelProp
-    fun setChat(performance: Chat) {
-        binding.speakerName.text = performance.name
-        binding.lastMessage.text = Instant.ofEpochMilli(performance.date).convertTimeTo()
+    fun setChat(chat: UiChat) {
+        val messages = chat.messages
+        val lastMessage = messages.lastOrNull()
+        val userMessages = lastMessage is UserMessage
+        val otherUserMessages = messages.filterIsInstance<OtherUserMessage>().filter { it.readDate == null }
+        println("FUCK ${lastMessage}")
+        binding.unreadMessageCount.isVisible = otherUserMessages.isNotEmpty()
+        binding.status.isVisible = userMessages
+        if (lastMessage is UserMessage) {
+            binding.status.imageTintList = colorSL(
+                when {
+                    lastMessage.readDate != null -> R.color.icon_color
+                    lastMessage.status == Status.SENDING -> R.color.gray
+                    lastMessage.status == Status.NOT_SEND -> R.color.colorError
+                    else -> R.color.icon_color
+                }
+            )
+            binding.status.setImageDrawable(
+                drawable(
+                    when {
+                        lastMessage.readDate != null -> R.drawable.ic_double_check
+                        lastMessage.status == Status.SENDING -> R.drawable.ic_clock
+                        lastMessage.status == Status.NOT_SEND -> R.drawable.ic_error
+                        else -> R.drawable.ic_check
+                    }
+                )
+            )
+        } else {
+            binding.unreadMessageCount.text = otherUserMessages.size.toString()
+        }
+        binding.speakerName.text = chat.name
+        binding.lastMessage.text = lastMessage?.text
         binding.imageChat.loadWithCircle("https://masterpiecer-images.s3.yandex.net/8d73ce257d8611eea814d659965eed18:upscaled")
     }
 

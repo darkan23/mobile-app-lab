@@ -28,6 +28,7 @@ import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.signature.ObjectKey
 import com.example.labone.R
 import com.example.labone.databinding.FragmentProfileBinding
+import mu.KotlinLogging.logger
 import ru.labone.GlideApp
 import ru.labone.centerDialog
 import ru.labone.doAfterTextChanged
@@ -38,7 +39,6 @@ import ru.labone.showDatePicker
 import ru.labone.toURI
 import ru.labone.toUri
 import ru.labone.viewbinding.viewBinding
-import mu.KotlinLogging.logger
 import splitties.alertdialog.appcompat.messageResource
 import splitties.alertdialog.appcompat.okButton
 import splitties.alertdialog.appcompat.titleResource

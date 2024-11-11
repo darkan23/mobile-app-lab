@@ -46,6 +46,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         proguardFile("proguard-app.pro")
+        proguardFile("proguard-retrofit.pro")
     }
 
     buildTypes {
@@ -78,6 +79,9 @@ kapt {
 }
 
 repositories {
+    maven {
+        url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+    }
     mavenCentral()
     google()
     gradlePluginPortal()
@@ -98,6 +102,11 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxkotlin:_")
     implementation("io.reactivex.rxjava2:rxandroid:_")
     implementation("com.google.code.gson:gson:_")
+
+    implementation("ru.rustore.sdk:pushclient:6.3.0")
+
+    implementation("com.jenzz.appstate:appstate:_")
+    implementation("com.jenzz.appstate:adapter-rxjava2:_")
 
     implementation(Square.retrofit2.retrofit)
     implementation(JakeWharton.retrofit2.converter.kotlinxSerialization)

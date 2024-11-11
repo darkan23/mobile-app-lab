@@ -7,6 +7,7 @@ import com.airbnb.mvrx.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.launch
 import mu.KotlinLogging.logger
 import ru.labone.mvrx.AssistedViewModelFactory
 import ru.labone.mvrx.DiMavericksViewModelFactory
@@ -15,7 +16,7 @@ import ru.labone.news.data.NewsRepository
 
 class NewsViewModel @AssistedInject constructor(
     @Assisted initialState: NewsState,
-    newsRepository: NewsRepository,
+    val newsRepository: NewsRepository,
 ) : MavericksViewModel<NewsState>(initialState) {
 
     private val log = logger {}
@@ -31,6 +32,11 @@ class NewsViewModel @AssistedInject constructor(
                     this
                 }
             }
+    }
+
+    fun test() {
+        viewModelScope.launch {
+        }
     }
 
     @AssistedFactory

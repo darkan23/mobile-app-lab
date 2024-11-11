@@ -60,8 +60,16 @@
             android:layout_weight="0.01"
             android:minWidth="@dimen/padding_medium"
             android:padding="@dimen/padding_smaller"
+            android:visibility="gone"
             tools:ignore="RtlHardcoded,SpUsage"
             tools:text="1" />
+
+        <ImageView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/card_padding" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

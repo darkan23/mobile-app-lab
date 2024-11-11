@@ -7,6 +7,8 @@ import com.airbnb.mvrx.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import mu.KotlinLogging.logger
 import ru.labone.Effects
 import ru.labone.chat.data.ChatNavKey
@@ -15,12 +17,14 @@ import ru.labone.chats.data.ChatMessage
 import ru.labone.chats.data.ChatsRepository
 import ru.labone.chats.data.Message
 import ru.labone.chats.data.Person
+import ru.labone.chats.data.Status
 import ru.labone.effects
 import ru.labone.mvrx.AssistedViewModelFactory
 import ru.labone.mvrx.DiMavericksViewModelFactory
 import java.time.Instant
 import java.time.LocalDate
 import java.util.UUID
+import kotlin.time.Duration.Companion.seconds
 
 class ChatViewModel @AssistedInject constructor(
     @Assisted initialState: ChatState,
@@ -89,12 +93,26 @@ class ChatViewModel @AssistedInject constructor(
                 state.message,
                 Person("1", "My name", "Surname", 0),
                 createDate = Instant.now(),
-                readDate = Instant.now(),
+                readDate = null,
+                status = Status.SENDING,
             )
-            chatsRepository.saveMessage(message)
+            viewModelScope.launch {
+                chatsRepository.saveMessage(message)
+            }
         }
         setState {
             copy(message = "")
+        }
+    }
+
+    fun markRead(date: LocalDate, id: String) = withState { state ->
+        viewModelScope.launch {
+            val asd = state.messages[date]?.find { it.id == id }?.readDate
+            println("FUCK ${id} $asd")
+            if (asd == null) {
+                delay(1.seconds)
+                chatsRepository.markRead(id)
+            }
         }
     }
 

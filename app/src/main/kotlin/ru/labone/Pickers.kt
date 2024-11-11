@@ -7,8 +7,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.labone.R
 import com.example.labone.databinding.DatePickerDialogBinding
-import ru.labone.cancelButton
-import ru.labone.showAlert
 import splitties.alertdialog.appcompat.okButton
 import splitties.resources.dimen
 import java.time.Instant

@@ -12,8 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.epoxy.EpoxyVisibilityTracker
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
+import com.airbnb.epoxy.VisibilityState
 import com.airbnb.mvrx.Mavericks
 import com.airbnb.mvrx.MavericksView
 import com.airbnb.mvrx.fragmentViewModel
@@ -26,6 +28,7 @@ import com.example.labone.databinding.ItemMessageDateBinding
 import ru.labone.Convertors
 import ru.labone.chats.data.ChatMessage
 import ru.labone.chats.data.OtherUserMessage
+import ru.labone.chats.data.Status
 import ru.labone.chats.data.UserMessage
 import ru.labone.doAfterTextChanged
 import ru.labone.fullScreenDialog
@@ -35,6 +38,8 @@ import ru.labone.news.ui.dividerView
 import ru.labone.onClickWithDebounce
 import ru.labone.ui
 import ru.labone.viewbinding.viewBinding
+import splitties.resources.colorSL
+import splitties.resources.drawable
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.abs
@@ -120,8 +125,8 @@ class ChatDialogFragment : DialogFragment(R.layout.fragment_chat), MavericksView
                         id(date.toEpochDay())
                         date(date)
                     }
-                    val readMessages = messages.filter { it.readDate != null }
-                    val unReadMessages = messages.filter { it.readDate == null }
+                    val readMessages = messages.filter { it.readDate != null || it is UserMessage }
+                    val unReadMessages = messages.filterIsInstance<OtherUserMessage>().filter { it.readDate == null }
                     readMessages.forEach { message ->
                         when (message) {
                             is OtherUserMessage -> {
@@ -145,12 +150,15 @@ class ChatDialogFragment : DialogFragment(R.layout.fragment_chat), MavericksView
                         }
                     }
                     unReadMessages.forEach { message ->
-                        if (message is OtherUserMessage) {
-                            otherUserMessageView {
-                                id(message.id)
-                                message(message)
-                                authorName(message.authorName)
-                                authorAvatar(message.authorAvatar)
+                        otherUserMessageView {
+                            id(message.id)
+                            message(message)
+                            authorName(message.authorName)
+                            authorAvatar(message.authorAvatar)
+                            onVisibilityStateChanged { _, _, visibilityState ->
+                                if (visibilityState == VisibilityState.VISIBLE) {
+                                    viewModel.markRead(date, message.id)
+                                }
                             }
                         }
                     }
@@ -181,6 +189,7 @@ class ChatDialogFragment : DialogFragment(R.layout.fragment_chat), MavericksView
     }
 
     private fun setupRecyclerView() {
+        EpoxyVisibilityTracker().attach(binding.messages)
         val layoutManager = binding.messages.layoutManager as? LinearLayoutManager
         binding.messages.addOnScrollListener(onScrollListener)
         binding.messages.addOnLayoutChangeListener(layoutChangeListener)
@@ -262,9 +271,27 @@ internal class UserMessageView @JvmOverloads constructor(
     }
 
     @ModelProp
-    fun setMessage(message: ChatMessage) {
+    fun setMessage(message: UserMessage) {
         binding.message.text = message.text?.trim()
         binding.messageDate.text = Convertors.temporalToUITime(message.createDate)
+        binding.status.imageTintList = colorSL(
+            when {
+                message.readDate != null -> R.color.icon_color
+                message.status == Status.SENDING -> R.color.gray
+                message.status == Status.NOT_SEND -> R.color.colorError
+                else -> R.color.icon_color
+            }
+        )
+        binding.status.setImageDrawable(
+            drawable(
+                when {
+                    message.readDate != null -> R.drawable.ic_double_check
+                    message.status == Status.SENDING -> R.drawable.ic_clock
+                    message.status == Status.NOT_SEND -> R.drawable.ic_error
+                    else -> R.drawable.ic_check
+                }
+            )
+        )
     }
 }
 

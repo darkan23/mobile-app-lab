@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/padding_huge"
     android:layout_marginEnd="@dimen/padding_medium"
-    android:layout_marginBottom="@dimen/padding_smaller">
+    android:layout_marginBottom="@dimen/padding_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,6 +38,16 @@
                 tools:text="Тес" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ImageView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_check"
+            app:layout_constraintBottom_toBottomOf="@id/messageDate"
+            app:layout_constraintEnd_toStartOf="@id/messageDate"
+            app:layout_constraintTop_toTopOf="@id/messageDate" />
 
         <TextView
             android:id="@+id/messageDate"
